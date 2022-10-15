@@ -1,0 +1,74 @@
+.input {
+   margin: 0;
+   padding: 0;
+   border: none;
+   position: relative;
+   margin-bottom: 25px;
+ 
+ 
+ 
+   &_is-auth {
+     margin-bottom: 136px;
+   
+   }
+ 
+   &__text-field {
+     outline: none;
+     border: none;
+     background-color: transparent;
+     width: 100%;
+     border-bottom: 1px solid #2e69fd;
+     padding-bottom: 7px;
+     font-size: 15px;
+     color: #1e1e1e;
+     font-weight: 500;
+     line-height: 15px;
+     margin-bottom: 7px;
+   }
+ 
+   &__label {
+     cursor: text;
+   }
+ 
+   &__text {
+     position: absolute;
+     top: 6px;
+     left: 0;
+     
+     width: 100%;
+     font-size: 15px;
+ 
+     color: #999;
+     font-weight: 500;
+ 
+     line-height: 15px;
+ 
+  
+   }
+ 
+   &__text_error {
+     color: #fd0b0bf7;
+   }
+ 
+ 
+   &__helper-text {
+     margin: 0;
+     min-height: 8px;
+     font-size: 8px;
+     color: #fd0b0bf7;
+     font-weight: 400;
+     line-height: 8px;
+     opacity: 0;
+   }
+ 
+   &__helper-text_show {
+     opacity: 1;
+   }
+ 
+   &__text_isValue {
+     top: -10px !important;
+     font-size: 9px;
+     line-height: 9px;
+   }
+ }
+ 
