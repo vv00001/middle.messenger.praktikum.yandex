@@ -15,26 +15,16 @@
    margin-bottom: 15px;
  
    
+   max-width: 280px;
    border-radius: 8px;
    font-size: 15px;
    color: #fff;
    font-weight: 500;
    line-height: 15px;
- 
- 
-   &_page_edit-profile {
-     max-width: 280px;
-     margin: 60px auto 0;
-   }
- 
-   &_page_edit-password {
-     max-width: 280px;
-     margin: 160px auto 0;
-   }
- 
+   
    &_disable {
-     opacity: 0.8;
-     cursor: default;
-   }
+    opacity: 0.2;
+  }
+ 
  }
  
