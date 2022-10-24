@@ -10,8 +10,8 @@ import Button from "./component/button"
 registerComponent(Button);
 
 document.addEventListener("DOMContentLoaded", () => {
-   //renderDOM(new LoginPage())
-   renderDOM(new NotFoundPage())
+   renderDOM(new LoginPage())
+   // renderDOM(new NotFoundPage())
  })
  
  

@@ -158,7 +158,7 @@ export default  class Block <P=any>{
         set:(target: Record<string>, prop: string, value:unknown)=> {
           target[prop] = value;
           
-          self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
+          this.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
           return true;
         },
         deleteProperty() {
