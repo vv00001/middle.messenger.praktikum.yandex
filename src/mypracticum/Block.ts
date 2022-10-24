@@ -155,7 +155,7 @@ export default  class Block <P=any>{
           const value = target[prop];
           return typeof value === "function" ? value.bind(target) : value;
         },
-        set(target: Record<string>, prop: string, value:unknown) {
+        set:(target: Record<string>, prop: string, value:unknown)=> {
           target[prop] = value;
           
           self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
