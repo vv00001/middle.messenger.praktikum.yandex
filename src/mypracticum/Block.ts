@@ -1,6 +1,7 @@
 import EventBus from "./EventBus"
 import Handlebars from "handlebars"
 
+import {v4 as makeUUID} from 'uuid'
 interface BlockMeta<P = any> {
   props: P
 }
@@ -23,7 +24,7 @@ export default  class Block <P=any>{
   _meta:BlockMeta;
 
   static componentName: string
-  public id = "111111"
+  public id = makeUUID();
   props: P
   children: { [id: string]: Block } = {}
   /** JSDoc

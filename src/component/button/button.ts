@@ -1,7 +1,6 @@
 import Block from "../../mypracticum/Block";
 import "./button.css";
 
-
 interface ButtonProps {
   textBtn: string;
   onClick: () => void;
@@ -14,6 +13,8 @@ export class Button extends Block {
   }
 
   protected render(): string {
-    return `<a href="{{href}}" class="button {{classes}}">{{textBtn}}</a>`;
+    return `<button class="{{classes}}" type="button">{{textBtn}}</button>`;
+    
   }
 }
+
