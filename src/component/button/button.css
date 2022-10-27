@@ -26,6 +26,17 @@
    &_disable {
     opacity: 0.2;
   }
- 
+  &__footer-btn-send {
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: #2e69fd;
+    border: none;
+    padding: 0;
+    transform: scaleX(-1);
+    border-radius: 50%;
+    min-width: 30px;
+    height: 30px;
+    background: center no-repeat url("../../image/Group 202.svg");
+  }
  }
  
