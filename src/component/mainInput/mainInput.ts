@@ -1,5 +1,7 @@
 import Block from "../../mypracticum/Block"
 import "./mainInput.css"
+import { Error} from "../error/error"
+import { validate } from "../../sourseCode/validate"
 
 interface mainInputProps {
   onInput?: () => void
@@ -10,14 +12,51 @@ interface mainInputProps {
   value: string
   name?: string
   classes?: string
-}
+  errorMes?:string
+  errorClass:string}
 
 export class MainInput extends Block {
+      
   static componentName = "mainInput"
-  constructor(props: mainInputProps) {
-    super({      
-      ...props
-    })
+  constructor({
+    placeholder,
+    value,
+    name,
+    classes,
+    errorMes,
+    errorClass}: mainInputProps) {
+    super({
+      classes,
+      placeholder, value,
+      name,     
+      errorClass:"error",
+      onInput: (e: FocusEvent) => {
+        
+        const takeInput = e.target as HTMLInputElement
+        // const messageError = validate([{ receive: takeInput.value }])
+        const messageError = validate(takeInput.value )
+        console.log(errorClass)
+
+        let fff=this._children;
+        let hhh=Object.entries(fff);
+
+        if(messageError){
+          // errorClass="error_showw"
+          // errorMes=messageError
+          
+        
+          hhh[1][1].setProps({        
+            errorClass:"error_show",
+            errorMes:messageError
+          })
+        }else{
+          hhh[1][1].setProps({        
+            errorClass:"error_hide",
+            errorMes:""
+          })
+        }
+      }
+    })    
   }
 
   protected render(): string {
@@ -33,6 +72,11 @@ export class MainInput extends Block {
         onBlur=onBlur 
         value=value
     }}}
+
+    {{{Error
+      errorClass ="{{errorClass}}"
+      errorMes="{{errorMes}}"
+      }}}
     </div>
     `
   }

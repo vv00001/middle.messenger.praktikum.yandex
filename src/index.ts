@@ -7,6 +7,8 @@ import { Chat } from "./pages/chat/chat"
 
 
 
+
+import Error from "./component/error"
 import MainInput from "./component/mainInput"
 import Input from     "./component/input"
 import Button from    "./component/button"
@@ -20,10 +22,11 @@ registerComponent(MainInput);
 registerComponent(Title);
 registerComponent(ListItem);
 registerComponent(Message);
+registerComponent(Error);
 
 document.addEventListener("DOMContentLoaded", () => {
-   // renderDOM(new LoginPage())
+   renderDOM(new LoginPage())
   //  renderDOM(new NotFoundPage())
-   renderDOM(new Chat())
+  //  renderDOM(new Chat())
  })
  

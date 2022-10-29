@@ -24,7 +24,7 @@ export default  class Block <P=any>{
   _meta:BlockMeta;
 
   static componentName: string
-  public id = makeUUID();
+  public id = makeUUID(8);
   props: P
   children: { [id: string]: Block } = {}
   /** JSDoc
@@ -46,6 +46,7 @@ export default  class Block <P=any>{
       props
     };
     this.getStateFromProps(props)
+    this._children=this._makePropsProxy(this.children);
     this.props = this._makePropsProxy(props || ({} as P));
     this.state = this._makePropsProxy(this.state);
 
