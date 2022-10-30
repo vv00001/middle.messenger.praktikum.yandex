@@ -1,6 +1,7 @@
 import { input } from "../../component/input/input"
 import Block from "../../mypracticum/Block"
 import { NotFoundPage } from "../notFound/notFound"
+import { validate } from "../../sourseCode/validate"
 import "./login.css"
 
 export class LoginPage extends Block {
@@ -9,8 +10,20 @@ export class LoginPage extends Block {
     // console.log({input})
     this.setProps({
       loginValue: "",
-      passwordValue: ""
-      
+      passwordValue: "",
+      onSubmit: () => {
+        let login = this.element.querySelector("input[name='login']") as HTMLInputElement
+        let password = this.element.querySelector("input[name='password']") as HTMLInputElement
+
+        let messageErrorlogin = validate(login.value )
+        let messageErrorpassword = validate(password.value )
+       
+
+        if(!messageErrorlogin && !messageErrorpassword)
+        console.log("отправка ", login.value,password.value);
+        else
+        console.log("исправте ошибки выделеные красным цветом, пожалуйста") 
+      }
     })
   }
 

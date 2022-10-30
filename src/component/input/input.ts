@@ -19,7 +19,6 @@ export class Input extends Block {
   }
   
   protected render(): string {
-    console.log(22222)
     const { name, type, minlength, maxlength } = this.state;
     return `
     <input name="{{name}}" value="{{value}}" class="{{classes}}" type="{{type}}" placeholder="{{placeholder}}">   

@@ -15,7 +15,6 @@ export class Error extends Block {
    }
 
 protected render(): string {
-   console.log(999999999)
     return `
 
     <div class="{{errorClass}}">

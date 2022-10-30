@@ -7,7 +7,6 @@ interface BlockConstructable<Props = any> {
 }
 
 export default function registerComponent<Props extends any>(Component: BlockConstructable<Props>) {
-  console.log(Component)
   Handlebars.registerHelper(
     Component.componentName || Component.name,
     function (this: Props, { hash: { ref, ...hash }, data, fn }: HelperOptions) {
