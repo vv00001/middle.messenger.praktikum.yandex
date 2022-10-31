@@ -1,0 +1,11 @@
+.serverError {
+  min-height: 100vh;
+  display: flex;
+  
+  margin-left: 50%;
+  &__first{
+    margin-left: 50%;
+    
+  }
+}
+ 

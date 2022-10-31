@@ -1,0 +1,50 @@
+.profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 100vw;
+  height: 100vh;
+
+  &__title {
+    margin-top: 100px;
+    margin-bottom: 25px;
+
+    color: rgb(0, 0, 0);
+    text-align: center;
+  }
+  &__form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    color: black;
+
+    &__span {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      width: 760px;
+      padding: 15px 0;
+
+      font-size: 16px;
+      font-weight: 600;
+
+      border-bottom: 1px solid #eaeaea;
+      &__value {
+        margin: 0;
+      }
+
+    }
+  }
+  &__link {
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+
+    font-weight: 500;
+    
+    line-height: 15px;
+  }
+}
