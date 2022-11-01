@@ -2,9 +2,9 @@ import Block from "../../mypracticum/Block";
 import "./button.css";
 
 interface ButtonProps {
-  textBtn: string;
-  onClick: () => void;
-  classes:string;
+  textBtn?: string;
+  onClick?: () => void;
+  classes?:string;
 }
 
 export class Button extends Block {

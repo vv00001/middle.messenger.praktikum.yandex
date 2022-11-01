@@ -1,4 +1,5 @@
 import { input } from "../../component/input/input"
+import { button }from "../../component/button/button"
 import Block from "../../mypracticum/Block"
 import { NotFoundPage } from "../notFound/notFound"
 import { validate } from "../../sourseCode/validate"

@@ -1,6 +1,7 @@
 import Block from "../../mypracticum/Block" 
 import "./register.css"
 import { input } from "../../component/input/input"
+
 import {validate} from "../../sourseCode/validate"
 interface register {
  
