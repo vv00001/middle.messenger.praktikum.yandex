@@ -13,7 +13,11 @@ export class Button extends Block {
   }
 
   protected render(): string {
-    return `<button class="{{classes}}" type="button">{{textBtn}}</button>`
+    return `
+    <div class="button">
+    <button class="{{classes}}" type="button">{{textBtn}}</button>
+    </div>
+    `
     
   }
 }
