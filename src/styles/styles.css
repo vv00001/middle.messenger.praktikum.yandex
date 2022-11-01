@@ -1,24 +1,24 @@
 
 .page {
-   box-sizing: border-box;
-   font-family: sans-serif, Arial ;
-   height: 100vh;
- 
-   &__forma {
-     min-height: 100%;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-   }
- 
-   &__search-chat {
-     margin: 0 10px 15px;
-   }
- 
-   &__link-profile {
-     display: block;
-     margin: 0 10px 25px 0;
-   }
- }
+  box-sizing: border-box;
+  font-family: sans-serif, Arial ;
+  height: 100vh;
+
+  &__forma {
+    min-height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &__search-chat {
+    margin: 0 10px 15px;
+  }
+
+  &__link-profile {
+    display: block;
+    margin: 0 10px 25px 0;
+  }
+}
  
  

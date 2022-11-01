@@ -1,0 +1,146 @@
+.chat {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 310px 1fr;
+  height: 100%;
+  justify-content: flex-end;
+  
+   &__messages {
+    height: 825px;
+    display: flex;
+    flex-direction: column;
+  align-items:  flex-end;
+    justify-content: flex-end;
+  }
+  &__main {
+    list-style: none;
+    justify-content: flex-end;
+    height: 100%;
+  }
+   &__main_left {
+     background-color: #fbfbfb;
+     border-right: 1px solid #eaeaea;
+     overflow-y: auto;
+     text-align: right;
+     justify-content: flex-end;
+     height: 100%;
+   }
+ 
+   &__main-dialog {
+     margin: 10px 20px;
+     overflow-y: auto;
+     height: 100%;
+   }
+ 
+   &__footer{
+     border-top: 1px solid #efefef
+   }
+   &__footer-form {
+     justify-content: space-between;
+     font-family: inherit;
+     display: flex;
+     align-items: center;
+   }
+   &__footer-icon {
+     height: 32px;
+     width: 32px;
+   }
+   &__footer-btn-attach {
+     cursor: pointer;
+     background-color: transparent;
+     border: none;
+     padding: 0;
+     width: 32px;
+     height: 32px;
+   }
+   &__footer-btn-send {
+     box-sizing: border-box;
+     cursor: pointer;
+     background-color: #2e69fd;
+     border: none;
+     padding: 0;
+     transform: scaleX(-1);
+     border-radius: 50%;
+     min-width: 30px;
+     height: 30px;
+   }
+   &__footer-input {
+     box-sizing: border-box;
+     border-color: transparent;
+     outline: none;
+ 
+ 
+     background-color: #efefef;
+     border-radius: 30px;
+     margin: 0 10px;
+     border-width: 1px;
+     
+ 
+     font-size: 10px;
+ 
+     width: 100%;
+     color: #1e1e1e;
+ 
+     font-weight: 500;
+     line-height: 10px;
+     padding: 10px 20px;
+ 
+ 
+   }
+ 
+ 
+   &__profile {
+     display: inline-block;
+     margin-top: 20px;
+     text-decoration: none;
+   }
+ 
+ 
+   &__link-text {
+     font-size: 10px;
+     color: #999;
+     font-weight: 500;
+     line-height: 10px;
+     margin-right: 8px;
+   }
+ 
+   &__inner {
+     display: flex;
+     align-items: center;
+   }
+   &__list {
+     margin: 0;
+     padding: 0;
+   }
+ 
+   &__title {
+     margin: 0;
+     font-size: 10px;
+     color: #999;
+     font-weight: 500;
+     line-height: 10px;
+   }
+ 
+   &__header {
+     display: flex;
+     border-bottom: 1px solid #e5e5e5;
+     justify-content: space-between;
+     align-items: center;
+     padding-bottom: 10px;
+   }
+ 
+  
+ 
+   &__user-name {
+     margin: 0;
+     font-size: 15px;
+     color: #1e1e1e;
+     font-weight: 600;
+     line-height: 15px;
+   }
+ 
+ 
+  
+}
+ 
