@@ -12318,7 +12318,8 @@ class LoginPage extends _blockDefault.default {
         return `    
   <main class="mainclass">
     <form class="signin">
-      {{{Title firstLine="Вход"}}}
+      {{{Title firstLine="Входggg"}}}
+      {{{Button textBtn="Войти" classes="button" onClick=onSubmit }}}
       {{{mainInput 
         onInput=onInput 
         onFocus=onFocus
@@ -12340,7 +12341,7 @@ class LoginPage extends _blockDefault.default {
         placeholder="Пароль"
       }}}
       {{{Button textBtn="Войти" classes="button" onClick=onSubmit }}}
-      <a class="signin__link" href="./notFound">Нет аккаунта?</a>
+      <a class="signin__link" href="#">Нет аккаунта?</a>
     </form>
     </main>
     `;
