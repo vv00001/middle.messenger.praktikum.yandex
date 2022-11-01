@@ -1,6 +1,6 @@
 import Block from "../../mypracticum/Block"
 
-import "./listitem.css"
+import "./listItem.css"
 
 interface listitemProps {
   userName?: string

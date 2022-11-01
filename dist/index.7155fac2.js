@@ -13024,7 +13024,7 @@ parcelHelpers.export(exports, "ListItem", ()=>ListItem
 );
 var _block = require("../../mypracticum/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
-var _listitemCss = require("./listitem.css");
+var _listItemCss = require("./listItem.css");
 class ListItem extends _blockDefault.default {
     static componentName = "listItem";
     constructor({ userName , lastMessage , time , countNotReadMessage  }){
@@ -13054,7 +13054,7 @@ class ListItem extends _blockDefault.default {
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","./listitem.css":"6ZqMV","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"6ZqMV":[function() {},{}],"iypKu":[function(require,module,exports) {
+},{"../../mypracticum/Block":"hydC4","./listItem.css":"jIqkk","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"jIqkk":[function() {},{}],"iypKu":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>_message.Message
