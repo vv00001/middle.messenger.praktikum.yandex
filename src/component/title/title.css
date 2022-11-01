@@ -1,0 +1,29 @@
+.title {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+
+ 
+   &_first {
+      margin: 0;
+      font-size: 20px;
+      color: #1e1e1e;
+      font-weight: 500;
+      line-height: 20px;
+      letter-spacing: 0em;
+      text-align: center;
+      margin-bottom: 50px;
+   }
+ 
+   &_second{
+      margin: 0;
+      font-size: 20px;
+      color: #1e1e1e;
+      font-weight: 500;
+      line-height: 20px;
+      letter-spacing: 0em;
+      text-align: center;
+      margin-bottom: 50px;
+   }
+}

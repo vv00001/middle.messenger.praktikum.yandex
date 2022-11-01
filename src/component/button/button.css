@@ -1,40 +1,43 @@
 .button {
-   cursor: pointer;
-   text-decoration: none;
+  cursor: pointer;
+  text-decoration: none;
+  display: block;
+  border: none;
  
- 
-   display: block;
- 
- 
- 
- 
-   background-color: #2e69fd;
-   width: 100%;
-   padding: 10px 0;
-   text-align: center;
-   margin-bottom: 15px;
+  background-color: #2e69fd;
+  width: 100%;
+  padding: 10px 0;
+  text-align: center;
+  margin-bottom: 15px;
  
    
-   border-radius: 8px;
-   font-size: 15px;
-   color: #fff;
-   font-weight: 500;
-   line-height: 15px;
- 
- 
-   &_page_edit-profile {
-     max-width: 280px;
-     margin: 60px auto 0;
-   }
- 
-   &_page_edit-password {
-     max-width: 280px;
-     margin: 160px auto 0;
-   }
- 
-   &_disable {
-     opacity: 0.8;
-     cursor: default;
-   }
- }
+  max-width: 280px;
+  border-radius: 8px;
+  font-size: 15px;
+  color: #fff;
+  font-weight: 500;
+  line-height: 15px;
+   
+  &_disable {
+    opacity: 0.2;
+  }
+  &__edit_pro{ 
+    margin-left: 100px;    
+  }
+  &__edit_password{ 
+    margin-left: 70px;    
+  }
+  &__footer-btn-send {
+    box-sizing: border-box;
+    cursor: pointer;
+    background-color: #2e69fd;
+    border: none;
+    padding: 0;
+    transform: scaleX(-1);
+    border-radius: 50%;
+    min-width: 30px;
+    height: 30px;
+    background: center no-repeat url("../../image/Group 202.svg");
+  }
+}
  
