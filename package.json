@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "---",
   "scripts": {
-    "build": "parcel build src/index.html --no-cache --no-minify",
+    "build": "parcel build src/index.html --no-cache",
     "dev": "parcel src/index.html --no-source-maps --no-cache",
     "start": "node ./api/server.js"
   },
