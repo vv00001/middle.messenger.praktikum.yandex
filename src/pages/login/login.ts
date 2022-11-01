@@ -30,7 +30,7 @@ export class LoginPage extends Block {
     return `    
   <main class="mainclass">
     <form class="signin">
-      {{{Title firstLine="Входggg"}}}
+      {{{Title firstLine="sacasas"}}}
       {{{Button textBtn="Войти" classes="button" onClick=onSubmit }}}
       {{{mainInput 
         onInput=onInput 

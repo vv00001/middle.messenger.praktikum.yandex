@@ -12318,7 +12318,7 @@ class LoginPage extends _blockDefault.default {
         return `    
   <main class="mainclass">
     <form class="signin">
-      {{{Title firstLine="Входggg"}}}
+      {{{Title firstLine="sacasas"}}}
       {{{Button textBtn="Войти" classes="button" onClick=onSubmit }}}
       {{{mainInput 
         onInput=onInput 
@@ -12549,7 +12549,11 @@ class Button extends _blockDefault.default {
         });
     }
     render() {
-        return `<button class="{{classes}}" type="button">{{textBtn}}</button>`;
+        return `
+    <div class="button">
+    <button class="{{classes}}" type="button">{{textBtn}}</button>
+    </div>
+    `;
     }
 }
 
