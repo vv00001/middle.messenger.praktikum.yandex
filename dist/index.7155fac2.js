@@ -529,13 +529,6 @@ function hmrAcceptRun(bundle, id) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _mypracticum = require("./mypracticum");
 var _login = require("./pages/login/login");
-var _notFound = require("./pages/notFound/notFound");
-var _chat = require("./pages/chat/chat");
-var _editProfile = require("./pages/editProfile/editProfile");
-var _register = require("./pages/register/register");
-var _profile = require("./pages/profile/profile");
-var _editPassword = require("./pages/editPassword/editPassword");
-var _serverError = require("./pages/serverError/serverError");
 var _error = require("./component/error");
 var _errorDefault = parcelHelpers.interopDefault(_error);
 var _mainInput = require("./component/mainInput");
@@ -558,45 +551,40 @@ _mypracticum.registerComponent(_Default.default);
 _mypracticum.registerComponent(_listItemDefault.default);
 _mypracticum.registerComponent(_messageDefault.default);
 document.addEventListener("DOMContentLoaded", ()=>{
-    document.getElementById("chat").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _chat.Chat());
-    };
-    document.getElementById("loginPage").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _login.LoginPage());
-    };
-    document.getElementById("editPassword").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _editPassword.EditPassword());
-    };
-    document.getElementById("editProfile").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _editProfile.EditProfile());
-    };
-    document.getElementById("notFound").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _notFound.NotFoundPage());
-    };
-    document.getElementById("profile").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _profile.Profile());
-    };
-    document.getElementById("serverError").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _serverError.ServerError());
-    };
-    document.getElementById("register").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _register.Register());
-    };
+    _mypracticum.renderDOM(new _login.LoginPage());
+// document.getElementById("chat").onclick = function()  {
+//   removeMy();
+//   renderDOM(new Chat())
+// }
+// document.getElementById("loginPage").onclick = function()  {
+//   removeMy();
+//   renderDOM(new LoginPage())
+// }
+// document.getElementById("editPassword").onclick = function()  {
+//   removeMy();renderDOM(new EditPassword())
+// }
+// document.getElementById("editProfile").onclick = function()  {
+//   removeMy();renderDOM(new EditProfile())
+// }
+// document.getElementById("notFound").onclick = function()  {
+//   removeMy();renderDOM(new NotFoundPage())
+// }
+// document.getElementById("profile").onclick = function()  {
+//   removeMy();renderDOM(new Profile())
+// }
+// document.getElementById("serverError").onclick = function()  {
+//   removeMy();renderDOM(new ServerError())
+// }
+// document.getElementById("register").onclick = function()  {
+//   removeMy();renderDOM(new Register())
+// }  
 });
 function removeMy() {
     const myUl = document.getElementById('myul');
     while(myUl.firstChild)myUl.removeChild(myUl.firstChild);
 }
 
-},{"./mypracticum":"fmOdD","./pages/login/login":"d4kgo","./pages/notFound/notFound":"8Au6T","./pages/chat/chat":"BTZqg","./pages/editProfile/editProfile":"jAgB3","./pages/register/register":"1d69E","./pages/profile/profile":"3JZwj","./pages/editPassword/editPassword":"gEr5a","./pages/serverError/serverError":"hcOpP","./component/error":"35krS","./component/mainInput":"5Mbat","./component/input":"HJI1p","./component/button":"bhL52","./component/listItem":"eWJdd","./component/message":"iypKu","./component/title/":"dn7t3","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"fmOdD":[function(require,module,exports) {
+},{"./mypracticum":"fmOdD","./pages/login/login":"d4kgo","./component/error":"35krS","./component/mainInput":"5Mbat","./component/input":"HJI1p","./component/button":"bhL52","./component/listItem":"eWJdd","./component/message":"iypKu","./component/title/":"dn7t3","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"fmOdD":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Block", ()=>_blockDefault.default
@@ -12375,452 +12363,7 @@ function validate(receive) {
     return checkDone.answer;
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"7tyJ4":[function() {},{}],"8Au6T":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "NotFoundPage", ()=>NotFoundPage
-);
-var _block = require("../../mypracticum/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _notFoundCss = require("./notFound.css");
-class NotFoundPage extends _blockDefault.default {
-    constructor(){
-        super();
-    }
-    render() {
-        return `
-    <main class="notFound">
-      <div class="notFound__first"
-        {{{Title firstLine="404"  secondLine="Не туда попали"}}}
-      </div>
-    </main>
-  `;
-    }
-}
-
-},{"../../mypracticum/Block":"hydC4","./notFound.css":"l55nK","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"l55nK":[function() {},{}],"BTZqg":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Chat", ()=>Chat
-);
-var _block = require("../../mypracticum/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _chatCss = require("./chat.css");
-class Chat extends _blockDefault.default {
-    constructor(){
-        super();
-        this.setProps({
-            onSubmit: ()=>{
-                console.log("проверки для чата нет в разработке");
-            }
-        });
-    }
-    render() {
-        return `
-    <main>
-      <ul class="chat">
-      <li class="chat__main chat__main_left">
-        <a class="chat__profile page__link-profile" href="#">
-          <span class="chat__link-text">Профиль</span>
-        </a>
-        
-        <ul class="chat__list">
-        {{{ listItem 
-          userName= "Андрей" lastMessage= "djfljeri" time= "11:11" countNotReadMessage= 2 srcAvatar= "#"
-        }}}
-        {{{ listItem 
-          userName= "Андрей" lastMessage= "djfljeri" time= "11:11" countNotReadMessage= 2 srcAvatar= "#"
-        }}}
-        {{{ listItem 
-          userName= "Андрей" lastMessage= "djfljeri" time= "11:11" countNotReadMessage= 2 srcAvatar= "#"
-          }}}
-        </ul>
-      </li>
-        <li class="chat__main chat__main-dialog">
-        <div class="chat__header">
-          <div class="chat__inner">        
-            <p class="chat__user-name">Вадим</p>
-          </div>
-        </div>
-        
-
-        <ul class="chat__messages">
-          {{{ message text="1111111111111111111" time="11:11" isRead=false}}}
-          {{{ message text="1111111111111111111" time="11:11" owner=true}}}
-          {{{ message text="1111111111111111111" time="11:11" isRead=false}}}
-      </ul>
-
-      <div class="chat__footer">
-      <form class="chat__footer-form">
-        <button class="chat__footer-btn-attach" type="button" aria-label="Прикрепить файл">
-          <img
-            class="chat__footer-icon"
-            src="../image/Group 197.svg"
-          />
-        </button>
-        <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />
-    
-    
-        {{{Button classes="button__footer-btn-send" onClick=onSubmit }}}
-      
-      </form>
-      </div>    
-      </li>    
-    </ul>
-    </main>
-    `;
-    }
-}
-
-},{"../../mypracticum/Block":"hydC4","./chat.css":"1SU4r","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"1SU4r":[function() {},{}],"jAgB3":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "EditProfile", ()=>EditProfile
-);
-var _block = require("../../mypracticum/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _editProfileCss = require("./editProfile.css");
-var _validate = require("../../sourseCode/validate");
-class EditProfile extends _blockDefault.default {
-    constructor(){
-        super();
-        this.setProps({
-            loginValue: "",
-            passwordValue: "",
-            onSubmit: ()=>{
-                let login = this.element.querySelector("input[name='login']");
-                let telephon = this.element.querySelector("input[name='telephon']");
-                let chatname = this.element.querySelector("input[name='chatname']");
-                let secondname = this.element.querySelector("input[name='secondname']");
-                let profname = this.element.querySelector("input[name='profname']");
-                let mail = this.element.querySelector("input[name='mail']");
-                let messageErrorlogin = _validate.validate(login.value);
-                if (!messageErrorlogin && !_validate.validate(telephon.value) && !_validate.validate(chatname.value) && !_validate.validate(secondname.value) && !_validate.validate(profname.value) && !_validate.validate(mail.value)) console.log("отправка пока 1 пример но отрпавиться фсе что есть ", login.value);
-                else console.log("исправьте ошибки выделенные красным цветом, пожалуйста");
-            }
-        });
-    }
-    render() {
-        return `
-   <main class="mainclass">
-    <form class="edit-profile"> 
-      {{{Title firstLine="Изменение профиля"}}}
-      
-      {{{mainInput 
-        onInput=onInput 
-        onFocus=onFocus
-        type="text" 
-        name="mail"
-        classes="input__text-field"
-        placeholder="Почта"
-        errorClass="error"
-      }}}
-      {{{mainInput 
-        onInput=onInput 
-        onFocus=onFocus
-        type="text" 
-        name="login"
-        classes="input__text-field"
-        placeholder="Логин"
-        errorClass="error"
-      }}}
-      {{{mainInput 
-        onInput=onInput 
-        onFocus=onFocus
-        type="text" 
-        name="profname"
-        classes="input__text-field"
-        placeholder="Имя"
-        errorClass="error"
-      }}}
-      {{{mainInput 
-        onInput=onInput 
-        onFocus=onFocus
-        type="text" 
-        name="secondname"
-        classes="input__text-field"
-        placeholder="Фамилия"
-        errorClass="error"
-      }}}
-      {{{mainInput 
-        onInput=onInput 
-        onFocus=onFocus
-        type="text" 
-        name="chatname"
-        classes="input__text-field"
-        placeholder="Имя в чате"
-        errorClass="error"
-      }}}
-      {{{mainInput 
-        onInput=onInput 
-        onFocus=onFocus
-        type="text" 
-        name="telephon"
-        classes="input__text-field"
-        placeholder="Телефон"
-        errorClass="error"
-      }}}
-      {{{Button textBtn="Сохранить" classes="button button__edit_pro" onClick=onSubmit }}}
-      
-      </form>
-    </main>
-  `;
-    }
-}
-
-},{"../../mypracticum/Block":"hydC4","./editProfile.css":"5iWeb","../../sourseCode/validate":"ihU9O","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"5iWeb":[function() {},{}],"1d69E":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Register", ()=>Register
-);
-var _block = require("../../mypracticum/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _registerCss = require("./register.css");
-var _validate = require("../../sourseCode/validate");
-class Register extends _blockDefault.default {
-    constructor(){
-        super();
-        this.setProps({
-            loginValue: "",
-            passwordValue: "",
-            onSubmit: ()=>{
-                let login = this.element.querySelector("input[name='login']");
-                let secondname = this.element.querySelector("input[name='secondname']");
-                let mail = this.element.querySelector("input[name='mail']");
-                let profname = this.element.querySelector("input[name='profname']");
-                let password = this.element.querySelector("input[name='password']");
-                let password_repeat = this.element.querySelector("input[name='password_repeat']");
-                let messageErrorlogin = _validate.validate(login.value);
-                if (!messageErrorlogin && !_validate.validate(secondname.value) && !_validate.validate(profname.value) && !_validate.validate(mail.value) && !_validate.validate(password.value) && !_validate.validate(password_repeat.value)) console.log("отправка пока 1 пример но отрпавиться фсе что есть. Проверка на совпадение паролей в разработке", login.value);
-                else console.log("исправьте ошибки выделенные красным цветом, пожалуйста. Проверка на совпадение паролей в разработке");
-            }
-        });
-    }
-    render() {
-        return `
-   <main class="register">
-    <form class="register__profile"> 
-      {{{Title firstLine="Регистрация"}}}
-      {{{mainInput 
-        onInput=onInput 
-        onFocus=onFocus
-        type="text" 
-        name="login"
-        classes="input__text-field"
-        placeholder="Логин"
-        errorClass="error"
-      }}}     
-      {{{mainInput 
-        onInput=onInput 
-        onFocus=onFocus
-        type="text" 
-        name="mail"
-        classes="input__text-field"
-        placeholder="Почта"
-        errorClass="error"
-      }}}
-      {{{mainInput 
-        onInput=onInput 
-        onFocus=onFocus
-        type="text" 
-        name="profname"
-        classes="input__text-field"
-        placeholder="Имя"
-        errorClass="error"
-      }}}
-      {{{mainInput 
-        onInput=onInput 
-        onFocus=onFocus
-        type="text" 
-        name="secondname"
-        classes="input__text-field"
-        placeholder="Фамилия"
-        errorClass="error"
-      }}}
-      
-      {{{mainInput 
-        onInput=onInput 
-        onFocus=onFocus
-        type="text" 
-        name="password"
-        classes="input__text-field"
-        placeholder="Пароль"
-        errorClass="error"
-      }}}
-      {{{mainInput 
-        onInput=onInput 
-        onFocus=onFocus
-        type="text" 
-        name="password_repeat"
-        classes="input__text-field"
-        placeholder="Повтарите пароль"
-        errorClass="error"
-      }}}
-      {{{Button textBtn="Сохранить" classes="button button__edit_pro" onClick=onSubmit }}}      
-      </form>
-    </main>
-  `;
-    }
-}
-
-},{"../../mypracticum/Block":"hydC4","./register.css":"cgTR9","../../sourseCode/validate":"ihU9O","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"cgTR9":[function() {},{}],"3JZwj":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Profile", ()=>Profile
-);
-var _block = require("../../mypracticum/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _profileCss = require("./profile.css");
-class Profile extends _blockDefault.default {
-    constructor(){
-        super();
-    }
-    render() {
-        return `
-      <main class="profile">
-        <div class="profile__form">
-            <div class ="profile__title">
-            {{{Title firstLine="Иван"}}}
-            </div>
-            <form class="profile__form">
-            <div class="profile__form__span">
-                <label class="profile__form__span__label">Почта</label>
-                <p>googool@google.com</p>
-            </div>
-            <div class="profile__form__span">
-                <label class="profile__form__span__label">Логин</label>
-                <p class="profile__form__span__value">ivanivanov</p>
-            </div>
-            <div class="profile__form__span">
-                <label class="profile__form__span__label">Имя</label>
-                <p class="profile__form__span__value">Иван</p>
-            </div>
-            <div class="profile__form__span">
-                <label class="profile__form__span__label">Фамилия</label>
-                <p class="profile__form__span__value">Иванов</p>
-            </div>
-            <div class="profile__form__span">
-                <label class="profile__form__span__label">Имя в чате</label>
-                <p class="profile__form__span__value">Иван</p>
-            </div>
-            <div class="profile__form__span">
-                <label class="profile__form__span__label">Телефон</label>
-                <p class="profile__form__span__value">+7 (909) 967 30 3</p>
-            </div>
-            </form>
-
-            <div class="profile__form__span">
-                <a class="profile__link" href="#">Изменить данные</a>
-            </div>
-            <div class="profile__form__span">
-                <a class="profile__link" href="#">Изменить пароль</a>
-            </div>
-            <div class="profile__form__span">
-                <a class="profile__link" href="#">Выйти</a>
-            </div>
-            
-            
-     </main>
-    `;
-    }
-}
-
-},{"../../mypracticum/Block":"hydC4","./profile.css":"gXxuZ","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"gXxuZ":[function() {},{}],"gEr5a":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "EditPassword", ()=>EditPassword
-);
-var _block = require("../../mypracticum/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _editPasswordCss = require("./editPassword.css");
-var _validate = require("../../sourseCode/validate");
-class EditPassword extends _blockDefault.default {
-    constructor(){
-        super();
-        this.setProps({
-            onSubmit: ()=>{
-                let oldPassword = this.element.querySelector("input[name='oldPassword']");
-                let newPassword = this.element.querySelector("input[name='newPassword']");
-                let repeateNewPassword = this.element.querySelector("input[name='repeateNewPassword']");
-                let newPasswordValue = newPassword.value;
-                let repeateNewPasswordValue = repeateNewPassword.value;
-                if (!_validate.validate(oldPassword.value) && !_validate.validate(newPasswordValue) && !_validate.validate(repeateNewPasswordValue)) {
-                    if (newPasswordValue == repeateNewPasswordValue) console.log("отправка пока 1 пример но отрпавиться фсе что есть ", newPasswordValue);
-                    else console.log("пасворды одинаковые пожалуйста, зато без запар с цифрами и заглавными, пока без запар");
-                } else console.log("исправьте ошибки выделенные красным цветом, пожалуйста");
-            }
-        });
-    }
-    render() {
-        return `
-      <main class="mainpage">
-         <ul class="edit-profile">
-            <li class="edit-profile__main">
-               <form class="edit-password__form">         
-                  {{{Title firstLine="Смена пароля"}}}
-                  <ul class="edit-password__list">
-                  {{{mainInput 
-                     onInput=onInput 
-                     onFocus=onFocus
-                     type="text" 
-                     name="oldPassword"
-                     classes="input__text-field"
-                     placeholder="Текущий пароль"
-                     errorClass="error"
-                  }}}
-                  {{{mainInput 
-                     onInput=onInput 
-                     onFocus=onFocus
-                     type="text" 
-                     name="newPassword"
-                     classes="input__text-field"
-                     placeholder="Новый пароль"
-                     errorClass="error"
-                  }}}
-                  {{{mainInput 
-                     onInput=onInput 
-                     onFocus=onFocus
-                     type="text" 
-                     name="repeateNewPassword"
-                     classes="input__text-field"
-                     placeholder="Повторите новый пароль"
-                     errorClass="error"
-                  }}}
-                  {{{Button textBtn="Сохранить" classes="button button__edit_password" onClick=onSubmit }}}
-                     
-                  </ul>
-               </form>
-            </li>
-         </ul>
-      </main>
-   `;
-    }
-}
-
-},{"../../mypracticum/Block":"hydC4","./editPassword.css":"uFkuX","../../sourseCode/validate":"ihU9O","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"uFkuX":[function() {},{}],"hcOpP":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "ServerError", ()=>ServerError
-);
-var _block = require("../../mypracticum/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _serverErrorCss = require("./serverError.css");
-class ServerError extends _blockDefault.default {
-    constructor(){
-        super();
-    }
-    render() {
-        return `
-    <main class="serverError">
-      <div class="serverError__first"
-        {{{Title firstLine="500"  secondLine="Мы уже ремонтируем"}}}
-      </div>
-    </main>
-  `;
-    }
-}
-
-},{"../../mypracticum/Block":"hydC4","./serverError.css":"jVSNf","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"jVSNf":[function() {},{}],"35krS":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"7tyJ4":[function() {},{}],"35krS":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>_error.Error
