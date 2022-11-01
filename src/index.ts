@@ -26,33 +26,33 @@ registerComponent(Title);
 registerComponent(ListItem);
 registerComponent(Message);
 document.addEventListener("DOMContentLoaded", () => {
-  renderDOM(new LoginPage())
-  // document.getElementById("chat").onclick = function()  {
-  //   removeMy();
-  //   renderDOM(new Chat())
-  // }
-  // document.getElementById("loginPage").onclick = function()  {
-  //   removeMy();
-  //   renderDOM(new LoginPage())
-  // }
-  // document.getElementById("editPassword").onclick = function()  {
-  //   removeMy();renderDOM(new EditPassword())
-  // }
-  // document.getElementById("editProfile").onclick = function()  {
-  //   removeMy();renderDOM(new EditProfile())
-  // }
-  // document.getElementById("notFound").onclick = function()  {
-  //   removeMy();renderDOM(new NotFoundPage())
-  // }
-  // document.getElementById("profile").onclick = function()  {
-  //   removeMy();renderDOM(new Profile())
-  // }
-  // document.getElementById("serverError").onclick = function()  {
-  //   removeMy();renderDOM(new ServerError())
-  // }
-  // document.getElementById("register").onclick = function()  {
-  //   removeMy();renderDOM(new Register())
-  // }  
+ 
+  document.getElementById("chat").onclick = function()  {
+    removeMy();
+    renderDOM(new Chat())
+  }
+  document.getElementById("loginPage").onclick = function()  {
+    removeMy();
+    renderDOM(new LoginPage())
+  }
+  document.getElementById("editPassword").onclick = function()  {
+    removeMy();renderDOM(new EditPassword())
+  }
+  document.getElementById("editProfile").onclick = function()  {
+    removeMy();renderDOM(new EditProfile())
+  }
+  document.getElementById("notFound").onclick = function()  {
+    removeMy();renderDOM(new NotFoundPage())
+  }
+  document.getElementById("profile").onclick = function()  {
+    removeMy();renderDOM(new Profile())
+  }
+  document.getElementById("serverError").onclick = function()  {
+    removeMy();renderDOM(new ServerError())
+  }
+  document.getElementById("register").onclick = function()  {
+    removeMy();renderDOM(new Register())
+  }  
 })
 function removeMy(){
   const myUl=document.getElementById('myul');  
