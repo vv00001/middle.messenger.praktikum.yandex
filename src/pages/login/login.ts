@@ -1,7 +1,6 @@
 import { input } from "../../component/input/input"
-import { button }from "../../component/button/button"
+import { Button }from "../../component/button/button"
 import Block from "../../mypracticum/Block"
-import { NotFoundPage } from "../notFound/notFound"
 import { validate } from "../../sourseCode/validate"
 import "./login.css"
 
@@ -31,7 +30,7 @@ export class LoginPage extends Block {
     return `    
   <main class="mainclass">
     <form class="signin">
-      {{{Title firstLine="Вход"}}}
+      {{{Title firstLine="ВВход"}}}
       {{{mainInput 
         onInput=onInput 
         onFocus=onFocus
@@ -53,7 +52,7 @@ export class LoginPage extends Block {
         placeholder="Пароль"
       }}}
       {{{Button textBtn="Войти" classes="button" onClick=onSubmit }}}
-      <a class="signin__link" href="./notFound">Нет аккаунта?</a>
+      <a class="signin__link" href="#">Нет аккаунта?</a>
     </form>
     </main>
     `
