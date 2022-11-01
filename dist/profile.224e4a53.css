@@ -1,0 +1,2 @@
+.popup{visibility:hidden;opacity:0;width:100%;height:100%;background-color:#0003;justify-content:center;align-items:center;display:flex;position:fixed;top:0;left:0}.popup_opened{visibility:visible;opacity:1}.popup__container{box-sizing:border-box;max-width:340px;width:100%;background-color:#fff;border-radius:10px;padding:40px 30px}.popup__title{color:#1e1e1e;text-align:center;margin:0 0 50px;font-size:15px;font-weight:500;line-height:20px}.popup__form{font-family:inherit}
+/*# sourceMappingURL=profile.224e4a53.css.map */
