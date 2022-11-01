@@ -9,11 +9,11 @@ interface ButtonProps {
 
 export class Button extends Block {
   constructor({ textBtn, onClick,classes }: ButtonProps) {
-    super({classes, textBtn, events: { click: onClick } });
+    super({classes, textBtn, events: { click: onClick } })
   }
 
   protected render(): string {
-    return `<button class="{{classes}}" type="button">{{textBtn}}</button>`;
+    return `<button class="{{classes}}" type="button">{{textBtn}}</button>`
     
   }
 }
