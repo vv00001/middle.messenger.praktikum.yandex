@@ -12318,7 +12318,7 @@ class LoginPage extends _blockDefault.default {
         return `    
   <main class="mainclass">
     <form class="signin">
-      {{{Title firstLine="sacasas"}}}
+      {{{Title firstLine="последний довод"}}}
       {{{Button textBtn="Войти" classes="button" onClick=onSubmit }}}
       {{{mainInput 
         onInput=onInput 
@@ -12539,6 +12539,7 @@ var _block = require("../../mypracticum/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
 var _buttonCss = require("./button.css");
 class Button extends _blockDefault.default {
+    static componentName = "Button";
     constructor({ textBtn , onClick , classes  }){
         super({
             classes,
@@ -12549,10 +12550,9 @@ class Button extends _blockDefault.default {
         });
     }
     render() {
-        return `
-    <div class="button">
-    <button class="{{classes}}" type="button">{{textBtn}}</button>
-    </div>
+        return `<button class="{{classes}}" 
+    type="button">
+    {{textBtn}}</button>  
     `;
     }
 }
