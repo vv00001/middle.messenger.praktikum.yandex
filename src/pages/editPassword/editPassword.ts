@@ -28,7 +28,7 @@ export class EditPassword extends Block {
    }
    render():string {
    return `
-      <main>
+      <main class="mainpage">
          <ul class="edit-profile">
             <li class="edit-profile__main">
                <form class="edit-password__form">         

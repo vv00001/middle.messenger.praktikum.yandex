@@ -33,67 +33,67 @@ export class EditProfile extends Block {
   }
    render():string {
    return `
-   <main>
-   <form class="edit-profile"> 
-     {{{Title firstLine="Изменение профиля"}}}
-     
-    {{{mainInput 
-      onInput=onInput 
-      onFocus=onFocus
-      type="text" 
-      name="mail"
-      classes="input__text-field"
-      placeholder="Почта"
-      errorClass="error"
-    }}}
-    {{{mainInput 
-      onInput=onInput 
-      onFocus=onFocus
-      type="text" 
-      name="login"
-      classes="input__text-field"
-      placeholder="Логин"
-      errorClass="error"
-    }}}
-    {{{mainInput 
-      onInput=onInput 
-      onFocus=onFocus
-      type="text" 
-      name="profname"
-      classes="input__text-field"
-      placeholder="Имя"
-      errorClass="error"
-    }}}
-    {{{mainInput 
-      onInput=onInput 
-      onFocus=onFocus
-      type="text" 
-      name="secondname"
-      classes="input__text-field"
-      placeholder="Фамилия"
-      errorClass="error"
-    }}}
-    {{{mainInput 
-      onInput=onInput 
-      onFocus=onFocus
-      type="text" 
-      name="chatname"
-      classes="input__text-field"
-      placeholder="Имя в чате"
-      errorClass="error"
-    }}}
-    {{{mainInput 
-      onInput=onInput 
-      onFocus=onFocus
-      type="text" 
-      name="telephon"
-      classes="input__text-field"
-      placeholder="Телефон"
-      errorClass="error"
-    }}}
-    {{{Button textBtn="Сохранить" classes="button button__edit_pro" onClick=onSubmit }}}
-    
-    </form>
+   <main class="mainclass">
+    <form class="edit-profile"> 
+      {{{Title firstLine="Изменение профиля"}}}
+      
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="mail"
+        classes="input__text-field"
+        placeholder="Почта"
+        errorClass="error"
+      }}}
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="login"
+        classes="input__text-field"
+        placeholder="Логин"
+        errorClass="error"
+      }}}
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="profname"
+        classes="input__text-field"
+        placeholder="Имя"
+        errorClass="error"
+      }}}
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="secondname"
+        classes="input__text-field"
+        placeholder="Фамилия"
+        errorClass="error"
+      }}}
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="chatname"
+        classes="input__text-field"
+        placeholder="Имя в чате"
+        errorClass="error"
+      }}}
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="telephon"
+        classes="input__text-field"
+        placeholder="Телефон"
+        errorClass="error"
+      }}}
+      {{{Button textBtn="Сохранить" classes="button button__edit_pro" onClick=onSubmit }}}
+      
+      </form>
     </main>
   `
   }

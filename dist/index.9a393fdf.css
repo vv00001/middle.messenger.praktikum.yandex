@@ -1,3 +1,7 @@
+.mainclass {
+  display: flex;
+}
+
 .signin {
   box-sizing: border-box;
   max-width: 340px;
@@ -190,6 +194,10 @@
   line-height: 15px;
 }
 
+.mainclass {
+  display: flex;
+}
+
 .edit-profile {
   box-sizing: border-box;
   max-width: 540px;
@@ -202,7 +210,11 @@
   box-shadow: 0 0 6px #0003;
 }
 
-.edit-profile {
+.register {
+  display: flex;
+}
+
+.register__profile {
   box-sizing: border-box;
   max-width: 540px;
   width: 100%;
@@ -256,6 +268,10 @@
   line-height: 15px;
   text-decoration: none;
   display: inline-block;
+}
+
+.mainpage {
+  display: flex;
 }
 
 .edit-password {
