@@ -4,7 +4,6 @@
   "description": "---",
   "scripts": {
     "build": "parcel build ./src/pages/index.hbs --no-cache --public-url ./",
-    "devold": "parcel ./src/pages/index.hbs --no-cache && parcel watch ./*",
     "dev": "parcel src/index.html --no-source-maps --no-cache",
     "start": "node ./api/server.js"
   },

@@ -10,13 +10,10 @@
     height: 825px;
     display: flex;
     flex-direction: column;
-    /* align-self: flex-end; */
   align-items:  flex-end;
     justify-content: flex-end;
-    /* flex-grow: 1; */
   }
   &__main {
-    /* background-color: aqua; */
     list-style: none;
     justify-content: flex-end;
     height: 100%;

@@ -6,13 +6,7 @@ const METHODS = {
 
 };
 
-/**
-* Функцию реализовывать здесь необязательно, но может помочь не плодить логику у GET-метода
-* На входе: объект. Пример: {a: 1, b: 2, c: {d: 123}, k: [1, 2, 3]}
-* На выходе: строка. Пример: ?a=1&b=2&c=[object Object]&k=1,2,3
-*/
 function queryStringify(data) {
-   // Можно делать трансформацию GET-параметров в отдельной функции
    console.log(data);
    let keys=Object.keys(data);
 
@@ -42,11 +36,7 @@ class HTTPTransport {
           
          return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
    };
-   // PUT, POST, DELETE
 
-   // options:
-   // headers — obj
-   // data — obj
    request = (url:string, options:myOptions, timeout = 5000) => {
        let {headers={},
       method,data}=options;

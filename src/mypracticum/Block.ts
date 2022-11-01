@@ -36,7 +36,6 @@ export default  class Block <P=any>{
   eventBus: () => EventBus<Events>
   state: any = {}
   protected refs: { [key: string]: HTMLElementWithRefs } = {}
-  //constructor(tagName = "div", props = {}) {
     constructor(props?:P) {
     const eventBus = new EventBus<Events>();
 
@@ -64,7 +63,6 @@ export default  class Block <P=any>{
   }
 
   _createResources() {
-    // const { tagName } = this._meta;
     this._element = this._createDocumentElement("div");
   }
   getStateFromProps(props: any): void {
@@ -80,14 +78,8 @@ export default  class Block <P=any>{
     this.componentDidMount();
   }
 
-  // Может переопределять пользователь, необязательно трогать
   componentDidMount(props: P) {}
-/*
-  dispatchComponentDidMoun() {
-    
-    
-    this.eventBus().emit(Block.EVENTS.FLOW_CDM);
-  }*/
+
 
   _componentDidUpdate(oldProps:P, newProps:P) {
     const response = this.componentDidUpdate(oldProps, newProps);
@@ -97,7 +89,6 @@ export default  class Block <P=any>{
     this._render();
   }
 
-  // Может переопределять пользователь, необязательно трогать
   componentDidUpdate(oldProps:P, newProps:P) {
     return true;
   }
@@ -121,12 +112,6 @@ export default  class Block <P=any>{
   }
 
   _render() {
-    // const block = this.render();
-    // Этот небезопасный метод для упрощения логики
-    // Используйте шаблонизатор из npm или напишите свой безопасный
-    // Нужно не в строку компилировать (или делать это правильно),
-    // либо сразу в DOM-элементы возвращать из compile DOM-ноду
-    // this._element.innerHTML = block;
     const fragment = this._compile();
 
     this._removeEvents();
@@ -138,7 +123,6 @@ export default  class Block <P=any>{
     this._addEvents();
   }
 
-  // Может переопределять пользователь, необязательно трогать
   render(): string {return""}
 
   getContent() : HTMLElement{
@@ -147,11 +131,6 @@ export default  class Block <P=any>{
 
 
   _makePropsProxy=(props:any):any=> {
-    // Можно и так передать this
-    // Такой способ больше не применяется с приходом ES6+
-    // const self = this;
-
-    //return props;
       return new Proxy(props as unknown as object, {
         get(target: Record<string, unknown>, prop: string) {
           const value = target[prop];
@@ -170,7 +149,6 @@ export default  class Block <P=any>{
   }
 
   _createDocumentElement(tagName:string) {
-    // Можно сделать метод, который через фрагменты в цикле создаёт сразу несколько блоков
     return document.createElement(tagName);
   }
 

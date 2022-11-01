@@ -7,7 +7,6 @@ import "./login.css"
 export class LoginPage extends Block {
   constructor() {
     super()
-    // console.log({input})
     this.setProps({
       loginValue: "",
       passwordValue: "",
