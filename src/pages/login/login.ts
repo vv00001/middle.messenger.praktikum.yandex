@@ -28,7 +28,7 @@ export class LoginPage extends Block {
 
   render() {
     return `    
-  <main>
+  <main class="mainclass">
     <form class="signin">
       {{{Title firstLine="Вход"}}}
       {{{mainInput 

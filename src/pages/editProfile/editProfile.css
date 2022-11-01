@@ -1,3 +1,7 @@
+.mainclass{
+  display: flex;
+}
+
 .edit-profile {
   list-style: none;
   font-family: inherit;
@@ -8,7 +12,6 @@
   flex-direction: column;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-
 }
 
 

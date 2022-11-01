@@ -33,67 +33,66 @@ export class Register extends Block {
   }
    render():string {
    return `
-   <main>
-   <form class="edit-profile"> 
-     {{{Title firstLine="Регистрация"}}}
-     {{{mainInput 
-       onInput=onInput 
-       onFocus=onFocus
-       type="text" 
-       name="login"
-       classes="input__text-field"
-       placeholder="Логин"
-       errorClass="error"
-     }}}     
-    {{{mainInput 
-      onInput=onInput 
-      onFocus=onFocus
-      type="text" 
-      name="mail"
-      classes="input__text-field"
-      placeholder="Почта"
-      errorClass="error"
-    }}}
-    {{{mainInput 
-      onInput=onInput 
-      onFocus=onFocus
-      type="text" 
-      name="profname"
-      classes="input__text-field"
-      placeholder="Имя"
-      errorClass="error"
-    }}}
-    {{{mainInput 
-      onInput=onInput 
-      onFocus=onFocus
-      type="text" 
-      name="secondname"
-      classes="input__text-field"
-      placeholder="Фамилия"
-      errorClass="error"
-    }}}
-    
-    {{{mainInput 
-      onInput=onInput 
-      onFocus=onFocus
-      type="text" 
-      name="password"
-      classes="input__text-field"
-      placeholder="Пароль"
-      errorClass="error"
-    }}}
-    {{{mainInput 
-      onInput=onInput 
-      onFocus=onFocus
-      type="text" 
-      name="password_repeat"
-      classes="input__text-field"
-      placeholder="Повтарите пароль"
-      errorClass="error"
-    }}}
-    {{{Button textBtn="Сохранить" classes="button button__edit_pro" onClick=onSubmit }}}
-    
-    </form>
+   <main class="register">
+    <form class="register__profile"> 
+      {{{Title firstLine="Регистрация"}}}
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="login"
+        classes="input__text-field"
+        placeholder="Логин"
+        errorClass="error"
+      }}}     
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="mail"
+        classes="input__text-field"
+        placeholder="Почта"
+        errorClass="error"
+      }}}
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="profname"
+        classes="input__text-field"
+        placeholder="Имя"
+        errorClass="error"
+      }}}
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="secondname"
+        classes="input__text-field"
+        placeholder="Фамилия"
+        errorClass="error"
+      }}}
+      
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="password"
+        classes="input__text-field"
+        placeholder="Пароль"
+        errorClass="error"
+      }}}
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="password_repeat"
+        classes="input__text-field"
+        placeholder="Повтарите пароль"
+        errorClass="error"
+      }}}
+      {{{Button textBtn="Сохранить" classes="button button__edit_pro" onClick=onSubmit }}}      
+      </form>
     </main>
   `
   }
