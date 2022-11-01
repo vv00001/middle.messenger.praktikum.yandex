@@ -25,48 +25,49 @@ export class EditPassword extends Block {
       }
    })
    
-}
+   }
    render():string {
    return `
-   <ul class="edit-profile">
-      <li class="edit-profile__main">
-         <form class="edit-password__form">         
-            {{{Title firstLine="Смена пароля"}}}
-            <ul class="edit-password__list">
-            {{{mainInput 
-               onInput=onInput 
-               onFocus=onFocus
-               type="text" 
-               name="oldPassword"
-               classes="input__text-field"
-               placeholder="Текущий пароль"
-               errorClass="error"
-            }}}
-            {{{mainInput 
-               onInput=onInput 
-               onFocus=onFocus
-               type="text" 
-               name="newPassword"
-               classes="input__text-field"
-               placeholder="Новый пароль"
-               errorClass="error"
-            }}}
-            {{{mainInput 
-               onInput=onInput 
-               onFocus=onFocus
-               type="text" 
-               name="repeateNewPassword"
-               classes="input__text-field"
-               placeholder="Повторите новый пароль"
-               errorClass="error"
-            }}}
-            {{{Button textBtn="Сохранить" classes="button button__edit_password" onClick=onSubmit }}}
-               
-            </ul>
-         </form>
-      </li>
-   </ul>
-
-`
-}
+      <main>
+         <ul class="edit-profile">
+            <li class="edit-profile__main">
+               <form class="edit-password__form">         
+                  {{{Title firstLine="Смена пароля"}}}
+                  <ul class="edit-password__list">
+                  {{{mainInput 
+                     onInput=onInput 
+                     onFocus=onFocus
+                     type="text" 
+                     name="oldPassword"
+                     classes="input__text-field"
+                     placeholder="Текущий пароль"
+                     errorClass="error"
+                  }}}
+                  {{{mainInput 
+                     onInput=onInput 
+                     onFocus=onFocus
+                     type="text" 
+                     name="newPassword"
+                     classes="input__text-field"
+                     placeholder="Новый пароль"
+                     errorClass="error"
+                  }}}
+                  {{{mainInput 
+                     onInput=onInput 
+                     onFocus=onFocus
+                     type="text" 
+                     name="repeateNewPassword"
+                     classes="input__text-field"
+                     placeholder="Повторите новый пароль"
+                     errorClass="error"
+                  }}}
+                  {{{Button textBtn="Сохранить" classes="button button__edit_password" onClick=onSubmit }}}
+                     
+                  </ul>
+               </form>
+            </li>
+         </ul>
+      </main>
+   `
+   }
 }

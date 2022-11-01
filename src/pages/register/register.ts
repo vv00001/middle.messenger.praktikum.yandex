@@ -33,7 +33,7 @@ export class Register extends Block {
   }
    render():string {
    return `
-   <main >
+   <main>
    <form class="edit-profile"> 
      {{{Title firstLine="Регистрация"}}}
      {{{mainInput 

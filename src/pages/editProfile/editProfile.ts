@@ -33,7 +33,7 @@ export class EditProfile extends Block {
   }
    render():string {
    return `
-   <main >
+   <main>
    <form class="edit-profile"> 
      {{{Title firstLine="Изменение профиля"}}}
      
