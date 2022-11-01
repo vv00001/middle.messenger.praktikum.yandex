@@ -26,6 +26,12 @@
   &_disable {
     opacity: 0.2;
   }
+  &__edit_pro{ 
+    margin-left: 100px;    
+  }
+  &__edit_password{ 
+    margin-left: 70px;    
+  }
   &__footer-btn-send {
     box-sizing: border-box;
     cursor: pointer;
