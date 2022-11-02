@@ -9,7 +9,7 @@ interface Error {
 export class Error extends Block {
    
   static componentName = "Error"
-  constructor({errorMes,errorClass}: error) {
+  constructor({errorMes,errorClass}: Error) {
     super({errorMes,errorClass})
    }
 

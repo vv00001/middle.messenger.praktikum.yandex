@@ -1,4 +1,3 @@
-
 import Block from "../../mypracticum/Block"
 
 import "./chat.css"
@@ -55,13 +54,11 @@ export class Chat extends Block {
         <button class="chat__footer-btn-attach" type="button" aria-label="Прикрепить файл">
           <img
             class="chat__footer-icon"
-            src="../image/Group 197.svg"
+            src="../../image/Group 202.svg"
             alt="Прикрепить файл"
           />
         </button>
-        <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />
-    
-    
+        <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />    
         {{{Button classes="button__footer-btn-send" onClick=onSubmit }}}
       
       </form>

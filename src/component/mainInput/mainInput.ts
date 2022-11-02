@@ -2,7 +2,7 @@ import Block from "../../mypracticum/Block"
 import { Error} from "../error/error"
 import { validate } from "../../sourseCode/validate"
 
-interface mainInputProps {
+interface MainInputProps {
   onInput?: () => void
   onBlur?: () => void
   onFocus?:()=> void
@@ -23,7 +23,7 @@ export class MainInput extends Block {
     name,
     classes,
     errorMes,
-    errorClass}: mainInputProps) {
+    errorClass}: MainInputProps) {
     super({
       classes,
       placeholder, value,

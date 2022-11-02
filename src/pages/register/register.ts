@@ -3,7 +3,7 @@ import "./register.css"
 import { input } from "../../component/input/input"
 
 import {validate} from "../../sourseCode/validate"
-interface register {
+interface Register {
  
 }
 export class Register extends Block {

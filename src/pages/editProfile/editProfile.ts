@@ -2,7 +2,7 @@ import Block from "../../mypracticum/Block"
 import "./editProfile.css"
 import { input } from "../../component/input/input"
 import {validate} from "../../sourseCode/validate"
-interface editProfile {
+interface EditProfile {
  
 }
 export class EditProfile extends Block {
