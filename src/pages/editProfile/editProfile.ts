@@ -13,7 +13,7 @@ export class EditProfile extends Block {
         passwordValue: "",
         onSubmit: () => {
           let login = this.element.querySelector("input[name='login']") as HTMLInputElement  
-          let telephon= this.element.querySelector("input[name='telephon']") as HTMLInputElement
+          let telephone= this.element.querySelector("input[name='telephone']") as HTMLInputElement
           let chatname= this.element.querySelector("input[name='chatname']") as HTMLInputElement
           let secondname= this.element.querySelector("input[name='secondname']") as HTMLInputElement
           let profname= this.element.querySelector("input[name='profname']") as HTMLInputElement
@@ -23,7 +23,7 @@ export class EditProfile extends Block {
           let messageErrorlogin = validate(login.value )
          
   
-          if(!messageErrorlogin &&!validate(telephon.value) &&!validate(chatname.value) &&!validate(secondname.value) &&!validate(profname.value) &&!validate(mail.value))
+          if(!messageErrorlogin &&!validate(telephone.value) &&!validate(chatname.value) &&!validate(secondname.value) &&!validate(profname.value) &&!validate(mail.value))
           console.log("отправка пока 1 пример но отрпавиться фсе что есть ", login.value);
           else
           console.log("исправьте ошибки выделенные красным цветом, пожалуйста") 
@@ -86,7 +86,7 @@ export class EditProfile extends Block {
         onInput=onInput 
         onFocus=onFocus
         type="text" 
-        name="telephon"
+        name="telephone"
         classes="input__text-field"
         placeholder="Телефон"
         errorClass="error"

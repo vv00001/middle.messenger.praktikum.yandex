@@ -1,8 +1,7 @@
 import Block from "../../mypracticum/Block"
 import "./error.css"
 
-interface error {
-
+interface Error {
    errorMes?:string
    errorClass:string
 }

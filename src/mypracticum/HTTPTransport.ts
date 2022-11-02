@@ -1,43 +1,37 @@
+import { queryStringify } from "../sourseCode/queryStringify"
 const METHODS = {
    GET: 'GET',
    PUT:'PUT',
    POST:'POST',
    DELETE:'DELETE'
-
 };
 
-function queryStringify(data) {
-   console.log(data);
-   let keys=Object.keys(data);
-
-   return keys.reduce((result, key, index) => {
-   return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
-   }, '?');
-}
-
-type myOptions={
-   moreOptions?:any
+type Options={
+   data?:any
+   headers?: Record<string, string>
+   method:METHODS
+   timeout?:number
 }
 
 class HTTPTransport {
-   get = (url:string, options:myOptions = {}) => {
-          
-      return this.request(url, {...options, method: METHODS.GET}, options.timeout);
+   get = (url:string, options:Options = {}) => {         
+      
+      return this.request(`${url}${queryStringify(options.data)}`, {...options, method: METHODS.GET}, options.timeout);
    };
-   put = (url:string, options:myOptions = {}) => {
+   put = (url:string, options:Options = {}) => {
           
          return this.request(url, {...options, method: METHODS.PUT}, options.timeout);
    };
-   post = (url:string, options:myOptions = {}) => {
+   post = (url:string, options:Options = {}) => {
           
          return this.request(url, {...options, method: METHODS.POST}, options.timeout);
    };
-   delete = (url:string, options:myOptions = {}) => {
+   delete = (url:string, options:Options = {}) => {
           
          return this.request(url, {...options, method: METHODS.DELETE}, options.timeout);
    };
 
-   request = (url:string, options:myOptions, timeout = 5000) => {
+   request = (url:string, options:Options, timeout = 5000) => {
        let {headers={},
       method,data}=options;
       
@@ -46,15 +40,8 @@ class HTTPTransport {
          reject("met")
          return;
          }
-         let xhr=new XMLHttpRequest();
-         
-         
-         let newUrl=url;
-         if(method==METHODS.GET && !!data){
-         newUrl=`${url}${queryStringify(data)}`
-         }
-         console.log(newUrl)
-         xhr.open(method,newUrl);
+         let xhr=new XMLHttpRequest();         
+         xhr.open(method,url);
          
          Object.keys(headers).forEach(key=>{
             
@@ -71,12 +58,12 @@ class HTTPTransport {
          xhr.ontimeout=reject;
          
          console.log(data);
-         if(method==METHODS.GET || !data){
+         if(method===METHODS.GET || !data){
          xhr.send();
          }else{
          xhr.send(data)
          }
          
       })
-   };s
+   };
 }

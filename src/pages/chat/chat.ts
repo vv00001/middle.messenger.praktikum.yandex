@@ -56,6 +56,7 @@ export class Chat extends Block {
           <img
             class="chat__footer-icon"
             src="../image/Group 197.svg"
+            alt="Прикрепить файл"
           />
         </button>
         <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />
