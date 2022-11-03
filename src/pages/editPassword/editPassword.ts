@@ -12,16 +12,18 @@ export class EditPassword extends Block {
       let newPassword= this.element.querySelector("input[name='newPassword']") as HTMLInputElement
       let repeateNewPassword= this.element.querySelector("input[name='repeateNewPassword']") as HTMLInputElement
    
-      let newPasswordValue=newPassword.value
-      let repeateNewPasswordValue=repeateNewPassword.value   
+      if(oldPassword && newPassword && repeateNewPassword){
+         let newPasswordValue=newPassword.value
+         let repeateNewPasswordValue=repeateNewPassword.value   
 
-      if(!validate(oldPassword.value) &&!validate(newPasswordValue) &&!validate(repeateNewPasswordValue)){
-         if(newPasswordValue== repeateNewPasswordValue)
-            console.log("отправка пока 1 пример но отрпавиться фсе что есть ", newPasswordValue);
-            else
-            console.log("пасворды одинаковые пожалуйста, зато без запар с цифрами и заглавными, пока без запар");
-      }else
-         console.log("исправьте ошибки выделенные красным цветом, пожалуйста") 
+         if(!validate(oldPassword.value) &&!validate(newPasswordValue) &&!validate(repeateNewPasswordValue)){
+            if(newPasswordValue== repeateNewPasswordValue)
+               console.log("отправка ", newPasswordValue);
+               else
+               console.log("пасворды одинаковые пожалуйста");
+         }else
+            console.log("исправьте ошибки выделенные красным цветом, пожалуйста") 
+         }
       }
    })
    

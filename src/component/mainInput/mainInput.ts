@@ -12,84 +12,55 @@ interface MainInputProps {
   name?: string
   classes?: string
   errorMes?:string
-  errorClass:string}
+  errorClass:string
+}
 
-export class MainInput extends Block {
-      
+export class MainInput extends Block {     
   static componentName = "mainInput"
   constructor({
-    placeholder,
-    value,
-    name,
-    classes,
-    errorMes,
-    errorClass}: MainInputProps) {
+      placeholder,
+      value,
+      name,
+      classes,
+      errorMes,
+      errorClass
+    }: MainInputProps) {
     super({
       classes,
       placeholder, value,
       name,     
       errorClass:"error",
-      onInput: (e: FocusEvent) => {
-        
+      onInput: (e: FocusEvent) => {        
         const takeInput = e.target as HTMLInputElement
-        const messageError = validate(takeInput.value )
-
-        let fff=this._children;
-        let hhh=Object.entries(fff);
-
-        if(messageError){
-          hhh[1][1].setProps({        
-            errorClass:"error_show",
-            errorMes:messageError
-          })
-        }else{
-          hhh[1][1].setProps({        
-            errorClass:"error_hide",
-            errorMes:""
-          })
-        }
+        this.validateDone(takeInput.value,takeInput.name)        
       },
       onBlur: (e: FocusEvent) => {
         const takeInput = e.target as HTMLInputElement
-        const messageError = validate(takeInput.value )
-
-        let fff=this._children;
-        let hhh=Object.entries(fff);
-
-        if(messageError){        
-          hhh[1][1].setProps({
-            errorClass:"error_show",
-            errorMes:messageError
-          })
-        }else{
-          hhh[1][1].setProps({        
-            errorClass:"error_hide",
-            errorMes:""
-          })
-        }
+        this.validateDone(takeInput.value,takeInput.name)
       },
-      onFocus: (e: FocusEvent) => {
+      onFocus: (e: FocusEvent) => {       
         const takeInput = e.target as HTMLInputElement
-        const messageError = validate(takeInput.value )
-
-        let fff=this._children;
-        let hhh=Object.entries(fff);
-
-        if(messageError){        
-          hhh[1][1].setProps({
-            errorClass:"error_show",
-            errorMes:messageError
-          })
-        }else{
-          hhh[1][1].setProps({        
-            errorClass:"error_hide",
-            errorMes:""
-          })
-        }
-      }
-    })    
+        this.validateDone(takeInput.value,takeInput.name)}
+    })
   }
 
+  protected validateDone(inputValue:string,inputName:string){
+    console.log(inputValue,inputName)
+    const takeCompinentOndex=Object.entries(this._children)[1][1]    
+    const messageError = validate(inputValue,inputName)
+    // console.log(messageError)
+    if(messageError.length>0){
+      takeCompinentOndex.setProps({
+        errorClass:"error_show",
+        errorMes:messageError
+        })
+    }else{      
+      takeCompinentOndex.setProps({
+        errorClass:"error_hide",
+        errorMes:""
+    })
+    }
+  }
   protected render(): string {
     return `
     <div class="input {{divClassName}}">
