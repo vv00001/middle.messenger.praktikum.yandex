@@ -2,7 +2,7 @@ import Block from "../../mypracticum/Block"
 
 import "./listItem.css"
 
-interface listitemProps {
+interface ListitemProps {
   userName?: string
   lastMessage?: string;
   time?: string;
@@ -11,16 +11,8 @@ interface listitemProps {
 export class ListItem extends Block {
   
   static componentName = "listItem";
-  constructor({
-    userName,
-    lastMessage,
-    time,
-    countNotReadMessage}:listitemProps){
-   super({
-    userName,
-    lastMessage,
-    time,
-    countNotReadMessage})
+  constructor(...props:ListitemProps){
+   super(...props)
   }
   render() {
     return `

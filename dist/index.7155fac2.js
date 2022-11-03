@@ -12364,14 +12364,52 @@ var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "validate", ()=>validate
 );
-function validate(receive) {
+function validate(receive, nameInput) {
+    console.log(receive, nameInput);
     let checkDone = {
         answer: ""
     };
-    //многочисленные и существенные проверки в разработке   
-    if (receive.length == 0) checkDone.answer = "Не может быть пустым";
-    else if (receive.length < 3) checkDone.answer = "от 3 символов";
-    else if (!receive.match(/^[a-zA-Z0-9-_]/g)) checkDone.answer = "только латинские";
+    if (nameInput == "profname" || nameInput == "secondname" || nameInput == "chatname") {
+        if (!receive.match(/^[A-ZА-Я]/g)) checkDone.answer = "С заглавной";
+        else if (receive.length < 3) checkDone.answer = "от 3 символов";
+        else if (receive.match(/\d+/g)) checkDone.answer = "без цифр";
+        else if (receive.match(/\s/g)) checkDone.answer = "без пробела";
+        else if (!receive.match(/^[a-zA-ZА-Яа-я0-9-]{0,}$/g)) checkDone.answer = "специальные символы не допускаются";
+    }
+    if (nameInput == "login") {
+        console.log(nameInput);
+        if (receive.length == 0) checkDone.answer = "Не может быть пустым";
+        else if (receive.length < 3) checkDone.answer = "от 3 символов";
+        else if (!receive.match(/^[a-zA-Z0-9-_]/g)) checkDone.answer = "только латинские";
+        else if (receive.length > 20) checkDone.answer = "не больше 20 символов";
+        else if (!receive.match(/[a-zA-Zа-я]+/g)) checkDone.answer = "мимимум 1 символ";
+        else if (receive.match(/\s/g)) checkDone.answer = "без пробела";
+        else if (!receive.match(/^[a-zA-Z0-9-_]{3,20}$/g)) checkDone.answer = "специальные символы не допускаются";
+    }
+    if (nameInput == "mail") {
+        if (receive.length < 3) checkDone.answer = "от 3 символов";
+        else if (receive.match(/\s/g)) checkDone.answer = "без пробела";
+        else if (!receive.match(/^[a-zA-Z0-9-_]/g)) checkDone.answer = "только латинские";
+        else if (!receive.match(/^[a-zA-Z0-9-_@.]{0,}$/g)) checkDone.answer = "специальные символы не допускаются";
+        else if (!receive.match(/[@]/g)) checkDone.answer = "не забудьте @";
+        else if (!receive.match(/[.]/g)) checkDone.answer = "нет точки в почте";
+        else if (receive.match(/[.]/g) && !receive.match(/\w+[.]\w+/g)) checkDone.answer = "это не почта";
+    }
+    if (nameInput == "password" || nameInput == "oldPassword" || nameInput == "newPassword" || nameInput == "repeateNewPassword") {
+        if (!receive.match(/^[a-zA-Z0-9-_]/g)) checkDone.answer = "только латинские";
+        else if (receive.length > 40) checkDone.answer = "не больше 40 символов";
+        else if (!receive.match(/\d+/g)) checkDone.answer = "хотя бы одну цифра";
+        else if (!receive.match(/[A-ZА-Я]+/g)) checkDone.answer = "хотя бы заглавную букву";
+        else if (receive.length < 8) checkDone.answer = "от 8 символов";
+    }
+    if (nameInput == "telephone") {
+        if (!receive.match(/^[+]/g)) checkDone.answer = "Начните с плюса, пока можно много плюсов но все наладится";
+        else if (!receive.match(/\d+/g)) checkDone.answer = "хотя бы одну цифра";
+        else if (receive.length < 10) checkDone.answer = "Номер телефона должен содержать от 10 символов";
+        else if (receive.match(/\s/g)) checkDone.answer = "Номер телефона не может содержать пробелы";
+        else if (receive.match(/[A-Za-zА-Яа-я]+/g)) checkDone.answer = "Номер телефона не может содержать буквы";
+        else if (receive.length > 15) checkDone.answer = "Номер телефона должен содержать до 15 символов";
+    }
     return checkDone.answer;
 }
 
@@ -12455,12 +12493,11 @@ class Chat extends _blockDefault.default {
         <button class="chat__footer-btn-attach" type="button" aria-label="Прикрепить файл">
           <img
             class="chat__footer-icon"
-            src="../image/Group 197.svg"
+            src="../../image/Group 202.svg"
+            alt="Прикрепить файл"
           />
         </button>
-        <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />
-    
-    
+        <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />    
         {{{Button classes="button__footer-btn-send" onClick=onSubmit }}}
       
       </form>
@@ -12489,13 +12526,13 @@ class EditProfile extends _blockDefault.default {
             passwordValue: "",
             onSubmit: ()=>{
                 let login = this.element.querySelector("input[name='login']");
-                let telephon = this.element.querySelector("input[name='telephon']");
+                let telephone = this.element.querySelector("input[name='telephone']");
                 let chatname = this.element.querySelector("input[name='chatname']");
                 let secondname = this.element.querySelector("input[name='secondname']");
                 let profname = this.element.querySelector("input[name='profname']");
                 let mail = this.element.querySelector("input[name='mail']");
                 let messageErrorlogin = _validate.validate(login.value);
-                if (!messageErrorlogin && !_validate.validate(telephon.value) && !_validate.validate(chatname.value) && !_validate.validate(secondname.value) && !_validate.validate(profname.value) && !_validate.validate(mail.value)) console.log("отправка пока 1 пример но отрпавиться фсе что есть ", login.value);
+                if (!messageErrorlogin && !_validate.validate(telephone.value) && !_validate.validate(chatname.value) && !_validate.validate(secondname.value) && !_validate.validate(profname.value) && !_validate.validate(mail.value)) console.log("отправка пока 1 пример но отрпавиться фсе что есть ", login.value);
                 else console.log("исправьте ошибки выделенные красным цветом, пожалуйста");
             }
         });
@@ -12555,7 +12592,7 @@ class EditProfile extends _blockDefault.default {
         onInput=onInput 
         onFocus=onFocus
         type="text" 
-        name="telephon"
+        name="telephone"
         classes="input__text-field"
         placeholder="Телефон"
         errorClass="error"
@@ -12742,12 +12779,14 @@ class EditPassword extends _blockDefault.default {
                 let oldPassword = this.element.querySelector("input[name='oldPassword']");
                 let newPassword = this.element.querySelector("input[name='newPassword']");
                 let repeateNewPassword = this.element.querySelector("input[name='repeateNewPassword']");
-                let newPasswordValue = newPassword.value;
-                let repeateNewPasswordValue = repeateNewPassword.value;
-                if (!_validate.validate(oldPassword.value) && !_validate.validate(newPasswordValue) && !_validate.validate(repeateNewPasswordValue)) {
-                    if (newPasswordValue == repeateNewPasswordValue) console.log("отправка пока 1 пример но отрпавиться фсе что есть ", newPasswordValue);
-                    else console.log("пасворды одинаковые пожалуйста, зато без запар с цифрами и заглавными, пока без запар");
-                } else console.log("исправьте ошибки выделенные красным цветом, пожалуйста");
+                if (oldPassword && newPassword && repeateNewPassword) {
+                    let newPasswordValue = newPassword.value;
+                    let repeateNewPasswordValue = repeateNewPassword.value;
+                    if (!_validate.validate(oldPassword.value) && !_validate.validate(newPasswordValue) && !_validate.validate(repeateNewPasswordValue)) {
+                        if (newPasswordValue == repeateNewPasswordValue) console.log("отправка ", newPasswordValue);
+                        else console.log("пасворды одинаковые пожалуйста");
+                    } else console.log("исправьте ошибки выделенные красным цветом, пожалуйста");
+                }
             }
         });
     }
@@ -12879,46 +12918,30 @@ class MainInput extends _blockDefault.default {
             errorClass: "error",
             onInput: (e)=>{
                 const takeInput = e.target;
-                const messageError = _validate.validate(takeInput.value);
-                let fff = this._children;
-                let hhh = Object.entries(fff);
-                if (messageError) hhh[1][1].setProps({
-                    errorClass: "error_show",
-                    errorMes: messageError
-                });
-                else hhh[1][1].setProps({
-                    errorClass: "error_hide",
-                    errorMes: ""
-                });
+                this.validateDone(takeInput.value, takeInput.name);
             },
             onBlur: (e)=>{
                 const takeInput = e.target;
-                const messageError = _validate.validate(takeInput.value);
-                let fff = this._children;
-                let hhh = Object.entries(fff);
-                if (messageError) hhh[1][1].setProps({
-                    errorClass: "error_show",
-                    errorMes: messageError
-                });
-                else hhh[1][1].setProps({
-                    errorClass: "error_hide",
-                    errorMes: ""
-                });
+                this.validateDone(takeInput.value, takeInput.name);
             },
             onFocus: (e)=>{
                 const takeInput = e.target;
-                const messageError = _validate.validate(takeInput.value);
-                let fff = this._children;
-                let hhh = Object.entries(fff);
-                if (messageError) hhh[1][1].setProps({
-                    errorClass: "error_show",
-                    errorMes: messageError
-                });
-                else hhh[1][1].setProps({
-                    errorClass: "error_hide",
-                    errorMes: ""
-                });
+                this.validateDone(takeInput.value, takeInput.name);
             }
+        });
+    }
+    validateDone(inputValue, inputName) {
+        console.log(inputValue, inputName);
+        const takeCompinentOndex = Object.entries(this._children)[1][1];
+        const messageError = _validate.validate(inputValue, inputName);
+        // console.log(messageError)
+        if (messageError.length > 0) takeCompinentOndex.setProps({
+            errorClass: "error_show",
+            errorMes: messageError
+        });
+        else takeCompinentOndex.setProps({
+            errorClass: "error_hide",
+            errorMes: ""
         });
     }
     render() {
@@ -13030,13 +13053,8 @@ var _blockDefault = parcelHelpers.interopDefault(_block);
 var _listItemCss = require("./listItem.css");
 class ListItem extends _blockDefault.default {
     static componentName = "listItem";
-    constructor({ userName , lastMessage , time , countNotReadMessage  }){
-        super({
-            userName,
-            lastMessage,
-            time,
-            countNotReadMessage
-        });
+    constructor(...props){
+        super(...props);
     }
     render() {
         return `
