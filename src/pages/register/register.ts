@@ -14,9 +14,9 @@ export class Register extends Block {
         passwordValue: "",
         onSubmit: () => {
           let login = this.element.querySelector("input[name='login']") as HTMLInputElement  
-          let secondname= this.element.querySelector("input[name='secondname']") as HTMLInputElement
+          let secondName= this.element.querySelector("input[name='secondName']") as HTMLInputElement
           let mail= this.element.querySelector("input[name='mail']") as HTMLInputElement
-          let profname= this.element.querySelector("input[name='profname']") as HTMLInputElement
+          let profileName= this.element.querySelector("input[name='profileName']") as HTMLInputElement
           let password= this.element.querySelector("input[name='password']") as HTMLInputElement
           let password_repeat= this.element.querySelector("input[name='password_repeat']") as HTMLInputElement
 
@@ -24,7 +24,7 @@ export class Register extends Block {
           let messageErrorlogin = validate(login.value )
          
   
-          if(!messageErrorlogin  &&!validate(secondname.value) &&!validate(profname.value) &&!validate(mail.value)  &&!validate(password.value)  &&!validate(password_repeat.value))
+          if(!messageErrorlogin  &&!validate(secondName.value) &&!validate(profileName.value) &&!validate(mail.value)  &&!validate(password.value)  &&!validate(password_repeat.value))
           console.log("отправка пока 1 пример но отрпавиться фсе что есть. Проверка на совпадение паролей в разработке", login.value);
           else
           console.log("исправьте ошибки выделенные красным цветом, пожалуйста. Проверка на совпадение паролей в разработке") 
@@ -59,7 +59,7 @@ export class Register extends Block {
         onInput=onInput 
         onFocus=onFocus
         type="text" 
-        name="profname"
+        name="profileName"
         classes="input__text-field"
         placeholder="Имя"
         errorClass="error"
@@ -68,7 +68,7 @@ export class Register extends Block {
         onInput=onInput 
         onFocus=onFocus
         type="text" 
-        name="secondname"
+        name="secondName"
         classes="input__text-field"
         placeholder="Фамилия"
         errorClass="error"

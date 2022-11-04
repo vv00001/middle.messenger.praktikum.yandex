@@ -2,8 +2,8 @@ export function validate (receive:string,nameInput:string){
    console.log(receive,nameInput)
    let checkDone = {answer:""}
    
-   if (nameInput == "profname" ||
-      nameInput == "secondname"||
+   if (nameInput == "profileName" ||
+      nameInput == "secondName"||
       nameInput == "chatname") {
       if (!receive.match(/^[A-ZА-Я]/g)){
       checkDone.answer = "С заглавной"
@@ -70,7 +70,7 @@ export function validate (receive:string,nameInput:string){
       }
    }
    
-   if (nameInput =="telephone") {
+   if (nameInput =="phone") {
       if (!receive.match(/^[+]/g)) {
          checkDone.answer = "Начните с плюса, пока можно много плюсов но все наладится"
       }else if (!receive.match(/\d+/g)) {
