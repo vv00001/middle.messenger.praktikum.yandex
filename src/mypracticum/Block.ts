@@ -55,14 +55,14 @@ export default  class Block <P=any>{
     eventBus.emit(Block.EVENTS.INIT,this.props);
   }
 
-  _registerEvents(eventBus) {
+  private _registerEvents(eventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU,this._componentDidUpdate.bind(this));
   }
 
-  _createResources() {
+  private _createResources() {
     this._element = this._createDocumentElement("div");
   }
   getStateFromProps(props: any): void {
@@ -74,14 +74,14 @@ export default  class Block <P=any>{
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER,this.props);
   }
 
-  _componentDidMount() {
+  private _componentDidMount() {
     this.componentDidMount();
   }
 
   componentDidMount(props: P) {}
 
 
-  _componentDidUpdate(oldProps:P, newProps:P) {
+  private _componentDidUpdate(oldProps:P, newProps:P) {
     const response = this.componentDidUpdate(oldProps, newProps);
     if(!response){
       return;
@@ -111,7 +111,7 @@ export default  class Block <P=any>{
     return this._element;
   }
 
-  _render() {
+  private _render() {
     const fragment = this._compile();
 
     this._removeEvents();
@@ -130,7 +130,7 @@ export default  class Block <P=any>{
   }
 
 
-  _makePropsProxy=(props:any):any=> {
+  private _makePropsProxy=(props:any):any=> {
       return new Proxy(props as unknown as object, {
         get(target: Record<string, unknown>, prop: string) {
           const value = target[prop];
@@ -148,7 +148,7 @@ export default  class Block <P=any>{
       }) as unknown as P;
   }
 
-  _createDocumentElement(tagName:string) {
+  private _createDocumentElement(tagName:string) {
     return document.createElement(tagName);
   }
 

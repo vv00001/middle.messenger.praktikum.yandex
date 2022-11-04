@@ -2,8 +2,7 @@
 import Block from "../../mypracticum/Block"
 import "./message.css"
 
-interface messageProps {
-  
+interface MessageProps {  
   owner?: boolen
   text: string
   time?: string
@@ -47,4 +46,3 @@ export class Message extends Block {
     `
   }
 }
-

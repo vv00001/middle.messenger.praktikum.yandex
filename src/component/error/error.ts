@@ -1,8 +1,7 @@
 import Block from "../../mypracticum/Block"
 import "./error.css"
 
-interface error {
-
+interface Error {
    errorMes?:string
    errorClass:string
 }
@@ -10,7 +9,7 @@ interface error {
 export class Error extends Block {
    
   static componentName = "Error"
-  constructor({errorMes,errorClass}: error) {
+  constructor({errorMes,errorClass}: Error) {
     super({errorMes,errorClass})
    }
 
