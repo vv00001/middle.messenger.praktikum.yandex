@@ -38,7 +38,7 @@ export class Profile extends Block {
             </div>
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Телефон</label>
-                <p class="profile__form__span__value">+7 (909) 967 30 3</p>
+                <p class="profile__form__span__value">+7 (909) 967 30 33</p>
             </div>
             </form>
 

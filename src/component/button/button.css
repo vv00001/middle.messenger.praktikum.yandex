@@ -4,7 +4,7 @@
   display: block;
   border: none;
  
-  background-color: #2e69fd;
+  background-color: var(--main-blue);
   width: 100%;
   padding: 10px 0;
   text-align: center;
@@ -14,7 +14,7 @@
   max-width: 280px;
   border-radius: 8px;
   font-size: 15px;
-  color: #fff;
+  color: var(--main-white);
   font-weight: 500;
   line-height: 15px;
    
@@ -30,7 +30,7 @@
   &__footer-btn-send {
     box-sizing: border-box;
     cursor: pointer;
-    background-color: #2e69fd;
+    background-color: var(--main-blue);
     border: none;
     padding: 0;
     transform: scaleX(-1);
