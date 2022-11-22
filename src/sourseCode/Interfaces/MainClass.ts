@@ -1,19 +1,31 @@
 import {HTTPTransport} from "../../mypracticum/HTTPTransport"
 
 export default abstract class MainClass {
-  protected https: HTTPTransport;
+  protected https: HTTPTransport; yandex:string;
 
-  protected constructor(point: string) {
-    console.log(point);
-    // console.log(https);
-    this.https = new HTTPTransport(point);
-  }
+  protected constructor( point : string) {
+   this.https = new HTTPTransport();
+      this.yandex='https://ya-praktikum.tech/api/v2'+point;
+      this._headers = { 'Content-Type': 'application/json' };    
+   }
   
-  public abstract create?(data: unknown): Promise<unknown>;
+   post(url: string, data: unknown) {
+      console.log(this.yandex,this.headers,data,url)
+      return this.https.post(`${this.yandex}/${url}`, { headers: this._headers, data });
+   }
 
-  public abstract read?(identifier?: string): Promise<unknown>;
+   get(url: string) {
+      return this.https.get(`${this.yandex}/${url}`, { headers: this._headers });
+   }
 
-  public abstract update?(identifier: string, data: unknown): Promise<unknown>;
+   put(url: string, data: unknown, headers?: unknown) {
+      return this.https.put(`${this.yandex}/${url}`, {
+         headers: headers ? headers : this._headers,
+         data,
+      });
+   }
 
-  public abstract delete?(identifier: string): Promise<unknown>;
+   delete(url: string, data: unknown) {
+      return this.https.delete(`${this.yandex}/${url}`, { headers: this._headers, data });
+   }
 }

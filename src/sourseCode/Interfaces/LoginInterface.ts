@@ -10,12 +10,8 @@ export class LoginInterface extends MainClass {
     super('/auth');
   }
 
-  signin(data: LoginData) {
-    return this.https.post('/signin', data);
-  }
-
-  read(): Promise<User> {
-    return this.https.get('/user');
+  public signin({ ...rest }: SigninType) {
+    return this.post('signin', { ...rest });
   }
 }
 

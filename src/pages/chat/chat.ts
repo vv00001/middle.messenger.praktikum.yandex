@@ -1,11 +1,16 @@
 import Block from "../../mypracticum/Block"
-
+import store from "../../mypracticum/Store"
+import ChatControll from "../../sourseCode/control/ChatControll"
 import "./chat.css"
 import {validate} from "../../sourseCode/validate"
 
 export class Chat extends Block {
   constructor() {
     super()
+    ChatControll.getChats();
+    store.on("update", () => {
+      this.setProps(store.get());
+    });
     this.setProps({
       
       onSubmit: () => {
@@ -14,7 +19,20 @@ export class Chat extends Block {
       }
     })
   }
+  getStateFromProps(props: any): void {
+    this.state={
+      myVoid:()=>{
+        console.log(4444444)
+      }
+    }
+  }
   render() {
+    const {
+      allChat=[],
+      allMessage=[]
+    }=this.props;
+
+    console.log(allChat,this.props)
     return `
     <main>
       <ul class="chat">
@@ -27,12 +45,30 @@ export class Chat extends Block {
         {{{ listItem 
           userName= "Андрей" lastMessage= "djfljeri" time= "11:11" countNotReadMessage= 2 srcAvatar= "#"
         }}}
-        {{{ listItem 
-          userName= "Андрей" lastMessage= "djfljeri" time= "11:11" countNotReadMessage= 2 srcAvatar= "#"
-        }}}
-        {{{ listItem 
-          userName= "Андрей" lastMessage= "djfljeri" time= "11:11" countNotReadMessage= 2 srcAvatar= "#"
-          }}}
+        ${
+          allChat &&Object.values(allChat)?.map(
+              (chat: any) =>{
+                console.log(chat.title)
+                return`
+                {{{listItem
+        
+                  userName="${chat.title}"
+                  lastMessage="${
+                    chat.last_message ? chat.last_message.content : null
+                  }"
+                  
+                  srcAvatar= "#"
+                  
+                  time="${chat.last_message ? chat.last_message.time : null}"
+                  countNotReadMessage="${chat.unread_count}"
+                  onClick=myVoid
+
+                }}}`;
+              }
+            )
+            .join('')
+  
+        }
         </ul>
       </li>
         <li class="chat__main chat__main-dialog">

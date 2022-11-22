@@ -29,6 +29,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   console.log(Router)
   Router
   .use("/", LoginPage)
+  .use("/messenger",Chat)
 
   
   console.log(window.location.pathname)

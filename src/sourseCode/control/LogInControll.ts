@@ -9,16 +9,16 @@ export class LogInControll {
     this.aplicationPI = MainClass;
   }
 
-  async signin(data: LoginData) {
-    console.log(data);
-    try {
-    await this.aplicationPI.signin(data);
+  public signin({ ...rest }: LoginData) {
+    console.log({...rest})
+    MainClass.signin({ ...rest })
+      .then(() => {
+        router.go("/messenger");
+      })
 
-    // router.go(;
-    console.log(3333333333333333333333333333333333333)
-    } catch (e: any) {
-    console.error(e);  
-    }
+
+
+      
   }
 
 }

@@ -7,14 +7,36 @@ interface ListItemProps {
   lastMessage?: string;
   time?: string;
   countNotReadMessage?: number;
+  onClick: () => void;
 }
 export class ListItem extends Block {
   
   static componentName = "listItem";
-  constructor(...props:ListItemProps){
-   super(...props)
+  constructor({onClick, ...receive}:ListItemProps){
+    super({
+      events:{click:onClick},
+      ...receive
+    })
+    
+  }
+  protected getStateFromProps(props: any): void {
+    this.state = {
+      userName: props.userName,
+      countNotReadMessage:props.countNotReadMessage,
+      time:props.time,
+      lastMessage:props.lastMessage
+
+    }
   }
   render() {
+    const {
+      countNotReadMessage,
+      time,
+      userName,
+      lastMessage
+    } = this.state;
+    console.log(11111);
+    console.log(userName,countNotReadMessage,lastMessage,time)
     return `
   <li class="list-item">
     <div class="list-item__container">
