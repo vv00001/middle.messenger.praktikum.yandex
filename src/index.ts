@@ -33,6 +33,9 @@ window.addEventListener('DOMContentLoaded', async () => {
   .use("/profile",Profile)
   .use("/settings",EditProfile)
   .use("/editPassword",EditPassword)
+  .use("/register",Register)
+  .use("/404",NotFoundPage)
+  .use("/500",ServerError)
 
   
   console.log(window.location.pathname)

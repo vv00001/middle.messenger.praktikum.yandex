@@ -5,6 +5,7 @@ import { validate } from "../../sourseCode/validate"
 import "./login.css"
 import MainClass from "../../sourseCode/Interfaces/MainClass"
 import LogInControll from "../../sourseCode/control/LogInControll"
+import router from "../../mypracticum/Router"
 
 
 export class LoginPage extends Block {
@@ -30,6 +31,9 @@ export class LoginPage extends Block {
           password:"Jjnvo390xkk"
         }
         LogInControll.signin(lll as LoginData);
+      },
+      onRegister:()=>{
+        router.go("/register")
       }
     })
   }
@@ -60,7 +64,7 @@ export class LoginPage extends Block {
         placeholder="Пароль"
       }}}
       {{{Button textBtn="Войти" classes="button" onClick=onSubmit }}}
-      <a class="signin__link" href="#">Нет аккаунта?</a>
+      {{{Button textBtn="Нет аккаунта?" classes="button__signup_link" onClick=onRegister }}}
     </form>
     </main>
     `

@@ -17,7 +17,15 @@
   color: var(--main-white);
   font-weight: 500;
   line-height: 15px;
-   
+  &__signup_link{
+    background-color: var(--main-white);
+    color: #05f;
+    margin-top: 10px;
+    color:none;
+    border:none;
+    margin-left:95px;
+
+  }
   &__profile_link{
     background-color: var(--main-white);
     color: #05f;

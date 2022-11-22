@@ -22,7 +22,7 @@ export class Profile extends Block {
         LogInControll.exit();
       },
       changeData: () => router.go("/settings"),
-      changePassword: () => router.go("/editPassword"),
+      changePassword: () => router.go("/editPassword")
     };
   }
 
