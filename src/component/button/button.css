@@ -18,6 +18,19 @@
   font-weight: 500;
   line-height: 15px;
    
+  &__profile_link{
+    background-color: var(--main-white);
+    color: #05f;
+    margin-top: 10px;
+    color:none;
+    border:none
+  }
+  &__chat_link{
+    color: #05f;
+    margin-top: 20px;
+    color:none;
+    border:none
+  }
   &_disable {
     opacity: 0.2;
   }

@@ -1,5 +1,6 @@
 import Block from "../../mypracticum/Block"
 import store from "../../mypracticum/Store"
+import router from "../../mypracticum/Router"
 import ChatControll from "../../sourseCode/control/ChatControll"
 import "./chat.css"
 import {validate} from "../../sourseCode/validate"
@@ -23,6 +24,10 @@ export class Chat extends Block {
     this.state={
       myVoid:()=>{
         console.log(4444444)
+      },
+      goProfile:()=>{
+        console.log(44444213122141)
+        router.go("/profile")
       }
     }
   }
@@ -37,9 +42,9 @@ export class Chat extends Block {
     <main>
       <ul class="chat">
       <li class="chat__main chat__main_left">
-        <a class="chat__profile page__link-profile" href="#">
-          <span class="chat__link-text">Профиль</span>
-        </a>
+      {{{Button classes="button__chat_link" textBtn="Профиль" onClick=goProfile }}}
+      
+        
         
         <ul class="chat__list">
         {{{ listItem 

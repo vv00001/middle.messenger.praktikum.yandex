@@ -30,6 +30,9 @@ window.addEventListener('DOMContentLoaded', async () => {
   Router
   .use("/", LoginPage)
   .use("/messenger",Chat)
+  .use("/profile",Profile)
+  .use("/settings",EditProfile)
+  .use("/editPassword",EditPassword)
 
   
   console.log(window.location.pathname)

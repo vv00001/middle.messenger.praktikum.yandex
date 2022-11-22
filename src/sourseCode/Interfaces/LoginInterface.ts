@@ -13,6 +13,12 @@ export class LoginInterface extends MainClass {
   public signin({ ...rest }: SigninType) {
     return this.post('signin', { ...rest });
   }
+  public getProfile() {
+    return this.get('user');
+  }
+  public exit() {
+    return this.post('logout', {});
+  }
 }
 
 export default new LoginInterface();

@@ -1,5 +1,5 @@
 import MainClass, {LoginInterface, LoginData} from '../Interfaces/LoginInterface';
-import store from '../mypracticum/Store';
+import store from '../../mypracticum/Store';
 import router from "../../mypracticum/Router";
 
 export class LogInControll {
@@ -15,11 +15,19 @@ export class LogInControll {
       .then(() => {
         router.go("/messenger");
       })
-
-
-
-      
+  }
+  public getProfile() {
+    MainClass.getProfile()
+      .then(({ response }: any) => {
+        store.set({ responseInfo: JSON.parse(response) });
+      })
   }
 
+  public exit() {
+    MainClass.exit()
+      .then(() => {
+        router.go("/");
+      })
+  }
 }
 export default new LogInControll();
