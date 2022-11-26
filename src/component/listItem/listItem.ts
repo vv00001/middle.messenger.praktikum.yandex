@@ -24,7 +24,8 @@ export class ListItem extends Block {
       userName: props.userName,
       countNotReadMessage:props.countNotReadMessage,
       time:props.time,
-      lastMessage:props.lastMessage
+      lastMessage:props.lastMessage,
+      id:props.id
 
     }
   }
@@ -33,12 +34,13 @@ export class ListItem extends Block {
       countNotReadMessage,
       time,
       userName,
-      lastMessage
+      lastMessage,
+      id
     } = this.state;
     console.log(11111);
-    console.log(userName,countNotReadMessage,lastMessage,time)
+    console.log(userName,countNotReadMessage,lastMessage,time,id)
     return `
-  <li class="list-item">
+  <li class="list-item" chat_id="${id}">
     <div class="list-item__container">
       <div class="list-item__inner">
         <p class="list-item__user-name">{{this.userName}}</p>

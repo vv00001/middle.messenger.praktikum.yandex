@@ -4,11 +4,25 @@ import router from "../../mypracticum/Router"
 import ChatControll from "../../sourseCode/control/ChatControll"
 import "./chat.css"
 import {validate} from "../../sourseCode/validate"
+import MessageControll from "../../sourseCode/control/MessageControll"
+import MainType from "../../sourseCode/globalTypes"
+
+
+
+interface MessageToChat{
+  content: string;
+  is_read: boolean;
+  time: string;
+}
+
 
 export class Chat extends Block {
   constructor() {
     super()
     ChatControll.getChats();
+    MessageControll.getMessages();
+
+
     store.on("update", () => {
       this.setProps(store.get());
     });
@@ -22,8 +36,35 @@ export class Chat extends Block {
   }
   getStateFromProps(props: any): void {
     this.state={
-      myVoid:()=>{
+      myVoid:(evt: Event)=>{
         console.log(4444444)
+          const element = evt.currentTarget as HTMLElement;
+          const chatItemId = element.getAttribute("chat_id");
+  
+
+          console.log(chatItemId)
+          this.setState({ chatItemId });
+  
+          const state = store.get() as MainType;
+          const { userInfo } = state;
+  
+          console.log(state)
+        if (chatItemId) {
+            ChatControll.getChatToken({ chatId: Number(chatItemId) })
+            .then(({ token }) =>{
+              console.log({token},userInfo?.id,chatItemId)
+              MessageControll.connect({
+                userId: userInfo?.id,
+                chatId: Number(chatItemId),
+                token,
+              })
+            }); 
+        }
+      },
+      sendMessage: (evt: Event) => {
+          evt.preventDefault();
+          const target = evt.target as HTMLFormElement;
+          console.log(target)
       },
       goProfile:()=>{
         console.log(44444213122141)
@@ -34,10 +75,12 @@ export class Chat extends Block {
   render() {
     const {
       allChat=[],
-      allMessage=[]
+      userInfo=[],
+      messages=[]
     }=this.props;
 
-    console.log(allChat,this.props)
+    // console.log(allChat,this.props,userInfo)
+    console.log("message",messages)
     return `
     <main>
       <ul class="chat">
@@ -47,9 +90,7 @@ export class Chat extends Block {
         
         
         <ul class="chat__list">
-        {{{ listItem 
-          userName= "Андрей" lastMessage= "djfljeri" time= "11:11" countNotReadMessage= 2 srcAvatar= "#"
-        }}}
+    
         ${
           allChat &&Object.values(allChat)?.map(
               (chat: any) =>{
@@ -57,6 +98,7 @@ export class Chat extends Block {
                 return`
                 {{{listItem
         
+                  id="${chat.id}"
                   userName="${chat.title}"
                   lastMessage="${
                     chat.last_message ? chat.last_message.content : null
@@ -84,12 +126,20 @@ export class Chat extends Block {
         </div>
         
 
-        <ul class="chat__messages">
-          {{{ message text="1111111111111111111" time="11:11" isRead=false}}}
-          {{{ message text="1111111111111111111" time="11:11" owner=true}}}
-          {{{ message text="1111111111111111111" time="11:11" isRead=false}}}
-      </ul>
-
+        <div class="chat__inner">
+          <ul class="chat__messages">
+            ${console.log(messages),
+              messages.map((message: MessageToChat) => {             
+                return `
+                  {{{message
+                    text="${message.content}"
+                    time="${message.time}"
+                    isRead=${message.is_read}
+                  }}}`;
+              })
+            .join('')}
+          </ul>
+        </div>
       <div class="chat__footer">
       <form class="chat__footer-form">
         <button class="chat__footer-btn-attach" type="button" aria-label="Прикрепить файл">
@@ -100,7 +150,7 @@ export class Chat extends Block {
           />
         </button>
         <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />    
-        {{{Button classes="button__footer-btn-send" onClick=onSubmit }}}
+        {{{Button classes="button__footer-btn-send" onClick=sendMessage }}}
       
       </form>
       </div>    

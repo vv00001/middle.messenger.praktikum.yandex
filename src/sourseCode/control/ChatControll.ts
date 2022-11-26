@@ -12,6 +12,10 @@ export class ChatControll {
       store.set({allChat: JSON.parse(response)})
     })
   }
-
+  public getChatToken({ ...rest }: number) {
+    return ChatInterface
+      .getChatToken({ ...rest })
+      .then(({ response }: any) => JSON.parse(response))
+  }
 }
 export default new ChatControll();

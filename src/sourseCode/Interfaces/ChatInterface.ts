@@ -14,6 +14,9 @@ export class ChatInterface extends MainClass {
       console.log(this)
       return this.get('');
    }
+   public getChatToken({ chatId }: number) {
+      return this.post(`token/${chatId}`, {});
+   }
 }
 
 export default new ChatInterface();
