@@ -26,45 +26,44 @@ export class Chat extends Block {
     store.on("update", () => {
       this.setProps(store.get());
     });
-    this.setProps({
+    // this.setProps({
       
-      onSubmit: () => {
-        console.log("проверки для чата нет в разработке")
+    //   onSubmit: () => {
+    //     console.log("проверки для чата нет в разработке")
         
-      }
-    })
+    //   }
+    // })
   }
   getStateFromProps(props: any): void {
     this.state={
-      myVoid:(evt: Event)=>{
-        console.log(4444444)
+      chooseChat:(evt: Event)=>{
           const element = evt.currentTarget as HTMLElement;
-          const chatItemId = element.getAttribute("chat_id");
-  
+          const chatItemId = element.getAttribute("chat_id");  
 
-          console.log(chatItemId)
           this.setState({ chatItemId });
   
           const state = store.get() as MainType;
-          const { userInfo } = state;
-  
-          console.log(state)
+          const { userInfo } = state;  
         if (chatItemId) {
-            ChatControll.getChatToken({ chatId: Number(chatItemId) })
-            .then(({ token }) =>{
-              console.log({token},userInfo?.id,chatItemId)
-              MessageControll.connect({
-                userId: userInfo?.id,
-                chatId: Number(chatItemId),
-                token,
-              })
-            }); 
+          ChatControll.getChatToken({ chatId: Number(chatItemId) })
+          .then(({ token }) =>{
+            console.log({token},userInfo?.id,chatItemId)
+            MessageControll.connect({
+              userId: userInfo?.id,
+              chatId: Number(chatItemId),
+              token,
+            })
+          });
         }
       },
       sendMessage: (evt: Event) => {
-          evt.preventDefault();
-          const target = evt.target as HTMLFormElement;
-          console.log(target)
+        evt.preventDefault();
+        const input=document.querySelector(".chat__footer-input") as HTMLFormElement;
+        MessageControll.sendMessage(input.value);
+        input.value = '';
+        store.on("update", ()=>{
+          this.setProps(store.get());
+        })
       },
       goProfile:()=>{
         console.log(44444213122141)
@@ -108,7 +107,7 @@ export class Chat extends Block {
                   
                   time="${chat.last_message ? chat.last_message.time : null}"
                   countNotReadMessage="${chat.unread_count}"
-                  onClick=myVoid
+                  onClick=chooseChat
 
                 }}}`;
               }

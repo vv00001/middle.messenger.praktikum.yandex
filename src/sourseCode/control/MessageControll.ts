@@ -64,6 +64,14 @@ class MessageControll {
          }
       }
    }
+   public sendMessage(message: string) {
+      if (this.socket) {
+        this.socket?.send(JSON.stringify({
+            content: message,
+            type: "message"
+         }));
+      }
+   }
 
 
    public getMessages() {
