@@ -27,7 +27,7 @@ export class LoginPage extends Block {
         else
         console.log("исправте ошибки выделеные красным цветом, пожалуйста") 
         const lll={
-          login:"hhhhhhHHHH",
+          login:"qqqqqqqqqqqqqqqqqqq",
           password:"Jjnvo390xkk"
         }
         LogInControll.signin(lll as LoginData);

@@ -24,7 +24,6 @@ enum AnswerMessage {
 }
 
 export function validate (receive:string,nameInput:string){
-   console.log(receive,nameInput)
    let checkDone = {answer:""}
    
    if (nameInput == "profileName" ||

@@ -2,9 +2,10 @@ import Block from "../../mypracticum/Block"
 import "./editProfile.css"
 import { input } from "../../component/input/input"
 import {validate} from "../../sourseCode/validate"
-interface EditProfile {
- 
-}
+import ProfileControll from "../../sourseCode/control/ProfileControll"
+import { ProfileInfo } from "../../sourseCode/globalTypes"
+
+
 export class EditProfile extends Block {
   constructor(){
     super()
@@ -23,8 +24,16 @@ export class EditProfile extends Block {
           let messageErrorlogin = validate(login.value )
          
   
-          if(!messageErrorlogin &&!validate(phone.value) &&!validate(chatname.value) &&!validate(secondName.value) &&!validate(profileName.value) &&!validate(mail.value))
-          console.log("отправка пока 1 пример но отрпавиться фсе что есть ", login.value);
+          if(!messageErrorlogin &&!validate(phone.value) &&!validate(chatname.value) &&!validate(secondName.value) &&!validate(profileName.value) &&!validate(mail.value)){
+            ProfileControll.editProfile({
+              first_name: profileName.value,
+              second_name: secondName.value,
+              display_name: chatname.value,
+              login:login.value,
+              email:mail.value,
+              phone:phone.value,
+            } as ProfileInfo);
+          }
           else
           console.log("исправьте ошибки выделенные красным цветом, пожалуйста") 
         }

@@ -26,13 +26,6 @@ export class Chat extends Block {
     store.on("update", () => {
       this.setProps(store.get());
     });
-    // this.setProps({
-      
-    //   onSubmit: () => {
-    //     console.log("проверки для чата нет в разработке")
-        
-    //   }
-    // })
   }
   getStateFromProps(props: any): void {
     this.state={
