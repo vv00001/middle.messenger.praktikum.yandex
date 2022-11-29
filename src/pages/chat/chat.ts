@@ -5,8 +5,8 @@ import ChatControll from "../../sourseCode/control/ChatControll"
 import "./chat.css"
 import {validate} from "../../sourseCode/validate"
 import MessageControll from "../../sourseCode/control/MessageControll"
-import MainType from "../../sourseCode/globalTypes"
-
+import { MainType, CreateChat,SearchUser} from "../../sourseCode/globalTypes"
+import  ProfileControll  from "../../sourseCode/control/ProfileControll"
 
 
 interface MessageToChat{
@@ -59,8 +59,34 @@ export class Chat extends Block {
         })
       },
       goProfile:()=>{
-        console.log(44444213122141)
         router.go("/profile")
+      },
+      addChat:()=>{
+        const input=document.querySelector(".chat__create_chat") as HTMLFormElement;
+        const title=input.value as CreateChat
+        console.log({title})
+        ChatControll.createChat({title});
+
+        store.on("update", () => {
+          const state = store.get() as MainType;
+          this.setState({ allChat: state.allChat });
+        });
+      },
+      addUser:()=>{
+        console.log(9999999999999999911111)
+        const input=document.querySelector(".input__footer-User") as HTMLFormElement;
+        const login=input.value as SearchUser
+        console.log({login})
+
+        const t=ProfileControll
+        console.log(t)
+        if(input.value!=""){
+          ProfileControll.searchUser({
+            login: login,
+          } as SearchUser);
+        }else{
+          console.log("---------------")
+        }
       }
     }
   }
@@ -71,44 +97,37 @@ export class Chat extends Block {
       messages=[]
     }=this.props;
 
-    // console.log(allChat,this.props,userInfo)
-    console.log("message",messages)
+    // console.log("message",messages)
     return `
     <main>
       <ul class="chat">
       <li class="chat__main chat__main_left">
       {{{Button classes="button__chat_link" textBtn="Профиль" onClick=goProfile }}}
-      
-        
-        
-        <ul class="chat__list">
-    
+        <ul class="chat__list">    
         ${
           allChat &&Object.values(allChat)?.map(
               (chat: any) =>{
                 console.log(chat.title)
                 return`
-                {{{listItem
-        
+                {{{listItem        
                   id="${chat.id}"
                   userName="${chat.title}"
                   lastMessage="${
-                    chat.last_message ? chat.last_message.content : null
-                  }"
-                  
-                  srcAvatar= "#"
-                  
+                    chat.last_message ? chat.last_message.content : ""
+                    // chat.last_message ? chat.last_message.content : null
+                  }"                  
+                  srcAvatar= "#"                  
                   time="${chat.last_message ? chat.last_message.time : null}"
                   countNotReadMessage="${chat.unread_count}"
                   onClick=chooseChat
-
                 }}}`;
               }
             )
-            .join('')
-  
+            .join('')  
         }
         </ul>
+        <input class="chat__create_chat" type="text" placeholder="Создать чат" />  
+        {{{Button classes="button__footer-btn-send" onClick=addChat }}}
       </li>
         <li class="chat__main chat__main-dialog">
         <div class="chat__header">
@@ -116,12 +135,10 @@ export class Chat extends Block {
             <p class="chat__user-name">Вадим</p>
           </div>
         </div>
-        
-
         <div class="chat__inner">
           <ul class="chat__messages">
             ${console.log(messages),
-              messages.map((message: MessageToChat) => {             
+              messages.map((message: MessageToChat) => {
                 return `
                   {{{message
                     text="${message.content}"
@@ -143,10 +160,15 @@ export class Chat extends Block {
         </button>
         <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />    
         {{{Button classes="button__footer-btn-send" onClick=sendMessage }}}
-      
+       
       </form>
-      </div>    
-      </li>    
+      </div>
+
+      <input class="input__footer-User" type="text" placeholder="Ник пользователя удалить/добавить Результат работы прошу проследить в консоль логе на Ф12" />  
+      {{{Button classes="button__footer-btn-addUser" textBtn = "add" onClick=addUser }}}
+      {{{Button classes="button__footer-btn-deleteUser" textBtn="delete" onClick=deleteUser }}}
+     
+      </li>
     </ul>
     </main>
     `

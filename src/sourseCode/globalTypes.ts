@@ -1,5 +1,10 @@
 import { Block } from "../mypracticum/Block";
-
+interface CreateChat {
+   title: string;
+}
+interface SearchUser{
+   login: string;
+}
 interface ProfileInfo{
    display_name: string;
    email: string;

@@ -1,7 +1,7 @@
 import  ProfileInterface  from "../Interfaces/ProfileInterface";
 import store from '../../mypracticum/Store';
 
-import { ProfileInfo } from "../../sourseCode/globalTypes"
+import { ProfileInfo,SearchUser } from "../../sourseCode/globalTypes"
 
 class ProfileControll {
 
@@ -11,7 +11,13 @@ class ProfileControll {
         store.set({ userInfo: JSON.parse(response) });        
       })
   }
-
+  public searchUser({ ...rest }: SearchUser) {
+    return ProfileInterface.searchUser({ ...rest })
+      .then(({ response }: any) =>
+        //store.setState({ users: response }, StoreEvents.ADD_USERS)
+        console.log(response)
+      )
+  }
 
 }
 

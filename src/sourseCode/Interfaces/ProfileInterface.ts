@@ -1,5 +1,5 @@
 import MainClass from "./MainClass"
-import { ProfileInfo } from "../../sourseCode/globalTypes"
+import { ProfileInfo,SearchUser } from "../../sourseCode/globalTypes"
 
 class ProfileInterface extends MainClass {
    constructor() {
@@ -10,8 +10,9 @@ class ProfileInterface extends MainClass {
       console.log(userInfo)
       return this.put("profile", userInfo);
    }
-
-
+   public searchUser({ login }: SearchUser) {
+     return this.post("search", {login});
+   }
 }
 
 export default new ProfileInterface();

@@ -1,10 +1,5 @@
 import MainClass from './MainClass';
 
-// export interface ChatData {
-//    login: string;
-//    password: string;
-// }
-
 export class ChatInterface extends MainClass {
    constructor() {
       super('/chats' );
@@ -16,6 +11,9 @@ export class ChatInterface extends MainClass {
    }
    public getChatToken({ chatId }: number) {
       return this.post(`token/${chatId}`, {});
+   }
+   public createChat({ ...rest }: string) {
+      return this.post('', { ...rest });
    }
 }
 
