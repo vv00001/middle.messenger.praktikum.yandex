@@ -1,36 +1,45 @@
 import Block from "../../mypracticum/Block" 
 import "./register.css"
 import { input } from "../../component/input/input"
+import router from "../../mypracticum/Router"
+import LogInControll from "../../sourseCode/control/LogInControll"
+import {SignupType} from "../../sourseCode/Interfaces/MainClass"
 
 import {validate} from "../../sourseCode/validate"
-interface Register {
- 
-}
+
 export class Register extends Block {
   constructor(){
     super()
-      this.setProps({
-        loginValue: "",
-        passwordValue: "",
-        onSubmit: () => {
-          let login = this.element.querySelector("input[name='login']") as HTMLInputElement  
-          let secondName= this.element.querySelector("input[name='secondName']") as HTMLInputElement
-          let mail= this.element.querySelector("input[name='mail']") as HTMLInputElement
-          let profileName= this.element.querySelector("input[name='profileName']") as HTMLInputElement
-          let password= this.element.querySelector("input[name='password']") as HTMLInputElement
-          let password_repeat= this.element.querySelector("input[name='password_repeat']") as HTMLInputElement
-
-
-          let messageErrorlogin = validate(login.value )
-         
-  
-          if(!messageErrorlogin  &&!validate(secondName.value) &&!validate(profileName.value) &&!validate(mail.value)  &&!validate(password.value)  &&!validate(password_repeat.value))
-          console.log("отправка пока 1 пример но отрпавиться фсе что есть. Проверка на совпадение паролей в разработке", login.value);
-          else
-          console.log("исправьте ошибки выделенные красным цветом, пожалуйста. Проверка на совпадение паролей в разработке") 
+    this.setProps({
+      onSubmit: () => {
+        let login = this.element.querySelector("input[name='login']") as HTMLInputElement  
+        let secondName= this.element.querySelector("input[name='secondName']") as HTMLInputElement
+        let mail= this.element.querySelector("input[name='mail']") as HTMLInputElement
+        let profileName= this.element.querySelector("input[name='profileName']") as HTMLInputElement
+        let password= this.element.querySelector("input[name='password']") as HTMLInputElement
+        let password_repeat= this.element.querySelector("input[name='password_repeat']") as HTMLInputElement
+        let phone= this.element.querySelector("input[name='phone']") as HTMLInputElement
+        let messageErrorlogin = validate(login.value )   
+        const signData={
+          password: password.value,
+          email: mail.value,
+          login: login.value,
+          first_name: profileName.value,
+          second_name: secondName.value,
+          phone:phone.value
+        }  
+        if(!messageErrorlogin  &&!validate(secondName.value) &&!validate(profileName.value) &&
+        !validate(mail.value)  &&!validate(password.value)  &&!validate(password_repeat.value) &&!validate(phone.value)){
+          console.log("отправка. Проверка на совпадение паролей в разработке", login.value);
+          LogInControll.signup(signData as SignupType);
         }
-      })
-    
+        else
+        console.log("исправьте ошибки выделенные красным цветом, пожалуйста. Проверка на совпадение паролей в разработке") 
+      },
+      toLogIn:()=>{          
+        router.go("/")
+      }
+    })
   }
    render():string {
    return `
@@ -73,7 +82,6 @@ export class Register extends Block {
         placeholder="Фамилия"
         errorClass="error"
       }}}
-      
       {{{mainInput 
         onInput=onInput 
         onFocus=onFocus
@@ -92,7 +100,17 @@ export class Register extends Block {
         placeholder="Повтарите пароль"
         errorClass="error"
       }}}
-      {{{Button textBtn="Сохранить" classes="button button__edit_pro" onClick=onSubmit }}}      
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="phone"
+        classes="input__text-field"
+        placeholder="Телефон"
+        errorClass="error"
+      }}}
+      {{{Button textBtn="Сохранить" classes="button button__edit_pro" onClick=onSubmit }}}
+      {{{Button textBtn="Вход" classes="button button__edit_pro" onClick=toLogIn}}}
       </form>
     </main>
   `

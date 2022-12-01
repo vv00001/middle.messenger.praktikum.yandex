@@ -14,11 +14,16 @@ class ProfileControll {
   public searchUser({ ...rest }: SearchUser) {
     return ProfileInterface.searchUser({ ...rest })
       .then(({ response }: any) =>
-        //store.setState({ users: response }, StoreEvents.ADD_USERS)
         console.log(response)
       )
   }
-
+  public changeAvatar(avatar:FormData){
+    console.log(avatar)
+    ProfileInterface.changeAvatar(avatar)
+    .then(({ response }: any) => {
+      store.set({ userInfo: JSON.parse(response) });   
+    })
+  }
 }
 
 export default new ProfileControll();

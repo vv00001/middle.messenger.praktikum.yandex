@@ -13,6 +13,10 @@ class ProfileInterface extends MainClass {
    public searchUser({ login }: SearchUser) {
      return this.post("search", {login});
    }
+   public changeAvatar(avatar: FormData) {
+      console.log(avatar)
+      return this.put('profile/avatar', avatar, {});
+   }
 }
 
 export default new ProfileInterface();

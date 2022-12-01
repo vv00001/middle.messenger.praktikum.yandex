@@ -7,6 +7,7 @@ import {validate} from "../../sourseCode/validate"
 import MessageControll from "../../sourseCode/control/MessageControll"
 import { MainType, CreateChat,SearchUser} from "../../sourseCode/globalTypes"
 import  ProfileControll  from "../../sourseCode/control/ProfileControll"
+import LogInControll from "../../sourseCode/control/LogInControll"
 
 
 interface MessageToChat{
@@ -20,8 +21,8 @@ export class Chat extends Block {
   constructor() {
     super()
     ChatControll.getChats();
-    MessageControll.getMessages();
-
+    MessageControll.getMessages();    
+    LogInControll.getProfile();
 
     store.on("update", () => {
       this.setProps(store.get());
@@ -72,22 +73,35 @@ export class Chat extends Block {
           this.setState({ allChat: state.allChat });
         });
       },
-      addUser:()=>{
-        console.log(9999999999999999911111)
-        const input=document.querySelector(".input__footer-User") as HTMLFormElement;
-        const login=input.value as SearchUser
-        console.log({login})
+      // serchUser:()=>{
+      //   const input=document.querySelector(".input__footer-User") as HTMLFormElement;
+      //   const login=input.value as SearchUser
+      //   console.log({login})
 
-        const t=ProfileControll
-        console.log(t)
-        if(input.value!=""){
-          ProfileControll.searchUser({
-            login: login,
-          } as SearchUser);
-        }else{
-          console.log("---------------")
+      //   const t=ProfileControll
+      //   console.log(t)
+      //   if(input.value!=""){
+      //     ProfileControll.searchUser({
+      //       login: login,
+      //     } as SearchUser);
+      //   }else{
+      //     console.log("---------------")
+      //   }
+      // }
+      addUser:()=>{
+          console.log(99991)
+          const input=document.querySelector(".input__footer-User") as HTMLFormElement;
+          const login=input.value as SearchUser
+          console.log({login})
+  
+          if(input.value!=""){
+            ProfileControll.searchUser({
+              login: login,
+            } as SearchUser);
+          }else{
+            console.log("---------------")
+          }
         }
-      }
     }
   }
   render() {
@@ -97,7 +111,6 @@ export class Chat extends Block {
       messages=[]
     }=this.props;
 
-    // console.log("message",messages)
     return `
     <main>
       <ul class="chat">
@@ -160,14 +173,11 @@ export class Chat extends Block {
         </button>
         <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />    
         {{{Button classes="button__footer-btn-send" onClick=sendMessage }}}
-       
       </form>
       </div>
-
       <input class="input__footer-User" type="text" placeholder="Ник пользователя удалить/добавить Результат работы прошу проследить в консоль логе на Ф12" />  
       {{{Button classes="button__footer-btn-addUser" textBtn = "add" onClick=addUser }}}
       {{{Button classes="button__footer-btn-deleteUser" textBtn="delete" onClick=deleteUser }}}
-     
       </li>
     </ul>
     </main>

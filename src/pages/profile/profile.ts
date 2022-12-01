@@ -3,6 +3,8 @@ import LogInControll from "../../sourseCode/control/LogInControll";
 import store from "../../mypracticum/Store"
 import router from "../../mypracticum/Router"
 import "./profile.css"
+import { Avatar }from "../../component/Avatar/avatar"
+import ProfileControll from "../../sourseCode/control/ProfileControll";
 
 export class Profile extends Block {
   constructor() {
@@ -22,12 +24,17 @@ export class Profile extends Block {
         LogInControll.exit();
       },
       changeData: () => router.go("/settings"),
-      changePassword: () => router.go("/editPassword")
+      changePassword: () => router.go("/editPassword"),
+      Avatar:(evt:Event)=>{        
+        const input=document.querySelector(".input-file__input") as HTMLFormElement;
+        const jjj= input.files;
+         let formData = new FormData()
+         formData.append("avatar", jjj[0]) 
+         ProfileControll.changeAvatar(formData)        
+      }
     };
   }
-
-
-
+  
   protected render(): string {
     const { responseInfo = [] } = this.props;
     const { avatar,  email,login, first_name,second_name , display_name,phone  } =
@@ -37,6 +44,8 @@ export class Profile extends Block {
     return `
       <main class="profile">
         <div class="profile__form">
+        {{{Avatar avatar="${avatar}" onClick=Avatar}}}
+        <input class="input-file__input" type="file" name="avatar" accept="image/*" />
             <div class ="profile__title">
             {{{Title firstLine="${display_name}"}}}
             </div>
