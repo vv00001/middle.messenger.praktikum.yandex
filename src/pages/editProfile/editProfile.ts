@@ -2,9 +2,10 @@ import Block from "../../mypracticum/Block"
 import "./editProfile.css"
 import { input } from "../../component/input/input"
 import {validate} from "../../sourseCode/validate"
-interface EditProfile {
- 
-}
+import ProfileControll from "../../sourseCode/control/ProfileControll"
+import { ProfileInfo } from "../../sourseCode/globalTypes"
+
+
 export class EditProfile extends Block {
   constructor(){
     super()
@@ -13,18 +14,26 @@ export class EditProfile extends Block {
         passwordValue: "",
         onSubmit: () => {
           let login = this.element.querySelector("input[name='login']") as HTMLInputElement  
-          let telephone= this.element.querySelector("input[name='telephone']") as HTMLInputElement
+          let phone= this.element.querySelector("input[name='phone']") as HTMLInputElement
           let chatname= this.element.querySelector("input[name='chatname']") as HTMLInputElement
-          let secondname= this.element.querySelector("input[name='secondname']") as HTMLInputElement
-          let profname= this.element.querySelector("input[name='profname']") as HTMLInputElement
+          let secondName= this.element.querySelector("input[name='secondName']") as HTMLInputElement
+          let profileName= this.element.querySelector("input[name='profileName']") as HTMLInputElement
           let mail= this.element.querySelector("input[name='mail']") as HTMLInputElement
 
 
           let messageErrorlogin = validate(login.value )
          
   
-          if(!messageErrorlogin &&!validate(telephone.value) &&!validate(chatname.value) &&!validate(secondname.value) &&!validate(profname.value) &&!validate(mail.value))
-          console.log("отправка пока 1 пример но отрпавиться фсе что есть ", login.value);
+          if(!messageErrorlogin &&!validate(phone.value) &&!validate(chatname.value) &&!validate(secondName.value) &&!validate(profileName.value) &&!validate(mail.value)){
+            ProfileControll.editProfile({
+              first_name: profileName.value,
+              second_name: secondName.value,
+              display_name: chatname.value,
+              login:login.value,
+              email:mail.value,
+              phone:phone.value,
+            } as ProfileInfo);
+          }
           else
           console.log("исправьте ошибки выделенные красным цветом, пожалуйста") 
         }
@@ -59,7 +68,7 @@ export class EditProfile extends Block {
         onInput=onInput 
         onFocus=onFocus
         type="text" 
-        name="profname"
+        name="profileName"
         classes="input__text-field"
         placeholder="Имя"
         errorClass="error"
@@ -68,7 +77,7 @@ export class EditProfile extends Block {
         onInput=onInput 
         onFocus=onFocus
         type="text" 
-        name="secondname"
+        name="secondName"
         classes="input__text-field"
         placeholder="Фамилия"
         errorClass="error"
@@ -86,7 +95,7 @@ export class EditProfile extends Block {
         onInput=onInput 
         onFocus=onFocus
         type="text" 
-        name="telephone"
+        name="phone"
         classes="input__text-field"
         placeholder="Телефон"
         errorClass="error"

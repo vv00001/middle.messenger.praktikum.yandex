@@ -2,21 +2,45 @@ import Block from "../../mypracticum/Block"
 
 import "./listItem.css"
 
-interface ListitemProps {
+interface ListItemProps {
   userName?: string
   lastMessage?: string;
   time?: string;
   countNotReadMessage?: number;
+  onClick: () => void;
 }
 export class ListItem extends Block {
   
   static componentName = "listItem";
-  constructor(...props:ListitemProps){
-   super(...props)
+  constructor({onClick, ...receive}:ListItemProps){
+    super({
+      events:{click:onClick},
+      ...receive
+    })
+    
+  }
+  protected getStateFromProps(props: any): void {
+    this.state = {
+      userName: props.userName,
+      countNotReadMessage:props.countNotReadMessage,
+      time:props.time,
+      lastMessage:props.lastMessage,
+      id:props.id
+
+    }
   }
   render() {
+    const {
+      countNotReadMessage,
+      time,
+      userName,
+      lastMessage,
+      id
+    } = this.state;
+    console.log(11111);
+    console.log(userName,countNotReadMessage,lastMessage,time,id)
     return `
-  <li class="list-item">
+  <li class="list-item" chat_id="${id}">
     <div class="list-item__container">
       <div class="list-item__inner">
         <p class="list-item__user-name">{{this.userName}}</p>

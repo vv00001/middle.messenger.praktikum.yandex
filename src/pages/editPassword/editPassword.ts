@@ -2,31 +2,36 @@ import Block from "../../mypracticum/Block"
 import "./editPassword.css"
 import { input } from "../../component/input/input"
 import {validate} from "../../sourseCode/validate"
+import ProfileControll from "../../sourseCode/control/ProfileControll"
+import {UserPaswordType} from "../../sourseCode/globalTypes"
 
 export class EditPassword extends Block {
   constructor(){
    super()
    this.setProps({
       onSubmit: () => {
-      let oldPassword = this.element.querySelector("input[name='oldPassword']") as HTMLInputElement  
-      let newPassword= this.element.querySelector("input[name='newPassword']") as HTMLInputElement
-      let repeateNewPassword= this.element.querySelector("input[name='repeateNewPassword']") as HTMLInputElement
-   
-      if(oldPassword && newPassword && repeateNewPassword){
-         let newPasswordValue=newPassword.value
-         let repeateNewPasswordValue=repeateNewPassword.value   
-
-         if(!validate(oldPassword.value) &&!validate(newPasswordValue) &&!validate(repeateNewPasswordValue)){
-            if(newPasswordValue== repeateNewPasswordValue)
-               console.log("отправка ", newPasswordValue);
-               else
-               console.log("пасворды одинаковые пожалуйста");
-         }else
-            console.log("исправьте ошибки выделенные красным цветом, пожалуйста") 
+         let oldPasswordHTML = this.element.querySelector("input[name='oldPassword']") as HTMLInputElement  
+         let newPasswordHTML= this.element.querySelector("input[name='newPassword']") as HTMLInputElement
+         let repeateNewPassword= this.element.querySelector("input[name='repeateNewPassword']") as HTMLInputElement
+      
+         if(oldPasswordHTML && newPasswordHTML && repeateNewPassword){
+            let newPassword=newPasswordHTML.value
+            let repeateNewPasswordValue=repeateNewPassword.value   
+            let oldPassword=oldPasswordHTML.value
+            if(!validate(oldPassword) &&!validate(newPassword) &&!validate(repeateNewPasswordValue)){
+               if(newPassword== repeateNewPasswordValue){                  
+                  console.log("отправка ", newPassword);
+                  ProfileControll.changePassword({
+                     newPassword,
+                     oldPassword
+                  } as UserPaswordType);
+               }else
+                  console.log("пасворды одинаковые пожалуйста");
+            }else
+               console.log("исправьте ошибки выделенные красным цветом, пожалуйста") 
          }
       }
    })
-   
    }
    render():string {
    return `
@@ -63,8 +68,7 @@ export class EditPassword extends Block {
                      placeholder="Повторите новый пароль"
                      errorClass="error"
                   }}}
-                  {{{Button textBtn="Сохранить" classes="button button__edit_password" onClick=onSubmit }}}
-                     
+                  {{{Button textBtn="Сохранить" classes="button button__edit_password" onClick=onSubmit }}}                     
                   </ul>
                </form>
             </li>

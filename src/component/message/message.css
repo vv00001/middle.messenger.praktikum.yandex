@@ -16,7 +16,7 @@
    &_is-img {
      padding: 11px;
      border-radius: 10px;
-     border: 1px solid #eaeaea;
+     border: 1px solid var(--main-grey);
    }
  
    &__text {
@@ -25,7 +25,7 @@
      padding: 11px;
      border-radius: 10px;
      font-size: 10px;
-     color: #1e1e1e;
+     color: var(--main-noFull-black);
      font-weight: 500;
      line-height: 15px;
    }
@@ -47,7 +47,7 @@
    &__time {
      margin: 0;
      position: relative;
-     color: #999;
+     color: var(--main-derk-grey);
      font-size: 9px;
      font-weight: 500;
      line-height: 9px;
@@ -62,7 +62,7 @@
  
  
    &__time_is-img {
-     color: #fff;
+     color: var(--main-white);
      padding: 2px 7px;
      border-radius: 30px;
      background-color: #a8a8a8;

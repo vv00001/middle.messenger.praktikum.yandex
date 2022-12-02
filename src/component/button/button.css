@@ -4,7 +4,7 @@
   display: block;
   border: none;
  
-  background-color: #2e69fd;
+  background-color: var(--main-blue);
   width: 100%;
   padding: 10px 0;
   text-align: center;
@@ -14,10 +14,31 @@
   max-width: 280px;
   border-radius: 8px;
   font-size: 15px;
-  color: #fff;
+  color: var(--main-white);
   font-weight: 500;
   line-height: 15px;
-   
+  &__signup_link{
+    background-color: var(--main-white);
+    color: #05f;
+    margin-top: 10px;
+    color:none;
+    border:none;
+    margin-left:95px;
+
+  }
+  &__profile_link{
+    background-color: var(--main-white);
+    color: #05f;
+    margin-top: 10px;
+    color:none;
+    border:none
+  }
+  &__chat_link{
+    color: #05f;
+    margin-top: 20px;
+    color:none;
+    border:none
+  }
   &_disable {
     opacity: 0.2;
   }
@@ -30,7 +51,7 @@
   &__footer-btn-send {
     box-sizing: border-box;
     cursor: pointer;
-    background-color: #2e69fd;
+    background-color: var(--main-blue);
     border: none;
     padding: 0;
     transform: scaleX(-1);

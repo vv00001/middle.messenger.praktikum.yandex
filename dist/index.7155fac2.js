@@ -528,6 +528,8 @@ function hmrAcceptRun(bundle, id) {
 },{}],"57jqn":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 var _mypracticum = require("./mypracticum");
+var _router = require("../src/mypracticum/Router");
+var _routerDefault = parcelHelpers.interopDefault(_router);
 var _login = require("./pages/login/login");
 var _notFound = require("./pages/notFound/notFound");
 var _chat = require("./pages/chat/chat");
@@ -550,6 +552,8 @@ var _message = require("./component/message");
 var _messageDefault = parcelHelpers.interopDefault(_message);
 var _ = require("./component/title/");
 var _Default = parcelHelpers.interopDefault(_);
+var _avatar = require("./component/avatar");
+var _avatarDefault = parcelHelpers.interopDefault(_avatar);
 _mypracticum.registerComponent(_errorDefault.default);
 _mypracticum.registerComponent(_inputDefault.default);
 _mypracticum.registerComponent(_buttonDefault.default);
@@ -557,46 +561,18 @@ _mypracticum.registerComponent(_mainInputDefault.default);
 _mypracticum.registerComponent(_Default.default);
 _mypracticum.registerComponent(_listItemDefault.default);
 _mypracticum.registerComponent(_messageDefault.default);
-document.addEventListener("DOMContentLoaded", ()=>{
-    document.getElementById("chat").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _chat.Chat());
-    };
-    document.getElementById("loginPage").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _login.LoginPage());
-    };
-    document.getElementById("editPassword").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _editPassword.EditPassword());
-    };
-    document.getElementById("editProfile").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _editProfile.EditProfile());
-    };
-    document.getElementById("notFound").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _notFound.NotFoundPage());
-    };
-    document.getElementById("profile").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _profile.Profile());
-    };
-    document.getElementById("serverError").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _serverError.ServerError());
-    };
-    document.getElementById("register").onclick = function() {
-        removeMy();
-        _mypracticum.renderDOM(new _register.Register());
-    };
+_mypracticum.registerComponent(_avatarDefault.default);
+window.addEventListener('DOMContentLoaded', async ()=>{
+    console.log(_routerDefault.default);
+    _routerDefault.default.use("/", _login.LoginPage).use("/messenger", _chat.Chat).use("/profile", _profile.Profile).use("/settings", _editProfile.EditProfile).use("/editPassword", _editPassword.EditPassword).use("/register", _register.Register).use("/404", _notFound.NotFoundPage).use("/500", _serverError.ServerError);
+    console.log(window.location.pathname);
+    window.location.pathname;
+    try {
+        _routerDefault.default.start();
+    } catch (e) {}
 });
-function removeMy() {
-    const myUl = document.getElementById('myul');
-    while(myUl.firstChild)myUl.removeChild(myUl.firstChild);
-}
 
-},{"./mypracticum":"fmOdD","./pages/login/login":"d4kgo","./pages/notFound/notFound":"8Au6T","./pages/chat/chat":"BTZqg","./pages/editProfile/editProfile":"jAgB3","./pages/register/register":"1d69E","./pages/profile/profile":"3JZwj","./pages/editPassword/editPassword":"gEr5a","./pages/serverError/serverError":"hcOpP","./component/error":"35krS","./component/mainInput":"5Mbat","./component/input":"HJI1p","./component/button":"bhL52","./component/listItem":"eWJdd","./component/message":"iypKu","./component/title/":"dn7t3","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"fmOdD":[function(require,module,exports) {
+},{"./mypracticum":"fmOdD","../src/mypracticum/Router":"ksMzb","./pages/login/login":"d4kgo","./pages/notFound/notFound":"8Au6T","./pages/chat/chat":"BTZqg","./pages/editProfile/editProfile":"jAgB3","./pages/register/register":"1d69E","./pages/profile/profile":"3JZwj","./pages/editPassword/editPassword":"gEr5a","./pages/serverError/serverError":"hcOpP","./component/error":"35krS","./component/mainInput":"5Mbat","./component/input":"HJI1p","./component/button":"bhL52","./component/listItem":"eWJdd","./component/message":"iypKu","./component/title/":"dn7t3","./component/avatar":"jLr1o","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"fmOdD":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Block", ()=>_blockDefault.default
@@ -12301,6 +12277,94 @@ function renderDOM(block) {
 }
 exports.default = renderDOM;
 
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"ksMzb":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+function isEqual(first, second) {
+    return first === second;
+}
+class Route {
+    constructor(pathname, view, props){
+        this._pathname = pathname;
+        this._blockClass = view;
+        this._block = null;
+        this._props = props;
+    }
+    navigate(pathname) {
+        if (this.match(pathname)) {
+            this._pathname = pathname;
+            this.render();
+        }
+    }
+    leave() {
+        if (this._block) this._block.hide();
+    }
+    match(pathname) {
+        return isEqual(pathname, this._pathname);
+    }
+    render() {
+        if (!this._block) {
+            this._block = new this._blockClass();
+            render(this._props.rootQuery, this._block);
+            return;
+        }
+        this._block.show();
+    }
+}
+class Router {
+    constructor(rootQuery){
+        if (Router.__instance) return Router.__instance;
+        this.routes = [];
+        this.history = window.history;
+        this._currentRoute = null;
+        this._rootQuery = rootQuery;
+        Router.__instance = this;
+    }
+    use(pathname, block) {
+        const route = new Route(pathname, block, {
+            rootQuery: this._rootQuery
+        });
+        this.routes.push(route);
+        return this;
+    }
+    start() {
+        window.onpopstate = ((event)=>{
+            //console.log(11111)
+            this._onRoute(event.currentTarget.location.pathname);
+        }).bind(this);
+        this._onRoute(window.location.pathname);
+    }
+    _onRoute(pathname) {
+        const route = this.getRoute(pathname);
+        if (this._currentRoute && this._currentRoute != route) this._currentRoute.leave();
+        this._currentRoute = route;
+        route.render(route, pathname);
+    }
+    go(pathname) {
+        this.history.pushState({}, "", pathname);
+        this._onRoute(pathname);
+    }
+    back() {
+        this.history.back();
+    }
+    forward() {
+        this.history.forward();
+    }
+    getRoute(pathname) {
+        return this.routes.find((route)=>route.match(pathname)
+        );
+    }
+}
+function render(takeSelector, block) {
+    const root = document.querySelector(takeSelector);
+    if (root === null) throw new Error(`not takeSelector "${takeSelector}"`);
+    root.innerHTML = '';
+    console.log(block);
+    root.append(block.getContent());
+    return root;
+}
+exports.default = new Router('#app');
+
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"d4kgo":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -12310,6 +12374,10 @@ var _block = require("../../mypracticum/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
 var _validate = require("../../sourseCode/validate");
 var _loginCss = require("./login.css");
+var _logInControll = require("../../sourseCode/control/LogInControll");
+var _logInControllDefault = parcelHelpers.interopDefault(_logInControll);
+var _router = require("../../mypracticum/Router");
+var _routerDefault = parcelHelpers.interopDefault(_router);
 class LoginPage extends _blockDefault.default {
     constructor(){
         super();
@@ -12317,12 +12385,24 @@ class LoginPage extends _blockDefault.default {
             loginValue: "",
             passwordValue: "",
             onSubmit: ()=>{
-                let login = this.element.querySelector("input[name='login']");
-                let password = this.element.querySelector("input[name='password']");
-                let messageErrorlogin = _validate.validate(login.value);
-                let messageErrorpassword = _validate.validate(password.value);
-                if (!messageErrorlogin && !messageErrorpassword) console.log("отправка ", login.value, password.value);
-                else console.log("исправте ошибки выделеные красным цветом, пожалуйста");
+                let loginHTML = this.element.querySelector("input[name='login']");
+                let passwordHTML = this.element.querySelector("input[name='password']");
+                let messageErrorlogin = _validate.validate(loginHTML.value);
+                let messageErrorpassword = _validate.validate(passwordHTML.value);
+                if (!messageErrorlogin && !messageErrorpassword) {
+                    let login = loginHTML.value;
+                    let password = passwordHTML.value;
+                    if (login == "") login = "qqqqqqqqqqqqqqqqqqq";
+                    if (password == "") password = "dkn30oLKdlk";
+                    const sedLogin = {
+                        login: login,
+                        password: password
+                    };
+                    _logInControllDefault.default.signin(sedLogin);
+                } else console.log("исправте ошибки выделеные красным цветом, пожалуйста");
+            },
+            onRegister: ()=>{
+                _routerDefault.default.go("/register");
             }
         });
     }
@@ -12352,68 +12432,313 @@ class LoginPage extends _blockDefault.default {
         placeholder="Пароль"
       }}}
       {{{Button textBtn="Войти" classes="button" onClick=onSubmit }}}
-      <a class="signin__link" href="#">Нет аккаунта?</a>
+      {{{Button textBtn="Нет аккаунта?" classes="button__signup_link" onClick=onRegister }}}
     </form>
     </main>
     `;
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","../../sourseCode/validate":"ihU9O","./login.css":"7tyJ4","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"ihU9O":[function(require,module,exports) {
+},{"../../mypracticum/Block":"hydC4","../../sourseCode/validate":"ihU9O","./login.css":"7tyJ4","../../sourseCode/control/LogInControll":"3t8s8","../../mypracticum/Router":"ksMzb","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"ihU9O":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "validate", ()=>validate
 );
+let AnswerMessage;
+(function(AnswerMessage1) {
+    AnswerMessage1["FromThreeCharts"] = "от 3 символов";
+    AnswerMessage1["FromUpperCharts"] = "С заглавной";
+    AnswerMessage1["WithOutNumber"] = "без цифр";
+    AnswerMessage1["Simbol"] = "специальные символы не допускаются";
+    AnswerMessage1["NoSpace"] = "без пробела";
+    AnswerMessage1["NoSpacePone"] = "Номер телефона не может содержать пробелы";
+    AnswerMessage1["OnlyLatinoParty"] = "только латинские";
+    AnswerMessage1["FromEight"] = "от 8 символов";
+    AnswerMessage1["FromTen"] = "Номер телефона должен содержать от 10 символов";
+    AnswerMessage1["NoVoidBo\xf6tes"] = "Не может быть пустым";
+    AnswerMessage1["LessThenFifteen"] = "Номер телефона должен содержать до 15 символов";
+    AnswerMessage1["LessThenTwenty"] = "не больше 20 символов";
+    AnswerMessage1["LessThenForty"] = "не больше 40 символов";
+    AnswerMessage1["MoreThenOne"] = "мимимум 1 символ";
+    AnswerMessage1["AtPlease"] = "не забудьте @";
+    AnswerMessage1["ComPlease"] = "нет точки в почте";
+    AnswerMessage1["NeedNumber"] = "хотя бы одну цифру";
+    AnswerMessage1["UpperCharts"] = "хотя бы заглавную букву";
+    AnswerMessage1["ThisNotMail"] = "это не почта";
+    AnswerMessage1["FormPlusPhone"] = "Начните с плюса, пока можно много плюсов но все наладится";
+    AnswerMessage1["WithOutCharts"] = "Номер телефона не может содержать буквы";
+})(AnswerMessage || (AnswerMessage = {}));
 function validate(receive, nameInput) {
-    console.log(receive, nameInput);
     let checkDone = {
         answer: ""
     };
-    if (nameInput == "profname" || nameInput == "secondname" || nameInput == "chatname") {
-        if (!receive.match(/^[A-ZА-Я]/g)) checkDone.answer = "С заглавной";
-        else if (receive.length < 3) checkDone.answer = "от 3 символов";
-        else if (receive.match(/\d+/g)) checkDone.answer = "без цифр";
-        else if (receive.match(/\s/g)) checkDone.answer = "без пробела";
-        else if (!receive.match(/^[a-zA-ZА-Яа-я0-9-]{0,}$/g)) checkDone.answer = "специальные символы не допускаются";
+    if (nameInput == "profileName" || nameInput == "secondName" || nameInput == "chatname") {
+        if (!receive.match(/^[A-ZА-Я]/g)) checkDone.answer = AnswerMessage.FromUpperCharts;
+        else if (receive.length < 3) checkDone.answer = AnswerMessage.FromThreeCharts;
+        else if (receive.match(/\d+/g)) checkDone.answer = AnswerMessage.WithOutNumber;
+        else if (receive.match(/\s/g)) checkDone.answer = AnswerMessage.NoSpace;
+        else if (!receive.match(/^[a-zA-ZА-Яа-я0-9-]{0,}$/g)) checkDone.answer = AnswerMessage.Simbol;
     }
     if (nameInput == "login") {
-        console.log(nameInput);
-        if (receive.length == 0) checkDone.answer = "Не может быть пустым";
-        else if (receive.length < 3) checkDone.answer = "от 3 символов";
-        else if (!receive.match(/^[a-zA-Z0-9-_]/g)) checkDone.answer = "только латинские";
-        else if (receive.length > 20) checkDone.answer = "не больше 20 символов";
-        else if (!receive.match(/[a-zA-Zа-я]+/g)) checkDone.answer = "мимимум 1 символ";
-        else if (receive.match(/\s/g)) checkDone.answer = "без пробела";
-        else if (!receive.match(/^[a-zA-Z0-9-_]{3,20}$/g)) checkDone.answer = "специальные символы не допускаются";
+        if (receive.length == 0) checkDone.answer = AnswerMessage.NoVoidBoötes;
+        else if (receive.length < 3) checkDone.answer = AnswerMessage.FromThreeCharts;
+        else if (!receive.match(/^[a-zA-Z0-9-_]/g)) checkDone.answer = AnswerMessage.OnlyLatinoParty;
+        else if (receive.length > 20) checkDone.answer = AnswerMessage.LessThenTwenty;
+        else if (!receive.match(/[a-zA-Zа-я]+/g)) checkDone.answer = AnswerMessage.MoreThenOne;
+        else if (receive.match(/\s/g)) checkDone.answer = AnswerMessage.NoSpace;
+        else if (!receive.match(/^[a-zA-Z0-9-_]{3,20}$/g)) checkDone.answer = AnswerMessage.Simbol;
     }
     if (nameInput == "mail") {
-        if (receive.length < 3) checkDone.answer = "от 3 символов";
-        else if (receive.match(/\s/g)) checkDone.answer = "без пробела";
-        else if (!receive.match(/^[a-zA-Z0-9-_]/g)) checkDone.answer = "только латинские";
-        else if (!receive.match(/^[a-zA-Z0-9-_@.]{0,}$/g)) checkDone.answer = "специальные символы не допускаются";
-        else if (!receive.match(/[@]/g)) checkDone.answer = "не забудьте @";
-        else if (!receive.match(/[.]/g)) checkDone.answer = "нет точки в почте";
-        else if (receive.match(/[.]/g) && !receive.match(/\w+[.]\w+/g)) checkDone.answer = "это не почта";
+        if (receive.length < 3) checkDone.answer = AnswerMessage.FromThreeCharts;
+        else if (receive.match(/\s/g)) checkDone.answer = AnswerMessage.NoSpace;
+        else if (!receive.match(/^[a-zA-Z0-9-_]/g)) checkDone.answer = AnswerMessage.OnlyLatinoParty;
+        else if (!receive.match(/^[a-zA-Z0-9-_@.]{0,}$/g)) checkDone.answer = AnswerMessage.Simbol;
+        else if (!receive.match(/[@]/g)) checkDone.answer = AnswerMessage.AtPlease;
+        else if (!receive.match(/[.]/g)) checkDone.answer = AnswerMessage.ComPlease;
+        else if (receive.match(/[.]/g) && !receive.match(/\w+[.]\w+/g)) checkDone.answer = AnswerMessage.ThisNotMail;
     }
     if (nameInput == "password" || nameInput == "oldPassword" || nameInput == "newPassword" || nameInput == "repeateNewPassword") {
-        if (!receive.match(/^[a-zA-Z0-9-_]/g)) checkDone.answer = "только латинские";
-        else if (receive.length > 40) checkDone.answer = "не больше 40 символов";
-        else if (!receive.match(/\d+/g)) checkDone.answer = "хотя бы одну цифра";
-        else if (!receive.match(/[A-ZА-Я]+/g)) checkDone.answer = "хотя бы заглавную букву";
-        else if (receive.length < 8) checkDone.answer = "от 8 символов";
+        if (!receive.match(/^[a-zA-Z0-9-_]/g)) checkDone.answer = AnswerMessage.OnlyLatinoParty;
+        else if (receive.length > 40) checkDone.answer = AnswerMessage.LessThenForty;
+        else if (!receive.match(/\d+/g)) checkDone.answer = AnswerMessage.NeedNumber;
+        else if (!receive.match(/[A-ZА-Я]+/g)) checkDone.answer = AnswerMessage.UpperCharts;
+        else if (receive.length < 8) checkDone.answer = AnswerMessage.FromEight;
     }
-    if (nameInput == "telephone") {
-        if (!receive.match(/^[+]/g)) checkDone.answer = "Начните с плюса, пока можно много плюсов но все наладится";
-        else if (!receive.match(/\d+/g)) checkDone.answer = "хотя бы одну цифра";
-        else if (receive.length < 10) checkDone.answer = "Номер телефона должен содержать от 10 символов";
-        else if (receive.match(/\s/g)) checkDone.answer = "Номер телефона не может содержать пробелы";
-        else if (receive.match(/[A-Za-zА-Яа-я]+/g)) checkDone.answer = "Номер телефона не может содержать буквы";
-        else if (receive.length > 15) checkDone.answer = "Номер телефона должен содержать до 15 символов";
+    if (nameInput == "phone") {
+        if (!receive.match(/^[+]/g)) checkDone.answer = AnswerMessage.FormPlusPhone;
+        else if (receive.length < 10) checkDone.answer = AnswerMessage.FromTen;
+        else if (receive.match(/\s/g)) checkDone.answer = AnswerMessage.NoSpacePone;
+        else if (receive.match(/[A-Za-zА-Яа-я]+/g)) checkDone.answer = AnswerMessage.WithOutCharts;
+        else if (receive.length > 15) checkDone.answer = AnswerMessage.LessThenfifteen;
     }
     return checkDone.answer;
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"7tyJ4":[function() {},{}],"8Au6T":[function(require,module,exports) {
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"7tyJ4":[function() {},{}],"3t8s8":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "LogInControll", ()=>LogInControll
+);
+var _loginInterface = require("../Interfaces/LoginInterface");
+var _loginInterfaceDefault = parcelHelpers.interopDefault(_loginInterface);
+var _store = require("../../mypracticum/Store");
+var _storeDefault = parcelHelpers.interopDefault(_store);
+var _router = require("../../mypracticum/Router");
+var _routerDefault = parcelHelpers.interopDefault(_router);
+class LogInControll {
+    constructor(){
+        this.aplicationPI = _loginInterfaceDefault.default;
+    }
+    signin({ ...rest }) {
+        console.log({
+            ...rest
+        });
+        _loginInterfaceDefault.default.signin({
+            ...rest
+        }).then(()=>{
+            _routerDefault.default.go("/messenger");
+        });
+    }
+    getProfile() {
+        _loginInterfaceDefault.default.getProfile().then(({ response  })=>{
+            console.log(response);
+            _storeDefault.default.set({
+                responseInfo: JSON.parse(response)
+            });
+        });
+    }
+    exit() {
+        _loginInterfaceDefault.default.exit().then(()=>{
+            _routerDefault.default.go("/");
+        });
+    }
+    signup({ ...rest }) {
+        _loginInterfaceDefault.default.signup({
+            ...rest
+        }).then(()=>{
+            _routerDefault.default.go("/messenger");
+        });
+    }
+}
+exports.default = new LogInControll();
+
+},{"../Interfaces/LoginInterface":"hqXYB","../../mypracticum/Store":"crPhk","../../mypracticum/Router":"ksMzb","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"hqXYB":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "LoginInterface", ()=>LoginInterface
+);
+var _mainClass = require("./MainClass");
+var _mainClassDefault = parcelHelpers.interopDefault(_mainClass);
+class LoginInterface extends _mainClassDefault.default {
+    constructor(){
+        super('/auth');
+    }
+    signin({ ...rest }) {
+        return this.post('signin', {
+            ...rest
+        });
+    }
+    getProfile() {
+        return this.get('user');
+    }
+    exit() {
+        return this.post('logout', {});
+    }
+}
+exports.default = new LoginInterface();
+
+},{"./MainClass":"lLqh3","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"lLqh3":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _httptransport = require("../../mypracticum/HTTPTransport");
+class MainClass {
+    constructor(point){
+        this.https = new _httptransport.HTTPTransport();
+        this.yandex = 'https://ya-praktikum.tech/api/v2' + point;
+        this._headers = {
+            'Content-Type': 'application/json'
+        };
+    }
+    post(url, data) {
+        console.log(this.yandex, this.headers, data, url);
+        return this.https.post(`${this.yandex}/${url}`, {
+            headers: this._headers,
+            data
+        });
+    }
+    get(url) {
+        return this.https.get(`${this.yandex}/${url}`, {
+            headers: this._headers
+        });
+    }
+    put(url, data, headers) {
+        return this.https.put(`${this.yandex}/${url}`, {
+            headers: headers ? headers : this._headers,
+            data
+        });
+    }
+    delete(url, data) {
+        return this.https.delete(`${this.yandex}/${url}`, {
+            headers: this._headers,
+            data
+        });
+    }
+}
+exports.default = MainClass;
+
+},{"../../mypracticum/HTTPTransport":"bF8qy","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"bF8qy":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "METHODS", ()=>METHODS
+);
+parcelHelpers.export(exports, "HTTPTransport", ()=>HTTPTransport
+);
+var _queryStringify = require("../sourseCode/queryStringify");
+let METHODS;
+(function(METHODS1) {
+    METHODS1["GET"] = "GET";
+    METHODS1["POST"] = "POST";
+    METHODS1["PUT"] = "PUT";
+    METHODS1["DELETE"] = "DELETE";
+})(METHODS || (METHODS = {}));
+class HTTPTransport {
+    get = (url, options = {})=>this.request(url, {
+            ...options,
+            method: METHODS.GET
+        })
+    ;
+    put = (url, options = {})=>this.request(url, {
+            ...options,
+            method: METHODS.PUT
+        })
+    ;
+    post = (url, options = {})=>this.request(url, {
+            ...options,
+            method: METHODS.POST
+        })
+    ;
+    delete = (url, options = {})=>this.request(url, {
+            ...options,
+            method: METHODS.DELETE
+        })
+    ;
+    request = (url, options)=>{
+        const { withCredentials =true , method =METHODS.GET , data , timeout =5000 , headers ={} ,  } = options;
+        const ques = method === METHODS.GET ? _queryStringify.queryStringify(data) : '';
+        return new Promise((resolve, reject)=>{
+            const xhr = new XMLHttpRequest();
+            xhr.open(method, `${url}${ques}`);
+            if (withCredentials) xhr.withCredentials = true;
+            Object.entries(headers).forEach(([key, value])=>xhr.setRequestHeader(key, value)
+            );
+            xhr.onload = ()=>xhr.status >= 300 ? reject(xhr) : resolve(xhr)
+            ;
+            xhr.onabort = reject;
+            xhr.onerror = reject;
+            xhr.timeout = timeout;
+            xhr.ontimeout = reject;
+            if (data?.constructor.name === 'FormData') xhr.send(data);
+            else method === METHODS.GET || !data ? xhr.send() : xhr.send(JSON.stringify(data));
+        });
+    };
+}
+
+},{"../sourseCode/queryStringify":"fa80c","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"fa80c":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "queryStringify", ()=>queryStringify
+);
+function queryStringify(data) {
+    if (!data) return '';
+    console.log(data);
+    let keys = Object.keys(data);
+    return keys.reduce((result, key, index)=>{
+        return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`;
+    }, '?');
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"crPhk":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _eventBus = require("./EventBus");
+var _eventBusDefault = parcelHelpers.interopDefault(_eventBus);
+var _mainState = require("../sourseCode/mainState");
+class Store extends _eventBusDefault.default {
+    constructor(defaultState = null){
+        super();
+        this.state = defaultState;
+    }
+    get() {
+        return this.state;
+    }
+    set(receive, action) {
+        this.state = {
+            ...this.state,
+            ...receive
+        };
+        this.emit(action ? action : 'update');
+    }
+}
+exports.default = new Store(_mainState.mainState);
+
+},{"./EventBus":"4xVNd","../sourseCode/mainState":"lRyxn","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"lRyxn":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "mainState", ()=>mainState
+);
+const mainState = {
+    userInfo: {
+        login: '',
+        email: '',
+        display_name: '',
+        first_name: '',
+        second_name: '',
+        phone: ''
+    },
+    users: ''
+};
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"8Au6T":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "NotFoundPage", ()=>NotFoundPage
@@ -12443,36 +12768,160 @@ parcelHelpers.export(exports, "Chat", ()=>Chat
 );
 var _block = require("../../mypracticum/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
+var _store = require("../../mypracticum/Store");
+var _storeDefault = parcelHelpers.interopDefault(_store);
+var _router = require("../../mypracticum/Router");
+var _routerDefault = parcelHelpers.interopDefault(_router);
+var _chatControll = require("../../sourseCode/control/ChatControll");
+var _chatControllDefault = parcelHelpers.interopDefault(_chatControll);
 var _chatCss = require("./chat.css");
+var _messageControll = require("../../sourseCode/control/MessageControll");
+var _messageControllDefault = parcelHelpers.interopDefault(_messageControll);
+var _profileControll = require("../../sourseCode/control/ProfileControll");
+var _profileControllDefault = parcelHelpers.interopDefault(_profileControll);
+var _logInControll = require("../../sourseCode/control/LogInControll");
+var _logInControllDefault = parcelHelpers.interopDefault(_logInControll);
 class Chat extends _blockDefault.default {
     constructor(){
         super();
-        this.setProps({
-            onSubmit: ()=>{
-                console.log("проверки для чата нет в разработке");
-            }
+        _chatControllDefault.default.getChats();
+        _messageControllDefault.default.getMessages();
+        _logInControllDefault.default.getProfile();
+        _storeDefault.default.on("update", ()=>{
+            this.setProps(_storeDefault.default.get());
         });
     }
+    getStateFromProps(props) {
+        this.state = {
+            chatItemId: 0,
+            chooseChat: (evt)=>{
+                const element = evt.currentTarget;
+                const chatItemId = element.getAttribute("chat_id");
+                this.setState({
+                    chatItemId
+                });
+                const state = _storeDefault.default.get();
+                const { userInfo  } = state;
+                if (chatItemId) _chatControllDefault.default.getChatToken({
+                    chatId: Number(chatItemId)
+                }).then(({ token  })=>{
+                    console.log({
+                        token
+                    }, userInfo?.id, chatItemId);
+                    _messageControllDefault.default.connect({
+                        userId: userInfo?.id,
+                        chatId: Number(chatItemId),
+                        token
+                    });
+                });
+                _storeDefault.default.on("add-users", ()=>{
+                    console.log("add-users");
+                });
+                _storeDefault.default.on("delete-users", ()=>{
+                    console.log("delete-users");
+                });
+            },
+            sendMessage: (evt)=>{
+                evt.preventDefault();
+                const input = document.querySelector(".chat__footer-input");
+                _messageControllDefault.default.sendMessage(input.value);
+                input.value = '';
+                _storeDefault.default.on("update", ()=>{
+                    this.setProps(_storeDefault.default.get());
+                });
+            },
+            goProfile: ()=>{
+                _routerDefault.default.go("/profile");
+            },
+            addChat: ()=>{
+                const input = document.querySelector(".chat__create_chat");
+                if (input.value != "") {
+                    const title = input.value;
+                    console.log({
+                        title
+                    });
+                    _chatControllDefault.default.createChat({
+                        title
+                    });
+                    _storeDefault.default.on("update", ()=>{
+                        const state = _storeDefault.default.get();
+                        this.setState({
+                            allChat: state.allChat
+                        });
+                    });
+                } else console.log("---------------");
+            },
+            serchUser: ()=>{
+                const input = document.querySelector(".input__footer-User");
+                const login = input.value;
+                console.log({
+                    login
+                });
+                if (input.value != "") _profileControllDefault.default.searchUser({
+                    login: login
+                });
+                else console.log("---------------");
+            },
+            addUser: ()=>{
+                console.log(99991);
+                const input = document.querySelector(".input__footer-User");
+                if (this.state.chatItemId != 0) {
+                    if (input.value != "") {
+                        const login = input.value;
+                        console.log({
+                            login
+                        }, this.state.chatItemID);
+                        let send = Number(login);
+                        _chatControllDefault.default.addUser({
+                            users: [
+                                send
+                            ],
+                            chatId: Number(this.state.chatItemId)
+                        });
+                    } else console.log("---------------");
+                }
+            },
+            deleteUser: ()=>{
+                const input = document.querySelector(".input__footer-User");
+                const login = input.value;
+                console.log({
+                    login
+                });
+                let send = Number(login);
+                if (input.value != "") _chatControllDefault.default.delUser({
+                    users: [
+                        send
+                    ],
+                    chatId: Number(this.state.chatItemId)
+                });
+                else console.log("---------------");
+            }
+        };
+    }
     render() {
+        const { allChat =[] , userInfo =[] , messages =[]  } = this.props;
         return `
     <main>
       <ul class="chat">
       <li class="chat__main chat__main_left">
-        <a class="chat__profile page__link-profile" href="#">
-          <span class="chat__link-text">Профиль</span>
-        </a>
-        
-        <ul class="chat__list">
-        {{{ listItem 
-          userName= "Андрей" lastMessage= "djfljeri" time= "11:11" countNotReadMessage= 2 srcAvatar= "#"
-        }}}
-        {{{ listItem 
-          userName= "Андрей" lastMessage= "djfljeri" time= "11:11" countNotReadMessage= 2 srcAvatar= "#"
-        }}}
-        {{{ listItem 
-          userName= "Андрей" lastMessage= "djfljeri" time= "11:11" countNotReadMessage= 2 srcAvatar= "#"
-          }}}
+      {{{Button classes="button__chat_link" textBtn="Профиль" onClick=goProfile }}}
+        <ul class="chat__list">    
+        ${allChat && Object.values(allChat)?.map((chat)=>{
+            console.log(chat.title);
+            return `
+                {{{listItem        
+                  id="${chat.id}"
+                  userName="${chat.title}"
+                  lastMessage="${chat.last_message ? chat.last_message.content : ""}"                  
+                  srcAvatar= "#"                  
+                  time="${chat.last_message ? chat.last_message.time : null}"
+                  countNotReadMessage="${chat.unread_count}"
+                  onClick=chooseChat
+                }}}`;
+        }).join('')}
         </ul>
+        <input class="chat__create_chat" type="text" placeholder="Создать чат" />  
+        {{{Button classes="button__footer-btn-send" onClick=addChat }}}
       </li>
         <li class="chat__main chat__main-dialog">
         <div class="chat__header">
@@ -12480,14 +12929,18 @@ class Chat extends _blockDefault.default {
             <p class="chat__user-name">Вадим</p>
           </div>
         </div>
-        
-
-        <ul class="chat__messages">
-          {{{ message text="1111111111111111111" time="11:11" isRead=false}}}
-          {{{ message text="1111111111111111111" time="11:11" owner=true}}}
-          {{{ message text="1111111111111111111" time="11:11" isRead=false}}}
-      </ul>
-
+        <div class="chat__inner">
+          <ul class="chat__messages">
+            ${console.log(messages), messages.map((message)=>{
+            return `
+                  {{{message
+                    text="${message.content}"
+                    time="${message.time}"
+                    isRead=${message.is_read}
+                  }}}`;
+        }).join('')}
+          </ul>
+        </div>
       <div class="chat__footer">
       <form class="chat__footer-form">
         <button class="chat__footer-btn-attach" type="button" aria-label="Прикрепить файл">
@@ -12498,18 +12951,266 @@ class Chat extends _blockDefault.default {
           />
         </button>
         <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />    
-        {{{Button classes="button__footer-btn-send" onClick=onSubmit }}}
-      
+        {{{Button classes="button__footer-btn-send" onClick=sendMessage }}}
       </form>
-      </div>    
-      </li>    
+      </div>
+      <div>
+        <input class="input__footer-User" type="text" placeholder="Ник пользователя удалить/добавить Результат работы прошу проследить в консоль логе на Ф12" />  
+      </div>
+      {{{Button classes="button__footer-btn-addUser" textBtn = "add" onClick=addUser }}}
+      {{{Button classes="button__footer-btn-deleteUser" textBtn="delete" onClick=deleteUser }}}
+      {{{Button classes="button__footer-btn-serchUser" textBtn="serchUserIdInF12" onClick=serchUser }}}
+      </li>
     </ul>
     </main>
     `;
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","./chat.css":"1SU4r","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"1SU4r":[function() {},{}],"jAgB3":[function(require,module,exports) {
+},{"../../mypracticum/Block":"hydC4","../../mypracticum/Store":"crPhk","../../mypracticum/Router":"ksMzb","../../sourseCode/control/ChatControll":"iSJcP","./chat.css":"1SU4r","../../sourseCode/control/MessageControll":"8DyY2","../../sourseCode/control/ProfileControll":"4CRXS","../../sourseCode/control/LogInControll":"3t8s8","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"iSJcP":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ChatControll", ()=>ChatControll
+);
+var _chatInterface = require("../Interfaces/ChatInterface");
+var _chatInterfaceDefault = parcelHelpers.interopDefault(_chatInterface);
+var _store = require("../../mypracticum/Store");
+var _storeDefault = parcelHelpers.interopDefault(_store);
+class ChatControll {
+    getChats() {
+        _chatInterfaceDefault.default.getChats().then(({ response  })=>{
+            _storeDefault.default.set({
+                allChat: JSON.parse(response)
+            });
+        });
+    }
+    getChatToken({ ...rest }) {
+        return _chatInterfaceDefault.default.getChatToken({
+            ...rest
+        }).then(({ response  })=>JSON.parse(response)
+        );
+    }
+    createChat({ title  }) {
+        console.log(title);
+        _chatInterfaceDefault.default.createChat({
+            title
+        }).then(({ response  })=>{
+            const state = _storeDefault.default.get();
+            const newChat = {
+                avatar: null,
+                id: JSON.parse(response).id,
+                title: title,
+                unread_count: 0,
+                created_by: 0
+            };
+            state.allChat?.push(newChat);
+            _storeDefault.default.set({
+                allChat: state.allChat
+            });
+        });
+    }
+    addUser({ users , chatId  }) {
+        _chatInterfaceDefault.default.addUser({
+            users,
+            chatId
+        }).then(()=>{
+            console.log("addUser");
+        });
+    }
+    delUser({ users , chatId  }) {
+        _chatInterfaceDefault.default.delUser({
+            users,
+            chatId
+        }).then(()=>{
+            console.log("delUser");
+        });
+    }
+}
+exports.default = new ChatControll();
+
+},{"../Interfaces/ChatInterface":"9uIaw","../../mypracticum/Store":"crPhk","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"9uIaw":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ChatInterface", ()=>ChatInterface
+);
+var _mainClass = require("./MainClass");
+var _mainClassDefault = parcelHelpers.interopDefault(_mainClass);
+class ChatInterface extends _mainClassDefault.default {
+    constructor(){
+        super('/chats');
+    }
+    getChats() {
+        console.log(this);
+        return this.get('');
+    }
+    getChatToken({ chatId  }) {
+        return this.post(`token/${chatId}`, {});
+    }
+    createChat({ ...rest }) {
+        return this.post('', {
+            ...rest
+        });
+    }
+    addUser({ ...rest }) {
+        return this.put('users', {
+            ...rest
+        });
+    }
+    delUser({ ...rest }) {
+        return this.delete('users', {
+            ...rest
+        });
+    }
+}
+exports.default = new ChatInterface();
+
+},{"./MainClass":"lLqh3","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"1SU4r":[function() {},{}],"8DyY2":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _store = require("../../mypracticum/Store");
+var _storeDefault = parcelHelpers.interopDefault(_store);
+const URLS = "wss://ya-praktikum.tech/ws/chats";
+const userId = "120127";
+class MessageControll {
+    constructor(){
+        this.socket = null;
+        this.handleOpen = this.handleOpen.bind(this);
+        this.handleMessage = this.handleMessage.bind(this);
+    }
+    setListeners() {
+        if (this.socket) {
+            this.socket.addEventListener('open', this.handleOpen);
+            this.socket.addEventListener('message', this.handleMessage);
+        }
+    }
+    removeListeners() {
+        if (this.socket) {
+            this.socket.removeEventListener('open', this.handleOpen);
+            this.socket.removeEventListener('message', this.handleMessage);
+        }
+    }
+    handleOpen() {
+        if (this.socket) {
+            this.getMessages();
+            setInterval(()=>{
+                this.socket?.send(JSON.stringify({
+                    type: 'ping'
+                }));
+            }, 5000);
+        }
+    }
+    connect({ chatId , token  }) {
+        console.log(chatId, token, "connect");
+        if (this.chatId !== chatId) {
+            this.chatId = chatId;
+            this.token = token;
+            // const socket = new WebSocket('wss://ya-praktikum.tech/ws/chats/<USER_ID>/<CHAT_ID>/<TOKEN_VALUE>');
+            this.socket = new WebSocket(`${URLS}/${userId}/${this.chatId}/${this.token}`);
+            this.setListeners();
+        }
+    }
+    handleMessage(evt) {
+        console.log(evt);
+        const messages = JSON.parse(evt.data);
+        if (messages.type !== 'pong') {
+            if (Array.isArray(messages)) {
+                console.log("handleMessage", messages);
+                _storeDefault.default.set({
+                    messages: messages.reverse()
+                });
+            } else {
+                const state = _storeDefault.default.get();
+                _storeDefault.default.set({
+                    messages: Object.assign(state.messages, {
+                        [state.messages.length]: messages
+                    })
+                });
+            }
+        }
+    }
+    sendMessage(message) {
+        if (this.socket) this.socket?.send(JSON.stringify({
+            content: message,
+            type: "message"
+        }));
+    }
+    getMessages() {
+        if (this.socket) {
+            console.log("getMessages");
+            this.socket.send(JSON.stringify({
+                content: "0",
+                type: "get old"
+            }));
+        }
+    }
+}
+exports.default = new MessageControll();
+
+},{"../../mypracticum/Store":"crPhk","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"4CRXS":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _profileInterface = require("../Interfaces/ProfileInterface");
+var _profileInterfaceDefault = parcelHelpers.interopDefault(_profileInterface);
+var _store = require("../../mypracticum/Store");
+var _storeDefault = parcelHelpers.interopDefault(_store);
+class ProfileControll {
+    editProfile(userInfo) {
+        _profileInterfaceDefault.default.changeUserInfo(userInfo).then(({ response  })=>{
+            _storeDefault.default.set({
+                userInfo: JSON.parse(response)
+            });
+        });
+    }
+    searchUser({ ...rest }) {
+        return _profileInterfaceDefault.default.searchUser({
+            ...rest
+        }).then(({ response  })=>console.log(response)
+        );
+    }
+    changeAvatar(avatar) {
+        console.log(avatar);
+        _profileInterfaceDefault.default.changeAvatar(avatar).then(({ response  })=>{
+            _storeDefault.default.set({
+                userInfo: JSON.parse(response)
+            });
+        });
+    }
+    changePassword(userPassword) {
+        _profileInterfaceDefault.default.changePassword(userPassword).then(()=>console.log("userPassword done")
+        );
+    }
+}
+exports.default = new ProfileControll();
+
+},{"../Interfaces/ProfileInterface":"fxgaP","../../mypracticum/Store":"crPhk","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"fxgaP":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _mainClass = require("./MainClass");
+var _mainClassDefault = parcelHelpers.interopDefault(_mainClass);
+class ProfileInterface extends _mainClassDefault.default {
+    constructor(){
+        super("/user");
+    }
+    changeUserInfo(userInfo) {
+        console.log(userInfo);
+        return this.put("profile", userInfo);
+    }
+    searchUser({ login  }) {
+        return this.post("search", {
+            login
+        });
+    }
+    changeAvatar(avatar) {
+        console.log(avatar);
+        return this.put('profile/avatar', avatar, {});
+    }
+    changePassword(userPassword) {
+        return this.put('password', userPassword);
+    }
+}
+exports.default = new ProfileInterface();
+
+},{"./MainClass":"lLqh3","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"jAgB3":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "EditProfile", ()=>EditProfile
@@ -12518,6 +13219,8 @@ var _block = require("../../mypracticum/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
 var _editProfileCss = require("./editProfile.css");
 var _validate = require("../../sourseCode/validate");
+var _profileControll = require("../../sourseCode/control/ProfileControll");
+var _profileControllDefault = parcelHelpers.interopDefault(_profileControll);
 class EditProfile extends _blockDefault.default {
     constructor(){
         super();
@@ -12526,13 +13229,20 @@ class EditProfile extends _blockDefault.default {
             passwordValue: "",
             onSubmit: ()=>{
                 let login = this.element.querySelector("input[name='login']");
-                let telephone = this.element.querySelector("input[name='telephone']");
+                let phone = this.element.querySelector("input[name='phone']");
                 let chatname = this.element.querySelector("input[name='chatname']");
-                let secondname = this.element.querySelector("input[name='secondname']");
-                let profname = this.element.querySelector("input[name='profname']");
+                let secondName = this.element.querySelector("input[name='secondName']");
+                let profileName = this.element.querySelector("input[name='profileName']");
                 let mail = this.element.querySelector("input[name='mail']");
                 let messageErrorlogin = _validate.validate(login.value);
-                if (!messageErrorlogin && !_validate.validate(telephone.value) && !_validate.validate(chatname.value) && !_validate.validate(secondname.value) && !_validate.validate(profname.value) && !_validate.validate(mail.value)) console.log("отправка пока 1 пример но отрпавиться фсе что есть ", login.value);
+                if (!messageErrorlogin && !_validate.validate(phone.value) && !_validate.validate(chatname.value) && !_validate.validate(secondName.value) && !_validate.validate(profileName.value) && !_validate.validate(mail.value)) _profileControllDefault.default.editProfile({
+                    first_name: profileName.value,
+                    second_name: secondName.value,
+                    display_name: chatname.value,
+                    login: login.value,
+                    email: mail.value,
+                    phone: phone.value
+                });
                 else console.log("исправьте ошибки выделенные красным цветом, пожалуйста");
             }
         });
@@ -12565,7 +13275,7 @@ class EditProfile extends _blockDefault.default {
         onInput=onInput 
         onFocus=onFocus
         type="text" 
-        name="profname"
+        name="profileName"
         classes="input__text-field"
         placeholder="Имя"
         errorClass="error"
@@ -12574,7 +13284,7 @@ class EditProfile extends _blockDefault.default {
         onInput=onInput 
         onFocus=onFocus
         type="text" 
-        name="secondname"
+        name="secondName"
         classes="input__text-field"
         placeholder="Фамилия"
         errorClass="error"
@@ -12592,7 +13302,7 @@ class EditProfile extends _blockDefault.default {
         onInput=onInput 
         onFocus=onFocus
         type="text" 
-        name="telephone"
+        name="phone"
         classes="input__text-field"
         placeholder="Телефон"
         errorClass="error"
@@ -12605,7 +13315,7 @@ class EditProfile extends _blockDefault.default {
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","./editProfile.css":"5iWeb","../../sourseCode/validate":"ihU9O","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"5iWeb":[function() {},{}],"1d69E":[function(require,module,exports) {
+},{"../../mypracticum/Block":"hydC4","./editProfile.css":"5iWeb","../../sourseCode/validate":"ihU9O","../../sourseCode/control/ProfileControll":"4CRXS","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"5iWeb":[function() {},{}],"1d69E":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Register", ()=>Register
@@ -12613,23 +13323,39 @@ parcelHelpers.export(exports, "Register", ()=>Register
 var _block = require("../../mypracticum/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
 var _registerCss = require("./register.css");
+var _router = require("../../mypracticum/Router");
+var _routerDefault = parcelHelpers.interopDefault(_router);
+var _logInControll = require("../../sourseCode/control/LogInControll");
+var _logInControllDefault = parcelHelpers.interopDefault(_logInControll);
 var _validate = require("../../sourseCode/validate");
 class Register extends _blockDefault.default {
     constructor(){
         super();
         this.setProps({
-            loginValue: "",
-            passwordValue: "",
             onSubmit: ()=>{
                 let login = this.element.querySelector("input[name='login']");
-                let secondname = this.element.querySelector("input[name='secondname']");
+                let secondName = this.element.querySelector("input[name='secondName']");
                 let mail = this.element.querySelector("input[name='mail']");
-                let profname = this.element.querySelector("input[name='profname']");
+                let profileName = this.element.querySelector("input[name='profileName']");
                 let password = this.element.querySelector("input[name='password']");
                 let password_repeat = this.element.querySelector("input[name='password_repeat']");
+                let phone = this.element.querySelector("input[name='phone']");
                 let messageErrorlogin = _validate.validate(login.value);
-                if (!messageErrorlogin && !_validate.validate(secondname.value) && !_validate.validate(profname.value) && !_validate.validate(mail.value) && !_validate.validate(password.value) && !_validate.validate(password_repeat.value)) console.log("отправка пока 1 пример но отрпавиться фсе что есть. Проверка на совпадение паролей в разработке", login.value);
-                else console.log("исправьте ошибки выделенные красным цветом, пожалуйста. Проверка на совпадение паролей в разработке");
+                const signData = {
+                    password: password.value,
+                    email: mail.value,
+                    login: login.value,
+                    first_name: profileName.value,
+                    second_name: secondName.value,
+                    phone: phone.value
+                };
+                if (!messageErrorlogin && !_validate.validate(secondName.value) && !_validate.validate(profileName.value) && !_validate.validate(mail.value) && !_validate.validate(password.value) && !_validate.validate(password_repeat.value) && !_validate.validate(phone.value)) {
+                    console.log("отправка. Проверка на совпадение паролей в разработке", login.value);
+                    _logInControllDefault.default.signup(signData);
+                } else console.log("исправьте ошибки выделенные красным цветом, пожалуйста. Проверка на совпадение паролей в разработке");
+            },
+            toLogIn: ()=>{
+                _routerDefault.default.go("/");
             }
         });
     }
@@ -12660,7 +13386,7 @@ class Register extends _blockDefault.default {
         onInput=onInput 
         onFocus=onFocus
         type="text" 
-        name="profname"
+        name="profileName"
         classes="input__text-field"
         placeholder="Имя"
         errorClass="error"
@@ -12669,12 +13395,11 @@ class Register extends _blockDefault.default {
         onInput=onInput 
         onFocus=onFocus
         type="text" 
-        name="secondname"
+        name="secondName"
         classes="input__text-field"
         placeholder="Фамилия"
         errorClass="error"
       }}}
-      
       {{{mainInput 
         onInput=onInput 
         onFocus=onFocus
@@ -12693,76 +13418,123 @@ class Register extends _blockDefault.default {
         placeholder="Повтарите пароль"
         errorClass="error"
       }}}
-      {{{Button textBtn="Сохранить" classes="button button__edit_pro" onClick=onSubmit }}}      
+      {{{mainInput 
+        onInput=onInput 
+        onFocus=onFocus
+        type="text" 
+        name="phone"
+        classes="input__text-field"
+        placeholder="Телефон"
+        errorClass="error"
+      }}}
+      {{{Button textBtn="Сохранить" classes="button button__edit_pro" onClick=onSubmit }}}
+      {{{Button textBtn="Вход" classes="button button__edit_pro" onClick=toLogIn}}}
       </form>
     </main>
   `;
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","./register.css":"cgTR9","../../sourseCode/validate":"ihU9O","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"cgTR9":[function() {},{}],"3JZwj":[function(require,module,exports) {
+},{"../../mypracticum/Block":"hydC4","./register.css":"cgTR9","../../mypracticum/Router":"ksMzb","../../sourseCode/control/LogInControll":"3t8s8","../../sourseCode/validate":"ihU9O","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"cgTR9":[function() {},{}],"3JZwj":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Profile", ()=>Profile
 );
 var _block = require("../../mypracticum/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
+var _logInControll = require("../../sourseCode/control/LogInControll");
+var _logInControllDefault = parcelHelpers.interopDefault(_logInControll);
+var _store = require("../../mypracticum/Store");
+var _storeDefault = parcelHelpers.interopDefault(_store);
+var _router = require("../../mypracticum/Router");
+var _routerDefault = parcelHelpers.interopDefault(_router);
 var _profileCss = require("./profile.css");
+var _profileControll = require("../../sourseCode/control/ProfileControll");
+var _profileControllDefault = parcelHelpers.interopDefault(_profileControll);
 class Profile extends _blockDefault.default {
     constructor(){
         super();
+        _logInControllDefault.default.getProfile();
+        _storeDefault.default.on("update", ()=>{
+            this.setProps(_storeDefault.default.get());
+        });
+    }
+    getStateFromProps() {
+        this.state = {
+            exit: (evt)=>{
+                evt.preventDefault();
+                _logInControllDefault.default.exit();
+            },
+            changeData: ()=>_routerDefault.default.go("/settings")
+            ,
+            changePassword: ()=>_routerDefault.default.go("/editPassword")
+            ,
+            Avatar: (evt)=>{
+                const input = document.querySelector(".input-file__input");
+                const jjj = input.files;
+                let formData = new FormData();
+                formData.append("avatar", jjj[0]);
+                _profileControllDefault.default.changeAvatar(formData);
+            }
+        };
     }
     render() {
+        const { responseInfo =[]  } = this.props;
+        const { avatar , email , login , first_name , second_name , display_name , phone  } = responseInfo;
+        console.log(responseInfo, this.props);
         return `
       <main class="profile">
         <div class="profile__form">
+        {{{Avatar avatar="${avatar}" onClick=Avatar}}}
+        <span >Выбор файла затем клик по круглой картинке высылает файл на сервер, замена тут после нового захода на эту страницу</span>
+        <input class="input-file__input" type="file" name="avatar" accept="image/*" />
             <div class ="profile__title">
-            {{{Title firstLine="Иван"}}}
+            {{{Title firstLine="${display_name}"}}}
             </div>
             <form class="profile__form">
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Почта</label>
-                <p>googool@google.com</p>
+                <p>"${email}"</p>
             </div>
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Логин</label>
-                <p class="profile__form__span__value">ivanivanov</p>
+                <p class="profile__form__span__value">"${login}"</p>
             </div>
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Имя</label>
-                <p class="profile__form__span__value">Иван</p>
+                <p class="profile__form__span__value">"${first_name}"</p>
             </div>
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Фамилия</label>
-                <p class="profile__form__span__value">Иванов</p>
+                <p class="profile__form__span__value">"${second_name}"</p>
             </div>
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Имя в чате</label>
-                <p class="profile__form__span__value">Иван</p>
+                <p class="profile__form__span__value">"${display_name}"</p>
             </div>
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Телефон</label>
-                <p class="profile__form__span__value">+7 (909) 967 30 3</p>
+                <p class="profile__form__span__value">"${phone}"</p>
             </div>
             </form>
 
             <div class="profile__form__span">
-                <a class="profile__link" href="#">Изменить данные</a>
+                {{{Button classes="button__profile_link" textBtn="Изменить данные" onClick=changeData }}}
             </div>
             <div class="profile__form__span">
-                <a class="profile__link" href="#">Изменить пароль</a>
+                {{{Button classes="button__profile_link" textBtn="Изменить пароль" onClick=changePassword }}}
             </div>
             <div class="profile__form__span">
-                <a class="profile__link" href="#">Выйти</a>
+                {{{Button classes="button__profile_link" textBtn="Выйти" onClick=exit }}}
+      
             </div>
-            
             
      </main>
     `;
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","./profile.css":"gXxuZ","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"gXxuZ":[function() {},{}],"gEr5a":[function(require,module,exports) {
+},{"../../mypracticum/Block":"hydC4","../../sourseCode/control/LogInControll":"3t8s8","../../mypracticum/Store":"crPhk","../../mypracticum/Router":"ksMzb","./profile.css":"gXxuZ","../../sourseCode/control/ProfileControll":"4CRXS","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"gXxuZ":[function() {},{}],"gEr5a":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "EditPassword", ()=>EditPassword
@@ -12771,20 +13543,28 @@ var _block = require("../../mypracticum/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
 var _editPasswordCss = require("./editPassword.css");
 var _validate = require("../../sourseCode/validate");
+var _profileControll = require("../../sourseCode/control/ProfileControll");
+var _profileControllDefault = parcelHelpers.interopDefault(_profileControll);
 class EditPassword extends _blockDefault.default {
     constructor(){
         super();
         this.setProps({
             onSubmit: ()=>{
-                let oldPassword = this.element.querySelector("input[name='oldPassword']");
-                let newPassword = this.element.querySelector("input[name='newPassword']");
+                let oldPasswordHTML = this.element.querySelector("input[name='oldPassword']");
+                let newPasswordHTML = this.element.querySelector("input[name='newPassword']");
                 let repeateNewPassword = this.element.querySelector("input[name='repeateNewPassword']");
-                if (oldPassword && newPassword && repeateNewPassword) {
-                    let newPasswordValue = newPassword.value;
+                if (oldPasswordHTML && newPasswordHTML && repeateNewPassword) {
+                    let newPassword = newPasswordHTML.value;
                     let repeateNewPasswordValue = repeateNewPassword.value;
-                    if (!_validate.validate(oldPassword.value) && !_validate.validate(newPasswordValue) && !_validate.validate(repeateNewPasswordValue)) {
-                        if (newPasswordValue == repeateNewPasswordValue) console.log("отправка ", newPasswordValue);
-                        else console.log("пасворды одинаковые пожалуйста");
+                    let oldPassword = oldPasswordHTML.value;
+                    if (!_validate.validate(oldPassword) && !_validate.validate(newPassword) && !_validate.validate(repeateNewPasswordValue)) {
+                        if (newPassword == repeateNewPasswordValue) {
+                            console.log("отправка ", newPassword);
+                            _profileControllDefault.default.changePassword({
+                                newPassword,
+                                oldPassword
+                            });
+                        } else console.log("пасворды одинаковые пожалуйста");
                     } else console.log("исправьте ошибки выделенные красным цветом, пожалуйста");
                 }
             }
@@ -12825,8 +13605,7 @@ class EditPassword extends _blockDefault.default {
                      placeholder="Повторите новый пароль"
                      errorClass="error"
                   }}}
-                  {{{Button textBtn="Сохранить" classes="button button__edit_password" onClick=onSubmit }}}
-                     
+                  {{{Button textBtn="Сохранить" classes="button button__edit_password" onClick=onSubmit }}}                     
                   </ul>
                </form>
             </li>
@@ -12836,7 +13615,7 @@ class EditPassword extends _blockDefault.default {
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","./editPassword.css":"uFkuX","../../sourseCode/validate":"ihU9O","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"uFkuX":[function() {},{}],"hcOpP":[function(require,module,exports) {
+},{"../../mypracticum/Block":"hydC4","./editPassword.css":"uFkuX","../../sourseCode/validate":"ihU9O","../../sourseCode/control/ProfileControll":"4CRXS","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"uFkuX":[function() {},{}],"hcOpP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ServerError", ()=>ServerError
@@ -13053,12 +13832,29 @@ var _blockDefault = parcelHelpers.interopDefault(_block);
 var _listItemCss = require("./listItem.css");
 class ListItem extends _blockDefault.default {
     static componentName = "listItem";
-    constructor(...props){
-        super(...props);
+    constructor({ onClick , ...receive }){
+        super({
+            events: {
+                click: onClick
+            },
+            ...receive
+        });
+    }
+    getStateFromProps(props) {
+        this.state = {
+            userName: props.userName,
+            countNotReadMessage: props.countNotReadMessage,
+            time: props.time,
+            lastMessage: props.lastMessage,
+            id: props.id
+        };
     }
     render() {
+        const { countNotReadMessage , time , userName , lastMessage , id  } = this.state;
+        console.log(11111);
+        console.log(userName, countNotReadMessage, lastMessage, time, id);
         return `
-  <li class="list-item">
+  <li class="list-item" chat_id="${id}">
     <div class="list-item__container">
       <div class="list-item__inner">
         <p class="list-item__user-name">{{this.userName}}</p>
@@ -13166,5 +13962,46 @@ class Title extends _blockDefault.default {
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","./title.css":"5MP1a","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"5MP1a":[function() {},{}]},["41p50","57jqn"], "57jqn", "parcelRequire4741")
+},{"../../mypracticum/Block":"hydC4","./title.css":"5MP1a","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"5MP1a":[function() {},{}],"jLr1o":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>_avatar.Avatar
+);
+var _avatar = require("./avatar");
+
+},{"./avatar":"gdrGh","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"gdrGh":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Avatar", ()=>Avatar
+);
+var _block = require("../../mypracticum/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _avatarCss = require("./avatar.css");
+const yandex = "https://ya-praktikum.tech/api/v2/resources";
+class Avatar extends _blockDefault.default {
+    static componentName = "Avatar";
+    constructor({ onClick , ...rest }){
+        super({
+            events: {
+                click: onClick
+            },
+            ...rest
+        });
+    }
+    getStateFromProps(props) {
+        this.state = {
+            avatar: props.avatar
+        };
+    }
+    render() {
+        const { avatar  } = this.state;
+        return `
+      <div class="avatar">
+      <img class="avatar__img" src="${`${yandex}${avatar}`}" alt="Аватар по умолчанию" />
+      </div>
+      `;
+    }
+}
+
+},{"../../mypracticum/Block":"hydC4","./avatar.css":"iIMPn","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"iIMPn":[function() {},{}]},["41p50","57jqn"], "57jqn", "parcelRequirea735")
 

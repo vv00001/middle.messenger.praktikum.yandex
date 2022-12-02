@@ -1,57 +1,92 @@
 import Block from "../../mypracticum/Block"
-
+import LogInControll from "../../sourseCode/control/LogInControll";
+import store from "../../mypracticum/Store"
+import router from "../../mypracticum/Router"
 import "./profile.css"
+import { Avatar }from "../../component/Avatar/avatar"
+import ProfileControll from "../../sourseCode/control/ProfileControll";
 
 export class Profile extends Block {
   constructor() {
     super()
-  
+    LogInControll.getProfile();
+
+    store.on("update", () => {
+      this.setProps(store.get());
+    });
   }
 
+
+  getStateFromProps() {
+    this.state = {
+      exit: (evt: Event) => {
+        evt.preventDefault();
+        LogInControll.exit();
+      },
+      changeData: () => router.go("/settings"),
+      changePassword: () => router.go("/editPassword"),
+      Avatar:(evt:Event)=>{        
+        const input=document.querySelector(".input-file__input") as HTMLFormElement;
+        const jjj= input.files;
+         let formData = new FormData()
+         formData.append("avatar", jjj[0]) 
+         ProfileControll.changeAvatar(formData)        
+      }
+    };
+  }
+  
   protected render(): string {
+    const { responseInfo = [] } = this.props;
+    const { avatar,  email,login, first_name,second_name , display_name,phone  } =
+    responseInfo;
+
+      console.log(responseInfo,this.props)
     return `
       <main class="profile">
         <div class="profile__form">
+        {{{Avatar avatar="${avatar}" onClick=Avatar}}}
+        <span >Выбор файла затем клик по круглой картинке высылает файл на сервер, замена тут после нового захода на эту страницу</span>
+        <input class="input-file__input" type="file" name="avatar" accept="image/*" />
             <div class ="profile__title">
-            {{{Title firstLine="Иван"}}}
+            {{{Title firstLine="${display_name}"}}}
             </div>
             <form class="profile__form">
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Почта</label>
-                <p>googool@google.com</p>
+                <p>"${email}"</p>
             </div>
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Логин</label>
-                <p class="profile__form__span__value">ivanivanov</p>
+                <p class="profile__form__span__value">"${login}"</p>
             </div>
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Имя</label>
-                <p class="profile__form__span__value">Иван</p>
+                <p class="profile__form__span__value">"${first_name}"</p>
             </div>
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Фамилия</label>
-                <p class="profile__form__span__value">Иванов</p>
+                <p class="profile__form__span__value">"${second_name}"</p>
             </div>
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Имя в чате</label>
-                <p class="profile__form__span__value">Иван</p>
+                <p class="profile__form__span__value">"${display_name}"</p>
             </div>
             <div class="profile__form__span">
                 <label class="profile__form__span__label">Телефон</label>
-                <p class="profile__form__span__value">+7 (909) 967 30 3</p>
+                <p class="profile__form__span__value">"${phone}"</p>
             </div>
             </form>
 
             <div class="profile__form__span">
-                <a class="profile__link" href="#">Изменить данные</a>
+                {{{Button classes="button__profile_link" textBtn="Изменить данные" onClick=changeData }}}
             </div>
             <div class="profile__form__span">
-                <a class="profile__link" href="#">Изменить пароль</a>
+                {{{Button classes="button__profile_link" textBtn="Изменить пароль" onClick=changePassword }}}
             </div>
             <div class="profile__form__span">
-                <a class="profile__link" href="#">Выйти</a>
+                {{{Button classes="button__profile_link" textBtn="Выйти" onClick=exit }}}
+      
             </div>
-            
             
      </main>
     `

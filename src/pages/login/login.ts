@@ -3,6 +3,10 @@ import { Button }from "../../component/button/button"
 import Block from "../../mypracticum/Block"
 import { validate } from "../../sourseCode/validate"
 import "./login.css"
+import MainClass from "../../sourseCode/Interfaces/MainClass"
+import LogInControll from "../../sourseCode/control/LogInControll"
+import router from "../../mypracticum/Router"
+
 
 export class LoginPage extends Block {
   constructor() {
@@ -11,17 +15,33 @@ export class LoginPage extends Block {
       loginValue: "",
       passwordValue: "",
       onSubmit: () => {
-        let login = this.element.querySelector("input[name='login']") as HTMLInputElement
-        let password = this.element.querySelector("input[name='password']") as HTMLInputElement
+        let loginHTML = this.element.querySelector("input[name='login']") as HTMLInputElement
+        let passwordHTML = this.element.querySelector("input[name='password']") as HTMLInputElement
 
-        let messageErrorlogin = validate(login.value )
-        let messageErrorpassword = validate(password.value )
+        let messageErrorlogin = validate(loginHTML.value )
+        let messageErrorpassword = validate(passwordHTML.value )
        
 
-        if(!messageErrorlogin && !messageErrorpassword)
-        console.log("отправка ", login.value,password.value);
+        if(!messageErrorlogin && !messageErrorpassword){
+          let login =loginHTML.value
+          let password =passwordHTML.value
+          if(login=="")
+            login="qqqqqqqqqqqqqqqqqqq"
+          if(password=="")
+            password="dkn30oLKdlk"
+
+          const sedLogin={
+            login:login,
+            password:password
+          }      
+          LogInControll.signin(sedLogin as LoginData);
+        }
         else
-        console.log("исправте ошибки выделеные красным цветом, пожалуйста") 
+        console.log("исправте ошибки выделеные красным цветом, пожалуйста")        
+        
+      },
+      onRegister:()=>{
+        router.go("/register")
       }
     })
   }
@@ -52,7 +72,7 @@ export class LoginPage extends Block {
         placeholder="Пароль"
       }}}
       {{{Button textBtn="Войти" classes="button" onClick=onSubmit }}}
-      <a class="signin__link" href="#">Нет аккаунта?</a>
+      {{{Button textBtn="Нет аккаунта?" classes="button__signup_link" onClick=onRegister }}}
     </form>
     </main>
     `

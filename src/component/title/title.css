@@ -8,7 +8,7 @@
    &_first {
       margin: 0;
       font-size: 20px;
-      color: #1e1e1e;
+      color: var(--main-noFull-black);
       font-weight: 500;
       line-height: 20px;
       letter-spacing: 0em;
@@ -19,7 +19,7 @@
    &_second{
       margin: 0;
       font-size: 20px;
-      color: #1e1e1e;
+      color: var(--main-noFull-black);
       font-weight: 500;
       line-height: 20px;
       letter-spacing: 0em;
