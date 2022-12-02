@@ -9,13 +9,11 @@ import { MainType, CreateChat,SearchUser} from "../../sourseCode/globalTypes"
 import  ProfileControll  from "../../sourseCode/control/ProfileControll"
 import LogInControll from "../../sourseCode/control/LogInControll"
 
-
 interface MessageToChat{
   content: string;
   is_read: boolean;
   time: string;
 }
-
 
 export class Chat extends Block {
   constructor() {
@@ -30,6 +28,7 @@ export class Chat extends Block {
   }
   getStateFromProps(props: any): void {
     this.state={
+      chatItemId:0,
       chooseChat:(evt: Event)=>{
           const element = evt.currentTarget as HTMLElement;
           const chatItemId = element.getAttribute("chat_id");  
@@ -49,6 +48,12 @@ export class Chat extends Block {
             })
           });
         }
+        store.on("add-users", () => {
+          console.log("add-users")
+        })
+        store.on("delete-users", () => {
+          console.log("delete-users")
+        })
       },
       sendMessage: (evt: Event) => {
         evt.preventDefault();
@@ -64,44 +69,65 @@ export class Chat extends Block {
       },
       addChat:()=>{
         const input=document.querySelector(".chat__create_chat") as HTMLFormElement;
-        const title=input.value as CreateChat
-        console.log({title})
-        ChatControll.createChat({title});
+        if(input.value!=""){
+          const title=input.value as CreateChat
+          console.log({title})
+          ChatControll.createChat({title});
 
-        store.on("update", () => {
-          const state = store.get() as MainType;
-          this.setState({ allChat: state.allChat });
-        });
+          store.on("update", () => {
+            const state = store.get() as MainType;
+            this.setState({ allChat: state.allChat });
+          });
+        }else{
+          console.log("---------------")
+        }
       },
-      // serchUser:()=>{
-      //   const input=document.querySelector(".input__footer-User") as HTMLFormElement;
-      //   const login=input.value as SearchUser
-      //   console.log({login})
-
-      //   const t=ProfileControll
-      //   console.log(t)
-      //   if(input.value!=""){
-      //     ProfileControll.searchUser({
-      //       login: login,
-      //     } as SearchUser);
-      //   }else{
-      //     console.log("---------------")
-      //   }
-      // }
+      serchUser:()=>{
+        const input=document.querySelector(".input__footer-User") as HTMLFormElement;
+        const login=input.value as SearchUser
+        console.log({login})
+        if(input.value!=""){
+          ProfileControll.searchUser({
+            login: login,
+          } as SearchUser);
+        }else{
+          console.log("---------------")
+        }
+      },
       addUser:()=>{
-          console.log(99991)
-          const input=document.querySelector(".input__footer-User") as HTMLFormElement;
-          const login=input.value as SearchUser
-          console.log({login})
-  
+        console.log(99991)
+        const input=document.querySelector(".input__footer-User") as HTMLFormElement;
+        if(this.state.chatItemId!=0){
           if(input.value!=""){
-            ProfileControll.searchUser({
-              login: login,
-            } as SearchUser);
+            const login=input.value as SearchUser
+            console.log({login},this.state.chatItemID)
+            let send=Number(login)
+            ChatControll.addUser({
+              users: [send],
+              chatId: Number(this.state.chatItemId),
+            });
           }else{
             console.log("---------------")
           }
         }
+      },
+      deleteUser:()=> {
+
+        const input=document.querySelector(".input__footer-User") as HTMLFormElement;
+        const login=input.value as SearchUser
+        console.log({login})
+        
+        let send=Number(login)
+        if(input.value!=""){
+          ChatControll.delUser({
+            users: [send],
+            chatId: Number(this.state.chatItemId),
+          });
+        }else{
+          console.log("---------------")
+        }
+
+      }
     }
   }
   render() {
@@ -175,9 +201,12 @@ export class Chat extends Block {
         {{{Button classes="button__footer-btn-send" onClick=sendMessage }}}
       </form>
       </div>
-      <input class="input__footer-User" type="text" placeholder="Ник пользователя удалить/добавить Результат работы прошу проследить в консоль логе на Ф12" />  
+      <div>
+        <input class="input__footer-User" type="text" placeholder="Ник пользователя удалить/добавить Результат работы прошу проследить в консоль логе на Ф12" />  
+      </div>
       {{{Button classes="button__footer-btn-addUser" textBtn = "add" onClick=addUser }}}
       {{{Button classes="button__footer-btn-deleteUser" textBtn="delete" onClick=deleteUser }}}
+      {{{Button classes="button__footer-btn-serchUser" textBtn="serchUserIdInF12" onClick=serchUser }}}
       </li>
     </ul>
     </main>

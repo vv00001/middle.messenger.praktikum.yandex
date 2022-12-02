@@ -1,5 +1,5 @@
 import MainClass from "./MainClass"
-import { ProfileInfo,SearchUser } from "../../sourseCode/globalTypes"
+import { ProfileInfo,SearchUser,UserPaswordType } from "../../sourseCode/globalTypes"
 
 class ProfileInterface extends MainClass {
    constructor() {
@@ -16,6 +16,9 @@ class ProfileInterface extends MainClass {
    public changeAvatar(avatar: FormData) {
       console.log(avatar)
       return this.put('profile/avatar', avatar, {});
+   }
+   public changePassword(userPassword: UserPaswordType) {
+      return this.put('password', userPassword);
    }
 }
 

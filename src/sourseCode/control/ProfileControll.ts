@@ -1,7 +1,7 @@
 import  ProfileInterface  from "../Interfaces/ProfileInterface";
 import store from '../../mypracticum/Store';
 
-import { ProfileInfo,SearchUser } from "../../sourseCode/globalTypes"
+import { ProfileInfo,SearchUser,UserPaswordType } from "../../sourseCode/globalTypes"
 
 class ProfileControll {
 
@@ -23,6 +23,12 @@ class ProfileControll {
     .then(({ response }: any) => {
       store.set({ userInfo: JSON.parse(response) });   
     })
+  }
+  public changePassword(userPassword: UserPaswordType) {
+    ProfileInterface.changePassword(userPassword)
+      .then(() =>
+        console.log("userPassword done")
+      )
   }
 }
 

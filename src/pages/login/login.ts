@@ -15,22 +15,30 @@ export class LoginPage extends Block {
       loginValue: "",
       passwordValue: "",
       onSubmit: () => {
-        let login = this.element.querySelector("input[name='login']") as HTMLInputElement
-        let password = this.element.querySelector("input[name='password']") as HTMLInputElement
+        let loginHTML = this.element.querySelector("input[name='login']") as HTMLInputElement
+        let passwordHTML = this.element.querySelector("input[name='password']") as HTMLInputElement
 
-        let messageErrorlogin = validate(login.value )
-        let messageErrorpassword = validate(password.value )
+        let messageErrorlogin = validate(loginHTML.value )
+        let messageErrorpassword = validate(passwordHTML.value )
        
 
-        if(!messageErrorlogin && !messageErrorpassword)
-        console.log("отправка ", login.value,password.value);
-        else
-        console.log("исправте ошибки выделеные красным цветом, пожалуйста") 
-        const lll={
-          login:"qqqqqqqqqqqqqqqqqqq",
-          password:"Jjnvo390xkk"
+        if(!messageErrorlogin && !messageErrorpassword){
+          let login =loginHTML.value
+          let password =passwordHTML.value
+          if(login=="")
+            login="qqqqqqqqqqqqqqqqqqq"
+          if(password=="")
+            password="dkn30oLKdlk"
+
+          const sedLogin={
+            login:login,
+            password:password
+          }      
+          LogInControll.signin(sedLogin as LoginData);
         }
-        LogInControll.signin(lll as LoginData);
+        else
+        console.log("исправте ошибки выделеные красным цветом, пожалуйста")        
+        
       },
       onRegister:()=>{
         router.go("/register")

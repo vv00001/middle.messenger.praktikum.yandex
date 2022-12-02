@@ -45,6 +45,7 @@ export class Profile extends Block {
       <main class="profile">
         <div class="profile__form">
         {{{Avatar avatar="${avatar}" onClick=Avatar}}}
+        <span >Выбор файла затем клик по круглой картинке высылает файл на сервер, замена тут после нового захода на эту страницу</span>
         <input class="input-file__input" type="file" name="avatar" accept="image/*" />
             <div class ="profile__title">
             {{{Title firstLine="${display_name}"}}}

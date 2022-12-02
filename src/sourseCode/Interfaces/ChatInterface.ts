@@ -15,6 +15,12 @@ export class ChatInterface extends MainClass {
    public createChat({ ...rest }: string) {
       return this.post('', { ...rest });
    }
+   public addUser({ ...rest }: AddUser) {
+      return this.put('users', { ...rest });
+   }
+   public delUser({ ...rest }: AddUser) {
+      return this.delete('users', { ...rest });
+   }
 }
 
 export default new ChatInterface();

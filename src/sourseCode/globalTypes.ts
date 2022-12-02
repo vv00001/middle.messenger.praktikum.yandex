@@ -1,4 +1,12 @@
 import { Block } from "../mypracticum/Block";
+interface AddUserType {
+   users: number[];
+   chatId: number;
+}
+interface UserPaswordType{   
+   newPassword: string;
+   oldPassword: string;
+}
 interface CreateChat {
    title: string;
 }

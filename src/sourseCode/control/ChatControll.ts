@@ -1,6 +1,6 @@
 import ChatInterface from '../Interfaces/ChatInterface';
 import store from '../../mypracticum/Store';
-import { MainType } from '../globalTypes';
+import { MainType,AddUserType } from '../globalTypes';
 
 interface ChatsType {
   avatar: null | string;
@@ -11,9 +11,7 @@ interface ChatsType {
   unread_count: number;
 }
 
-
 export class ChatControll {
-
   public getChats() {
     ChatInterface.getChats()
     .then(({ response }: any) => {
@@ -30,7 +28,6 @@ export class ChatControll {
     ChatInterface.createChat({title})
     .then(({ response }: any) => {
        const state = store.get() as ChatsType;
-//nameChat
       const newChat = {
         avatar: null,
         id: JSON.parse(response).id,
@@ -38,12 +35,21 @@ export class ChatControll {
         unread_count: 0,
         created_by: 0,
       };
-
       state.allChat?.push(newChat);
-
       store.set({ allChat: state.allChat });
     })
   }
-
+  public addUser({ users, chatId }: AddUserType) {
+    ChatInterface.addUser({ users, chatId })
+    .then(() => {     
+      console.log("addUser")
+    })
+  }
+  public delUser ({ users, chatId }: AddUserType) {
+    ChatInterface.delUser({ users, chatId })
+    .then(() => {
+      console.log("delUser")
+    })
+  }  
 }
 export default new ChatControll();

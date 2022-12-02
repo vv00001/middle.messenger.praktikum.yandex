@@ -42,7 +42,6 @@ export function validate (receive:string,nameInput:string){
       }
    }
    if(nameInput=="login"){
-      console.log(nameInput)
       if (receive.length == 0) {
          checkDone.answer =AnswerMessage.NoVoidBoötes
       } else if (receive.length < 3) {
