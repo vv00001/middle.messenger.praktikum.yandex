@@ -138,6 +138,8 @@
      color: var(--main-noFull-black);
      font-weight: 600;
      line-height: 15px;
-   }
+   }   
 }
- 
+.input__footer-User{
+  width: 60%;
+ }

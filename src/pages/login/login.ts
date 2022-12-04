@@ -6,6 +6,7 @@ import "./login.css"
 import MainClass from "../../sourseCode/Interfaces/MainClass"
 import LogInControll from "../../sourseCode/control/LogInControll"
 import router from "../../mypracticum/Router"
+import {LoginData} from '../Interfaces/LoginInterface';
 
 
 export class LoginPage extends Block {
@@ -25,16 +26,20 @@ export class LoginPage extends Block {
         if(!messageErrorlogin && !messageErrorpassword){
           let login =loginHTML.value
           let password =passwordHTML.value
-          if(login=="")
-            login="qqqqqqqqqqqqqqqqqqq"
-          if(password=="")
-            password="dkn30oLKdlk"
-
-          const sedLogin={
-            login:login,
-            password:password
-          }      
-          LogInControll.signin(sedLogin as LoginData);
+          // if(login=="")
+          //   login="qqqqqqqqqqqqqqqqqqq"
+          // if(password=="")
+          //   password="dkn30oLKdlk"
+          if(login!="" && password!=""){
+            const sedLogin={
+              login:login,
+              password:password
+            }      
+            LogInControll.signin(sedLogin as LoginData);
+          }
+          else{
+            console.log("enter plz")
+          }
         }
         else
         console.log("исправте ошибки выделеные красным цветом, пожалуйста")        

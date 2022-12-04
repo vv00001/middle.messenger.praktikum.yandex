@@ -4,6 +4,7 @@ import { input } from "../../component/input/input"
 import {validate} from "../../sourseCode/validate"
 import ProfileControll from "../../sourseCode/control/ProfileControll"
 import {UserPaswordType} from "../../sourseCode/globalTypes"
+import router from "../../mypracticum/Router"
 
 export class EditPassword extends Block {
   constructor(){
@@ -30,7 +31,8 @@ export class EditPassword extends Block {
             }else
                console.log("исправьте ошибки выделенные красным цветом, пожалуйста") 
          }
-      }
+      },
+      toChat:()=>router.go("/messenger")
    })
    }
    render():string {
@@ -68,7 +70,8 @@ export class EditPassword extends Block {
                      placeholder="Повторите новый пароль"
                      errorClass="error"
                   }}}
-                  {{{Button textBtn="Сохранить" classes="button button__edit_password" onClick=onSubmit }}}                     
+                  {{{Button textBtn="Сохранить" classes="button button__edit_password" onClick=onSubmit }}}
+                  {{{Button classes="button button__edit_pro" textBtn="Вернуться в чат" onClick=toChat }}}
                   </ul>
                </form>
             </li>

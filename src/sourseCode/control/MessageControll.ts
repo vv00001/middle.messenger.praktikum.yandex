@@ -1,7 +1,7 @@
 import Store from "../../mypracticum/Store";
 import { MainType } from "../globalTypes";
 const URLS= "wss://ya-praktikum.tech/ws/chats";
-const userId="120127"
+// const userId="120127"
 
 class MessageControll {
    chatId!: string | number;
@@ -34,8 +34,8 @@ class MessageControll {
       }, 5000);
       }
    }
-   public connect({ chatId, token }: any) {
-      console.log(chatId,token,"connect")
+   public connect({ chatId,userId, token }: any) {
+      console.log(chatId,token,"connect",userId)
       if (this.chatId !== chatId) {
          this.chatId = chatId;
          this.token = token;

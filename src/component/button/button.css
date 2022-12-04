@@ -17,48 +17,11 @@
   color: var(--main-white);
   font-weight: 500;
   line-height: 15px;
-  &__signup_link{
-    background-color: var(--main-white);
-    color: #05f;
-    margin-top: 10px;
-    color:none;
-    border:none;
-    margin-left:95px;
 
-  }
-  &__profile_link{
-    background-color: var(--main-white);
-    color: #05f;
-    margin-top: 10px;
-    color:none;
-    border:none
-  }
-  &__chat_link{
-    color: #05f;
-    margin-top: 20px;
-    color:none;
-    border:none
-  }
-  &_disable {
-    opacity: 0.2;
-  }
-  &__edit_pro{ 
-    margin-left: 100px;    
-  }
-  &__edit_password{ 
-    margin-left: 70px;    
-  }
-  &__footer-btn-send {
-    box-sizing: border-box;
-    cursor: pointer;
-    background-color: var(--main-blue);
-    border: none;
-    padding: 0;
-    transform: scaleX(-1);
-    border-radius: 50%;
-    min-width: 30px;
-    height: 30px;
-    background: center no-repeat url("../../image/Group 202.svg");
+  &__footer-btn-send_zero {
+    display: none;
+    width:0px;
+    height: 0px;
   }
 }
  

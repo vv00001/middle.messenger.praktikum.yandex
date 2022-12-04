@@ -554,6 +554,8 @@ var _ = require("./component/title/");
 var _Default = parcelHelpers.interopDefault(_);
 var _avatar = require("./component/avatar");
 var _avatarDefault = parcelHelpers.interopDefault(_avatar);
+var _buttonS = require("./component/button_s");
+var _buttonSDefault = parcelHelpers.interopDefault(_buttonS);
 _mypracticum.registerComponent(_errorDefault.default);
 _mypracticum.registerComponent(_inputDefault.default);
 _mypracticum.registerComponent(_buttonDefault.default);
@@ -562,6 +564,7 @@ _mypracticum.registerComponent(_Default.default);
 _mypracticum.registerComponent(_listItemDefault.default);
 _mypracticum.registerComponent(_messageDefault.default);
 _mypracticum.registerComponent(_avatarDefault.default);
+_mypracticum.registerComponent(_buttonSDefault.default);
 window.addEventListener('DOMContentLoaded', async ()=>{
     console.log(_routerDefault.default);
     _routerDefault.default.use("/", _login.LoginPage).use("/messenger", _chat.Chat).use("/profile", _profile.Profile).use("/settings", _editProfile.EditProfile).use("/editPassword", _editPassword.EditPassword).use("/register", _register.Register).use("/404", _notFound.NotFoundPage).use("/500", _serverError.ServerError);
@@ -572,7 +575,7 @@ window.addEventListener('DOMContentLoaded', async ()=>{
     } catch (e) {}
 });
 
-},{"./mypracticum":"fmOdD","../src/mypracticum/Router":"ksMzb","./pages/login/login":"d4kgo","./pages/notFound/notFound":"8Au6T","./pages/chat/chat":"BTZqg","./pages/editProfile/editProfile":"jAgB3","./pages/register/register":"1d69E","./pages/profile/profile":"3JZwj","./pages/editPassword/editPassword":"gEr5a","./pages/serverError/serverError":"hcOpP","./component/error":"35krS","./component/mainInput":"5Mbat","./component/input":"HJI1p","./component/button":"bhL52","./component/listItem":"eWJdd","./component/message":"iypKu","./component/title/":"dn7t3","./component/avatar":"jLr1o","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"fmOdD":[function(require,module,exports) {
+},{"./mypracticum":"fmOdD","../src/mypracticum/Router":"ksMzb","./pages/login/login":"d4kgo","./pages/notFound/notFound":"8Au6T","./pages/chat/chat":"BTZqg","./pages/editProfile/editProfile":"jAgB3","./pages/register/register":"1d69E","./pages/profile/profile":"3JZwj","./pages/editPassword/editPassword":"gEr5a","./pages/serverError/serverError":"hcOpP","./component/error":"35krS","./component/mainInput":"5Mbat","./component/input":"HJI1p","./component/button":"bhL52","./component/listItem":"eWJdd","./component/message":"iypKu","./component/title/":"dn7t3","./component/avatar":"jLr1o","./component/button_s":"4wJpe","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"fmOdD":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Block", ()=>_blockDefault.default
@@ -12303,11 +12306,11 @@ class Route {
         return isEqual(pathname, this._pathname);
     }
     render() {
-        if (!this._block) {
-            this._block = new this._blockClass();
-            render(this._props.rootQuery, this._block);
-            return;
-        }
+        console.log(this._block);
+        console.log(this._props.rootQuery);
+        this._block = new this._blockClass();
+        render(this._props.rootQuery, this._block);
+        return;
         this._block.show();
     }
 }
@@ -12329,7 +12332,6 @@ class Router {
     }
     start() {
         window.onpopstate = ((event)=>{
-            //console.log(11111)
             this._onRoute(event.currentTarget.location.pathname);
         }).bind(this);
         this._onRoute(window.location.pathname);
@@ -12341,10 +12343,12 @@ class Router {
         route.render(route, pathname);
     }
     go(pathname) {
+        console.log("this.go", pathname);
         this.history.pushState({}, "", pathname);
         this._onRoute(pathname);
     }
     back() {
+        console.log("this.back");
         this.history.back();
     }
     forward() {
@@ -12356,6 +12360,7 @@ class Router {
     }
 }
 function render(takeSelector, block) {
+    console.log(takeSelector);
     const root = document.querySelector(takeSelector);
     if (root === null) throw new Error(`not takeSelector "${takeSelector}"`);
     root.innerHTML = '';
@@ -12392,13 +12397,17 @@ class LoginPage extends _blockDefault.default {
                 if (!messageErrorlogin && !messageErrorpassword) {
                     let login = loginHTML.value;
                     let password = passwordHTML.value;
-                    if (login == "") login = "qqqqqqqqqqqqqqqqqqq";
-                    if (password == "") password = "dkn30oLKdlk";
-                    const sedLogin = {
-                        login: login,
-                        password: password
-                    };
-                    _logInControllDefault.default.signin(sedLogin);
+                    // if(login=="")
+                    //   login="qqqqqqqqqqqqqqqqqqq"
+                    // if(password=="")
+                    //   password="dkn30oLKdlk"
+                    if (login != "" && password != "") {
+                        const sedLogin = {
+                            login: login,
+                            password: password
+                        };
+                        _logInControllDefault.default.signin(sedLogin);
+                    } else console.log("enter plz");
                 } else console.log("исправте ошибки выделеные красным цветом, пожалуйста");
             },
             onRegister: ()=>{
@@ -12543,7 +12552,7 @@ class LogInControll {
         _loginInterfaceDefault.default.getProfile().then(({ response  })=>{
             console.log(response);
             _storeDefault.default.set({
-                responseInfo: JSON.parse(response)
+                userInfo: JSON.parse(response)
             });
         });
     }
@@ -12583,6 +12592,11 @@ class LoginInterface extends _mainClassDefault.default {
     }
     exit() {
         return this.post('logout', {});
+    }
+    signup({ ...rest }) {
+        return this.post('signup', {
+            ...rest
+        });
     }
 }
 exports.default = new LoginInterface();
@@ -12863,7 +12877,6 @@ class Chat extends _blockDefault.default {
                 else console.log("---------------");
             },
             addUser: ()=>{
-                console.log(99991);
                 const input = document.querySelector(".input__footer-User");
                 if (this.state.chatItemId != 0) {
                     if (input.value != "") {
@@ -12884,9 +12897,6 @@ class Chat extends _blockDefault.default {
             deleteUser: ()=>{
                 const input = document.querySelector(".input__footer-User");
                 const login = input.value;
-                console.log({
-                    login
-                });
                 let send = Number(login);
                 if (input.value != "") _chatControllDefault.default.delUser({
                     users: [
@@ -12904,7 +12914,7 @@ class Chat extends _blockDefault.default {
     <main>
       <ul class="chat">
       <li class="chat__main chat__main_left">
-      {{{Button classes="button__chat_link" textBtn="Профиль" onClick=goProfile }}}
+      {{{Button classes="button__chat_link" textBtn="Редактировать профиль" onClick=goProfile }}}
         <ul class="chat__list">    
         ${allChat && Object.values(allChat)?.map((chat)=>{
             console.log(chat.title);
@@ -12942,16 +12952,11 @@ class Chat extends _blockDefault.default {
           </ul>
         </div>
       <div class="chat__footer">
-      <form class="chat__footer-form">
-        <button class="chat__footer-btn-attach" type="button" aria-label="Прикрепить файл">
-          <img
-            class="chat__footer-icon"
-            src="../../image/Group 202.svg"
-            alt="Прикрепить файл"
-          />
+      <form class="chat__footer-form">       
         </button>
         <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />    
         {{{Button classes="button__footer-btn-send" onClick=sendMessage }}}
+        {{{ButtonS classes="button__footer-btn-send_zero" onClick=sendMessage }}}
       </form>
       </div>
       <div>
@@ -13070,7 +13075,7 @@ parcelHelpers.defineInteropFlag(exports);
 var _store = require("../../mypracticum/Store");
 var _storeDefault = parcelHelpers.interopDefault(_store);
 const URLS = "wss://ya-praktikum.tech/ws/chats";
-const userId = "120127";
+// const userId="120127"
 class MessageControll {
     constructor(){
         this.socket = null;
@@ -13099,8 +13104,8 @@ class MessageControll {
             }, 5000);
         }
     }
-    connect({ chatId , token  }) {
-        console.log(chatId, token, "connect");
+    connect({ chatId , userId , token  }) {
+        console.log(chatId, token, "connect", userId);
         if (this.chatId !== chatId) {
             this.chatId = chatId;
             this.token = token;
@@ -13221,12 +13226,20 @@ var _editProfileCss = require("./editProfile.css");
 var _validate = require("../../sourseCode/validate");
 var _profileControll = require("../../sourseCode/control/ProfileControll");
 var _profileControllDefault = parcelHelpers.interopDefault(_profileControll);
+var _logInControll = require("../../sourseCode/control/LogInControll");
+var _logInControllDefault = parcelHelpers.interopDefault(_logInControll);
+var _store = require("../../mypracticum/Store");
+var _storeDefault = parcelHelpers.interopDefault(_store);
+var _router = require("../../mypracticum/Router");
+var _routerDefault = parcelHelpers.interopDefault(_router);
 class EditProfile extends _blockDefault.default {
     constructor(){
         super();
+        _logInControllDefault.default.getProfile();
+        _storeDefault.default.on("update", ()=>{
+            this.setProps(_storeDefault.default.get());
+        });
         this.setProps({
-            loginValue: "",
-            passwordValue: "",
             onSubmit: ()=>{
                 let login = this.element.querySelector("input[name='login']");
                 let phone = this.element.querySelector("input[name='phone']");
@@ -13244,10 +13257,12 @@ class EditProfile extends _blockDefault.default {
                     phone: phone.value
                 });
                 else console.log("исправьте ошибки выделенные красным цветом, пожалуйста");
-            }
+            },
+            toChat: ()=>_routerDefault.default.go("/messenger")
         });
     }
     render() {
+        const { userInfo =[]  } = this.props;
         return `
    <main class="mainclass">
     <form class="edit-profile"> 
@@ -13261,6 +13276,7 @@ class EditProfile extends _blockDefault.default {
         classes="input__text-field"
         placeholder="Почта"
         errorClass="error"
+        value="${userInfo.email}"
       }}}
       {{{mainInput 
         onInput=onInput 
@@ -13270,6 +13286,7 @@ class EditProfile extends _blockDefault.default {
         classes="input__text-field"
         placeholder="Логин"
         errorClass="error"
+        value="${userInfo.first_name}"
       }}}
       {{{mainInput 
         onInput=onInput 
@@ -13279,6 +13296,7 @@ class EditProfile extends _blockDefault.default {
         classes="input__text-field"
         placeholder="Имя"
         errorClass="error"
+        value="${userInfo.first_name}"
       }}}
       {{{mainInput 
         onInput=onInput 
@@ -13288,6 +13306,7 @@ class EditProfile extends _blockDefault.default {
         classes="input__text-field"
         placeholder="Фамилия"
         errorClass="error"
+        value="${userInfo.second_name}"
       }}}
       {{{mainInput 
         onInput=onInput 
@@ -13297,6 +13316,7 @@ class EditProfile extends _blockDefault.default {
         classes="input__text-field"
         placeholder="Имя в чате"
         errorClass="error"
+        value="${userInfo.display_name}"
       }}}
       {{{mainInput 
         onInput=onInput 
@@ -13306,16 +13326,17 @@ class EditProfile extends _blockDefault.default {
         classes="input__text-field"
         placeholder="Телефон"
         errorClass="error"
+        value="${userInfo.phone}"
       }}}
       {{{Button textBtn="Сохранить" classes="button button__edit_pro" onClick=onSubmit }}}
-      
+      {{{Button classes="button button__edit_pro" textBtn="Вернуться в чат" onClick=toChat }}}
       </form>
     </main>
   `;
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","./editProfile.css":"5iWeb","../../sourseCode/validate":"ihU9O","../../sourseCode/control/ProfileControll":"4CRXS","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"5iWeb":[function() {},{}],"1d69E":[function(require,module,exports) {
+},{"../../mypracticum/Block":"hydC4","./editProfile.css":"5iWeb","../../sourseCode/validate":"ihU9O","../../sourseCode/control/ProfileControll":"4CRXS","../../sourseCode/control/LogInControll":"3t8s8","../../mypracticum/Store":"crPhk","../../mypracticum/Router":"ksMzb","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"5iWeb":[function() {},{}],"1d69E":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Register", ()=>Register
@@ -13472,16 +13493,20 @@ class Profile extends _blockDefault.default {
             Avatar: (evt)=>{
                 const input = document.querySelector(".input-file__input");
                 const jjj = input.files;
-                let formData = new FormData();
-                formData.append("avatar", jjj[0]);
-                _profileControllDefault.default.changeAvatar(formData);
-            }
+                if (jjj[0]) {
+                    let formData = new FormData();
+                    console.log(jjj[0]);
+                    formData.append("avatar", jjj[0]);
+                    _profileControllDefault.default.changeAvatar(formData);
+                } else console.log("Сначало выберете на кнопку ниже файл");
+            },
+            toChat: ()=>_routerDefault.default.go("/messenger")
         };
     }
     render() {
-        const { responseInfo =[]  } = this.props;
-        const { avatar , email , login , first_name , second_name , display_name , phone  } = responseInfo;
-        console.log(responseInfo, this.props);
+        const { userInfo =[]  } = this.props;
+        const { avatar , email , login , first_name , second_name , display_name , phone  } = userInfo;
+        console.log(userInfo, this.props);
         return `
       <main class="profile">
         <div class="profile__form">
@@ -13525,8 +13550,10 @@ class Profile extends _blockDefault.default {
                 {{{Button classes="button__profile_link" textBtn="Изменить пароль" onClick=changePassword }}}
             </div>
             <div class="profile__form__span">
-                {{{Button classes="button__profile_link" textBtn="Выйти" onClick=exit }}}
-      
+                {{{Button classes="button__profile_link" textBtn="Выйти" onClick=exit }}}      
+            </div>
+            <div class="profile__form__span">
+                {{{Button classes="button__profile_link" textBtn="Вернуться в чат" onClick=toChat }}}
             </div>
             
      </main>
@@ -13545,6 +13572,8 @@ var _editPasswordCss = require("./editPassword.css");
 var _validate = require("../../sourseCode/validate");
 var _profileControll = require("../../sourseCode/control/ProfileControll");
 var _profileControllDefault = parcelHelpers.interopDefault(_profileControll);
+var _router = require("../../mypracticum/Router");
+var _routerDefault = parcelHelpers.interopDefault(_router);
 class EditPassword extends _blockDefault.default {
     constructor(){
         super();
@@ -13567,7 +13596,8 @@ class EditPassword extends _blockDefault.default {
                         } else console.log("пасворды одинаковые пожалуйста");
                     } else console.log("исправьте ошибки выделенные красным цветом, пожалуйста");
                 }
-            }
+            },
+            toChat: ()=>_routerDefault.default.go("/messenger")
         });
     }
     render() {
@@ -13605,7 +13635,8 @@ class EditPassword extends _blockDefault.default {
                      placeholder="Повторите новый пароль"
                      errorClass="error"
                   }}}
-                  {{{Button textBtn="Сохранить" classes="button button__edit_password" onClick=onSubmit }}}                     
+                  {{{Button textBtn="Сохранить" classes="button button__edit_password" onClick=onSubmit }}}
+                  {{{Button classes="button button__edit_pro" textBtn="Вернуться в чат" onClick=toChat }}}
                   </ul>
                </form>
             </li>
@@ -13615,7 +13646,7 @@ class EditPassword extends _blockDefault.default {
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","./editPassword.css":"uFkuX","../../sourseCode/validate":"ihU9O","../../sourseCode/control/ProfileControll":"4CRXS","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"uFkuX":[function() {},{}],"hcOpP":[function(require,module,exports) {
+},{"../../mypracticum/Block":"hydC4","./editPassword.css":"uFkuX","../../sourseCode/validate":"ihU9O","../../sourseCode/control/ProfileControll":"4CRXS","../../mypracticum/Router":"ksMzb","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"uFkuX":[function() {},{}],"hcOpP":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ServerError", ()=>ServerError
@@ -13710,10 +13741,8 @@ class MainInput extends _blockDefault.default {
         });
     }
     validateDone(inputValue, inputName) {
-        console.log(inputValue, inputName);
         const takeCompinentOndex = Object.entries(this._children)[1][1];
         const messageError = _validate.validate(inputValue, inputName);
-        // console.log(messageError)
         if (messageError.length > 0) takeCompinentOndex.setProps({
             errorClass: "error_show",
             errorMes: messageError
@@ -14003,5 +14032,39 @@ class Avatar extends _blockDefault.default {
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","./avatar.css":"iIMPn","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"iIMPn":[function() {},{}]},["41p50","57jqn"], "57jqn", "parcelRequirea735")
+},{"../../mypracticum/Block":"hydC4","./avatar.css":"iIMPn","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"iIMPn":[function() {},{}],"4wJpe":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>_button.ButtonS
+);
+var _button = require("./button");
+
+},{"./button":"4rbpw","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"4rbpw":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "ButtonS", ()=>ButtonS
+);
+var _block = require("../../mypracticum/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _buttonCss = require("./button.css");
+class ButtonS extends _blockDefault.default {
+    static componentName = "ButtonS";
+    constructor({ textBtn , onClick , classes  }){
+        super({
+            classes,
+            textBtn,
+            events: {
+                click: onClick
+            }
+        });
+    }
+    render() {
+        return `<button class="{{classes}}" 
+    type="submit">
+    {{textBtn}}</button>  
+    `;
+    }
+}
+
+},{"../../mypracticum/Block":"hydC4","./button.css":"2SFtB","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"2SFtB":[function() {},{}]},["41p50","57jqn"], "57jqn", "parcelRequirea735")
 
