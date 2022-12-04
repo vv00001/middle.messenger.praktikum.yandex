@@ -69,7 +69,7 @@ export class EditProfile extends Block {
         classes="input__text-field"
         placeholder="Логин"
         errorClass="error"
-        value="${userInfo.first_name}"
+        value="${userInfo.login}"
       }}}
       {{{mainInput 
         onInput=onInput 
