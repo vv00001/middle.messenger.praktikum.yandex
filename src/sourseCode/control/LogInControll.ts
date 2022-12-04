@@ -20,7 +20,7 @@ export class LogInControll {
     MainClass.getProfile()
     .then(({ response }: any) => {
       console.log(response)
-      store.set({ responseInfo: JSON.parse(response) });
+      store.set({ userInfo: JSON.parse(response) });
     })
   }
   public exit() {

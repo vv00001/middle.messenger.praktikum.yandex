@@ -36,11 +36,11 @@ export class Profile extends Block {
   }
   
   protected render(): string {
-    const { responseInfo = [] } = this.props;
+    const { userInfo = [] } = this.props;
     const { avatar,  email,login, first_name,second_name , display_name,phone  } =
-    responseInfo;
+    userInfo;
 
-      console.log(responseInfo,this.props)
+      console.log(userInfo,this.props)
     return `
       <main class="profile">
         <div class="profile__form">

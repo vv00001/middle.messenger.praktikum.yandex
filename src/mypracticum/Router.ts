@@ -29,7 +29,10 @@ function isEqual(first: string, second: string): boolean {
     }
 
    render() {
-       if (!this._block) {
+    console.log(this._block)
+    //    if (!this._block) {
+       if (!0) {
+        console.log(this._props.rootQuery)
            this._block = new this._blockClass();
            render(this._props.rootQuery, this._block);
            return;
@@ -61,8 +64,6 @@ class Router {
 
    start() {
         window.onpopstate =(event=>{
-        
-        //console.log(11111)
         this. _onRoute(event.currentTarget.location.pathname)
         }).bind(this);
         
@@ -81,12 +82,14 @@ class Router {
     }
 
    go(pathname) {
+    console.log("this.go",pathname)
      this.history.pushState({},"",pathname);
      
      this._onRoute(pathname);
     }
 
    back() {
+    console.log("this.back")
      this.history.back();
     }
 
@@ -100,10 +103,11 @@ class Router {
 }
 
 function render(takeSelector: string, block: Block) {
+    console.log(takeSelector)
     const root = document.querySelector(takeSelector);
   
     if (root === null) {
-      throw new Error(`not takeSelector "${takeSelector}"`);
+        throw new Error(`not takeSelector "${takeSelector}"`);
     }
   
     root.innerHTML = '';
@@ -112,5 +116,5 @@ function render(takeSelector: string, block: Block) {
     root.append(block.getContent()!);
   
     return root;
-  }
+}
 export default new Router('#app');
