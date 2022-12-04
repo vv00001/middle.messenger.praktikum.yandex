@@ -19,6 +19,9 @@ export class LoginInterface extends MainClass {
   public exit() {
     return this.post('logout', {});
   }
+  public signup({ ...rest }: SignupType) {
+    return this.post('signup', { ...rest });
+  }
 }
 
 export default new LoginInterface();

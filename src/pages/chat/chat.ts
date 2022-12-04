@@ -30,7 +30,6 @@ export class Chat extends Block {
     this.state={
       chatItemId:0,
       chooseChat:(evt: Event)=>{
-        // console.log(chatItemId)
           const element = evt.currentTarget as HTMLElement;
           const chatItemId = element.getAttribute("chat_id");
           this.setState({ chatItemId });  
