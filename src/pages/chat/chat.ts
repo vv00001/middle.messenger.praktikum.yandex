@@ -30,11 +30,10 @@ export class Chat extends Block {
     this.state={
       chatItemId:0,
       chooseChat:(evt: Event)=>{
+        // console.log(chatItemId)
           const element = evt.currentTarget as HTMLElement;
-          const chatItemId = element.getAttribute("chat_id");  
-
-          this.setState({ chatItemId });
-  
+          const chatItemId = element.getAttribute("chat_id");
+          this.setState({ chatItemId });  
           const state = store.get() as MainType;
           const { userInfo } = state;  
         if (chatItemId) {
@@ -95,7 +94,6 @@ export class Chat extends Block {
         }
       },
       addUser:()=>{
-        console.log(99991)
         const input=document.querySelector(".input__footer-User") as HTMLFormElement;
         if(this.state.chatItemId!=0){
           if(input.value!=""){
@@ -112,11 +110,8 @@ export class Chat extends Block {
         }
       },
       deleteUser:()=> {
-
         const input=document.querySelector(".input__footer-User") as HTMLFormElement;
-        const login=input.value as SearchUser
-        console.log({login})
-        
+        const login=input.value as SearchUser        
         let send=Number(login)
         if(input.value!=""){
           ChatControll.delUser({
@@ -126,7 +121,6 @@ export class Chat extends Block {
         }else{
           console.log("---------------")
         }
-
       }
     }
   }
@@ -141,7 +135,7 @@ export class Chat extends Block {
     <main>
       <ul class="chat">
       <li class="chat__main chat__main_left">
-      {{{Button classes="button__chat_link" textBtn="Профиль" onClick=goProfile }}}
+      {{{Button classes="button__chat_link" textBtn="Редактировать профиль" onClick=goProfile }}}
         <ul class="chat__list">    
         ${
           allChat &&Object.values(allChat)?.map(
@@ -153,7 +147,6 @@ export class Chat extends Block {
                   userName="${chat.title}"
                   lastMessage="${
                     chat.last_message ? chat.last_message.content : ""
-                    // chat.last_message ? chat.last_message.content : null
                   }"                  
                   srcAvatar= "#"                  
                   time="${chat.last_message ? chat.last_message.time : null}"
@@ -189,16 +182,11 @@ export class Chat extends Block {
           </ul>
         </div>
       <div class="chat__footer">
-      <form class="chat__footer-form">
-        <button class="chat__footer-btn-attach" type="button" aria-label="Прикрепить файл">
-          <img
-            class="chat__footer-icon"
-            src="../../image/Group 202.svg"
-            alt="Прикрепить файл"
-          />
+      <form class="chat__footer-form">       
         </button>
         <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />    
         {{{Button classes="button__footer-btn-send" onClick=sendMessage }}}
+        {{{ButtonS classes="button__footer-btn-send_zero" onClick=sendMessage }}}
       </form>
       </div>
       <div>

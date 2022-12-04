@@ -4,14 +4,19 @@ import { input } from "../../component/input/input"
 import {validate} from "../../sourseCode/validate"
 import ProfileControll from "../../sourseCode/control/ProfileControll"
 import { ProfileInfo } from "../../sourseCode/globalTypes"
-
+import LogInControll from "../../sourseCode/control/LogInControll";
+import store from "../../mypracticum/Store"
+import router from "../../mypracticum/Router"
 
 export class EditProfile extends Block {
   constructor(){
     super()
+    LogInControll.getProfile();
+
+      store.on("update", () => {
+        this.setProps(store.get());
+      });
       this.setProps({
-        loginValue: "",
-        passwordValue: "",
         onSubmit: () => {
           let login = this.element.querySelector("input[name='login']") as HTMLInputElement  
           let phone= this.element.querySelector("input[name='phone']") as HTMLInputElement
@@ -19,11 +24,7 @@ export class EditProfile extends Block {
           let secondName= this.element.querySelector("input[name='secondName']") as HTMLInputElement
           let profileName= this.element.querySelector("input[name='profileName']") as HTMLInputElement
           let mail= this.element.querySelector("input[name='mail']") as HTMLInputElement
-
-
           let messageErrorlogin = validate(login.value )
-         
-  
           if(!messageErrorlogin &&!validate(phone.value) &&!validate(chatname.value) &&!validate(secondName.value) &&!validate(profileName.value) &&!validate(mail.value)){
             ProfileControll.editProfile({
               first_name: profileName.value,
@@ -36,11 +37,15 @@ export class EditProfile extends Block {
           }
           else
           console.log("исправьте ошибки выделенные красным цветом, пожалуйста") 
-        }
+        },
+        toChat:()=>router.go("/messenger")
       })
     
   }
    render():string {
+    const {
+      userInfo=[]
+    }=this.props;
    return `
    <main class="mainclass">
     <form class="edit-profile"> 
@@ -54,6 +59,7 @@ export class EditProfile extends Block {
         classes="input__text-field"
         placeholder="Почта"
         errorClass="error"
+        value="${userInfo.email}"
       }}}
       {{{mainInput 
         onInput=onInput 
@@ -63,6 +69,7 @@ export class EditProfile extends Block {
         classes="input__text-field"
         placeholder="Логин"
         errorClass="error"
+        value="${userInfo.first_name}"
       }}}
       {{{mainInput 
         onInput=onInput 
@@ -72,6 +79,7 @@ export class EditProfile extends Block {
         classes="input__text-field"
         placeholder="Имя"
         errorClass="error"
+        value="${userInfo.first_name}"
       }}}
       {{{mainInput 
         onInput=onInput 
@@ -81,6 +89,7 @@ export class EditProfile extends Block {
         classes="input__text-field"
         placeholder="Фамилия"
         errorClass="error"
+        value="${userInfo.second_name}"
       }}}
       {{{mainInput 
         onInput=onInput 
@@ -90,6 +99,7 @@ export class EditProfile extends Block {
         classes="input__text-field"
         placeholder="Имя в чате"
         errorClass="error"
+        value="${userInfo.display_name}"
       }}}
       {{{mainInput 
         onInput=onInput 
@@ -99,9 +109,10 @@ export class EditProfile extends Block {
         classes="input__text-field"
         placeholder="Телефон"
         errorClass="error"
+        value="${userInfo.phone}"
       }}}
       {{{Button textBtn="Сохранить" classes="button button__edit_pro" onClick=onSubmit }}}
-      
+      {{{Button classes="button button__edit_pro" textBtn="Вернуться в чат" onClick=toChat }}}
       </form>
     </main>
   `

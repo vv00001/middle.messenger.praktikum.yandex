@@ -28,10 +28,17 @@ export class Profile extends Block {
       Avatar:(evt:Event)=>{        
         const input=document.querySelector(".input-file__input") as HTMLFormElement;
         const jjj= input.files;
-         let formData = new FormData()
-         formData.append("avatar", jjj[0]) 
-         ProfileControll.changeAvatar(formData)        
-      }
+        if(jjj[0]){
+          let formData = new FormData()
+          console.log(jjj[0])
+          formData.append("avatar", jjj[0])
+          ProfileControll.changeAvatar(formData)        
+        }else{
+          console.log("Сначало выберете на кнопку ниже файл")
+        }
+      },
+      toChat:()=>router.go("/messenger"),
+      
     };
   }
   
@@ -84,8 +91,10 @@ export class Profile extends Block {
                 {{{Button classes="button__profile_link" textBtn="Изменить пароль" onClick=changePassword }}}
             </div>
             <div class="profile__form__span">
-                {{{Button classes="button__profile_link" textBtn="Выйти" onClick=exit }}}
-      
+                {{{Button classes="button__profile_link" textBtn="Выйти" onClick=exit }}}      
+            </div>
+            <div class="profile__form__span">
+                {{{Button classes="button__profile_link" textBtn="Вернуться в чат" onClick=toChat }}}
             </div>
             
      </main>

@@ -16,6 +16,7 @@ import ListItem from "./component/listItem"
 import Message from "./component/message"
 import Title from "./component/title/"
 import Avatar from "./component/avatar"
+import ButtonS from "./component/button_s"
 
 registerComponent(Error);
 registerComponent(Input);
@@ -25,6 +26,7 @@ registerComponent(Title);
 registerComponent(ListItem);
 registerComponent(Message);
 registerComponent(Avatar);
+registerComponent(ButtonS)
 
 window.addEventListener('DOMContentLoaded', async () => {
   console.log(Router)
