@@ -71,7 +71,7 @@ export class EditPassword extends Block {
                      errorClass="error"
                   }}}
                   {{{Button textBtn="Сохранить" classes="button button__edit_password" onClick=onSubmit }}}
-                  {{{Button classes="button button__edit_pro" textBtn="Вернуться в чат" onClick=toChat }}}
+                  {{{Button classes="button button__edit_password" textBtn="Вернуться в чат" onClick=toChat }}}
                   </ul>
                </form>
             </li>
