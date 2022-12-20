@@ -156,12 +156,7 @@ export class Chat extends Block {
           {{{Button classes="button__plus" onClick=addChat }}}
         </div>
       </li>
-        <li class="chat__main chat__main-dialog">
-        <div class="chat__header">
-          <div class="chat__inner">        
-            <p class="chat__user-name">Вадим</p>
-          </div>
-        </div>
+        <li class="chat__main chat__main-dialog">        
         <div class="chat__inner">
           <ul class="chat__messages">
             ${messages.map((message: MessageToChat) => {

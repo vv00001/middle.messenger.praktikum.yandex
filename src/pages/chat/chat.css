@@ -132,13 +132,6 @@
     font-weight: 500;
     line-height: 10px;
   } 
-  &__header {
-    display: flex;
-    border-bottom: 1px solid var(--main-light-grey);
-    justify-content: space-between;
-    align-items: center;
-    padding-bottom: 10px;
-  }
   &__user-name {
     margin: 0;
     font-size: 15px;
