@@ -1,1 +1,1 @@
-export { ButtonS as default } from "./button"
+export { ButtonS as default } from "./button_s"

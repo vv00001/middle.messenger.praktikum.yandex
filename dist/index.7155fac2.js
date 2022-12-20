@@ -556,6 +556,8 @@ var _avatar = require("./component/avatar");
 var _avatarDefault = parcelHelpers.interopDefault(_avatar);
 var _buttonS = require("./component/button_s");
 var _buttonSDefault = parcelHelpers.interopDefault(_buttonS);
+var _logInControll = require("./sourseCode/control/LogInControll");
+var _logInControllDefault = parcelHelpers.interopDefault(_logInControll);
 _mypracticum.registerComponent(_errorDefault.default);
 _mypracticum.registerComponent(_inputDefault.default);
 _mypracticum.registerComponent(_buttonDefault.default);
@@ -566,16 +568,12 @@ _mypracticum.registerComponent(_messageDefault.default);
 _mypracticum.registerComponent(_avatarDefault.default);
 _mypracticum.registerComponent(_buttonSDefault.default);
 window.addEventListener('DOMContentLoaded', async ()=>{
-    console.log(_routerDefault.default);
     _routerDefault.default.use("/", _login.LoginPage).use("/messenger", _chat.Chat).use("/profile", _profile.Profile).use("/settings", _editProfile.EditProfile).use("/editPassword", _editPassword.EditPassword).use("/register", _register.Register).use("/404", _notFound.NotFoundPage).use("/500", _serverError.ServerError);
-    console.log(window.location.pathname);
-    window.location.pathname;
-    try {
-        _routerDefault.default.start();
-    } catch (e) {}
+    _routerDefault.default.start();
+    _logInControllDefault.default.check();
 });
 
-},{"./mypracticum":"fmOdD","../src/mypracticum/Router":"ksMzb","./pages/login/login":"d4kgo","./pages/notFound/notFound":"8Au6T","./pages/chat/chat":"BTZqg","./pages/editProfile/editProfile":"jAgB3","./pages/register/register":"1d69E","./pages/profile/profile":"3JZwj","./pages/editPassword/editPassword":"gEr5a","./pages/serverError/serverError":"hcOpP","./component/error":"35krS","./component/mainInput":"5Mbat","./component/input":"HJI1p","./component/button":"bhL52","./component/listItem":"eWJdd","./component/message":"iypKu","./component/title/":"dn7t3","./component/avatar":"jLr1o","./component/button_s":"4wJpe","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"fmOdD":[function(require,module,exports) {
+},{"./mypracticum":"fmOdD","../src/mypracticum/Router":"ksMzb","./pages/login/login":"d4kgo","./pages/notFound/notFound":"8Au6T","./pages/chat/chat":"BTZqg","./pages/editProfile/editProfile":"jAgB3","./pages/register/register":"1d69E","./pages/profile/profile":"3JZwj","./pages/editPassword/editPassword":"gEr5a","./pages/serverError/serverError":"hcOpP","./component/error":"35krS","./component/mainInput":"5Mbat","./component/input":"HJI1p","./component/button":"bhL52","./component/listItem":"eWJdd","./component/message":"iypKu","./component/title/":"dn7t3","./component/avatar":"jLr1o","./component/button_s":"4wJpe","./sourseCode/control/LogInControll":"3t8s8","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"fmOdD":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Block", ()=>_blockDefault.default
@@ -12306,8 +12304,6 @@ class Route {
         return isEqual(pathname, this._pathname);
     }
     render() {
-        console.log(this._block);
-        console.log(this._props.rootQuery);
         this._block = new this._blockClass();
         render(this._props.rootQuery, this._block);
         return;
@@ -12343,12 +12339,10 @@ class Router {
         route.render(route, pathname);
     }
     go(pathname) {
-        console.log("this.go", pathname);
         this.history.pushState({}, "", pathname);
         this._onRoute(pathname);
     }
     back() {
-        console.log("this.back");
         this.history.back();
     }
     forward() {
@@ -12360,11 +12354,9 @@ class Router {
     }
 }
 function render(takeSelector, block) {
-    console.log(takeSelector);
     const root = document.querySelector(takeSelector);
     if (root === null) throw new Error(`not takeSelector "${takeSelector}"`);
     root.innerHTML = '';
-    console.log(block);
     root.append(block.getContent());
     return root;
 }
@@ -12539,22 +12531,18 @@ class LogInControll {
         this.aplicationPI = _loginInterfaceDefault.default;
     }
     signin({ ...rest }) {
-        console.log({
-            ...rest
-        });
         _loginInterfaceDefault.default.signin({
             ...rest
         }).then(()=>{
             _routerDefault.default.go("/messenger");
-        });
+        }).catch(()=>{});
     }
     getProfile() {
         _loginInterfaceDefault.default.getProfile().then(({ response  })=>{
-            console.log(response);
             _storeDefault.default.set({
                 userInfo: JSON.parse(response)
             });
-        });
+        }).catch(()=>{});
     }
     exit() {
         _loginInterfaceDefault.default.exit().then(()=>{
@@ -12566,6 +12554,13 @@ class LogInControll {
             ...rest
         }).then(()=>{
             _routerDefault.default.go("/messenger");
+        });
+    }
+    check() {
+        _loginInterfaceDefault.default.getProfile().then(()=>{
+            _routerDefault.default.go("/messenger");
+        }).catch((e)=>{
+            _routerDefault.default.go("/");
         });
     }
 }
@@ -12614,7 +12609,6 @@ class MainClass {
         };
     }
     post(url, data) {
-        console.log(this.yandex, this.headers, data, url);
         return this.https.post(`${this.yandex}/${url}`, {
             headers: this._headers,
             data
@@ -12819,9 +12813,6 @@ class Chat extends _blockDefault.default {
                 if (chatItemId) _chatControllDefault.default.getChatToken({
                     chatId: Number(chatItemId)
                 }).then(({ token  })=>{
-                    console.log({
-                        token
-                    }, userInfo?.id, chatItemId);
                     _messageControllDefault.default.connect({
                         userId: userInfo?.id,
                         chatId: Number(chatItemId),
@@ -12851,9 +12842,6 @@ class Chat extends _blockDefault.default {
                 const input = document.querySelector(".chat__create_chat");
                 if (input.value != "") {
                     const title = input.value;
-                    console.log({
-                        title
-                    });
                     _chatControllDefault.default.createChat({
                         title
                     });
@@ -12863,14 +12851,11 @@ class Chat extends _blockDefault.default {
                             allChat: state.allChat
                         });
                     });
-                } else console.log("---------------");
+                } else console.log("введите название чата");
             },
             serchUser: ()=>{
                 const input = document.querySelector(".input__footer-User");
                 const login = input.value;
-                console.log({
-                    login
-                });
                 if (input.value != "") _profileControllDefault.default.searchUser({
                     login: login
                 });
@@ -12881,9 +12866,6 @@ class Chat extends _blockDefault.default {
                 if (this.state.chatItemId != 0) {
                     if (input.value != "") {
                         const login = input.value;
-                        console.log({
-                            login
-                        }, this.state.chatItemID);
                         let send = Number(login);
                         _chatControllDefault.default.addUser({
                             users: [
@@ -12917,7 +12899,6 @@ class Chat extends _blockDefault.default {
       {{{Button classes="button__chat_link" textBtn="Редактировать профиль" onClick=goProfile }}}
         <ul class="chat__list">    
         ${allChat && Object.values(allChat)?.map((chat)=>{
-            console.log(chat.title);
             return `
                 {{{listItem        
                   id="${chat.id}"
@@ -12930,18 +12911,15 @@ class Chat extends _blockDefault.default {
                 }}}`;
         }).join('')}
         </ul>
-        <input class="chat__create_chat" type="text" placeholder="Создать чат" />  
-        {{{Button classes="button__footer-btn-send" onClick=addChat }}}
-      </li>
-        <li class="chat__main chat__main-dialog">
-        <div class="chat__header">
-          <div class="chat__inner">        
-            <p class="chat__user-name">Вадим</p>
-          </div>
+        <div class="chat__create_panel">
+          <input class="chat__create_chat" type="text" placeholder="Создать чат"/>
+          {{{Button classes="button__plus" onClick=addChat }}}
         </div>
+      </li>
+        <li class="chat__main chat__main-dialog">        
         <div class="chat__inner">
           <ul class="chat__messages">
-            ${console.log(messages), messages.map((message)=>{
+            ${messages.map((message)=>{
             return `
                   {{{message
                     text="${message.content}"
@@ -12956,15 +12934,17 @@ class Chat extends _blockDefault.default {
         </button>
         <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />    
         {{{Button classes="button__footer-btn-send" onClick=sendMessage }}}
-        {{{ButtonS classes="button__footer-btn-send_zero" onClick=sendMessage }}}
+        {{{ButtonS classes="button_s__footer-btn-send_zero" onClick=sendMessage }}}
       </form>
       </div>
       <div>
-        <input class="input__footer-User" type="text" placeholder="Ник пользователя удалить/добавить Результат работы прошу проследить в консоль логе на Ф12" />  
+        <input class="input__footer-User" type="text" placeholder="Добовлять/удалять участника чата по id. Id получить ввести первую букву логина на serchUserIdInF12 получить список всех id" />  
       </div>
-      {{{Button classes="button__footer-btn-addUser" textBtn = "add" onClick=addUser }}}
-      {{{Button classes="button__footer-btn-deleteUser" textBtn="delete" onClick=deleteUser }}}
-      {{{Button classes="button__footer-btn-serchUser" textBtn="serchUserIdInF12" onClick=serchUser }}}
+      <div class="chat__footer-button">
+        {{{Button classes="button__footer-btn-User" textBtn = "add" onClick=addUser }}}
+        {{{Button classes="button__footer-btn-User" textBtn="delete" onClick=deleteUser }}}
+        {{{Button classes="button__footer-btn-User" textBtn="serchUserIdInF12" onClick=serchUser }}}
+      </div>
       </li>
     </ul>
     </main>
@@ -12996,7 +12976,6 @@ class ChatControll {
         );
     }
     createChat({ title  }) {
-        console.log(title);
         _chatInterfaceDefault.default.createChat({
             title
         }).then(({ response  })=>{
@@ -13045,7 +13024,6 @@ class ChatInterface extends _mainClassDefault.default {
         super('/chats');
     }
     getChats() {
-        console.log(this);
         return this.get('');
     }
     getChatToken({ chatId  }) {
@@ -13075,25 +13053,34 @@ parcelHelpers.defineInteropFlag(exports);
 var _store = require("../../mypracticum/Store");
 var _storeDefault = parcelHelpers.interopDefault(_store);
 const URLS = "wss://ya-praktikum.tech/ws/chats";
-// const userId="120127"
 class MessageControll {
     constructor(){
         this.socket = null;
         this.handleOpen = this.handleOpen.bind(this);
         this.handleMessage = this.handleMessage.bind(this);
+        this.handleError = this.handleError.bind(this);
+        this.handleClose = this.handleClose.bind(this);
     }
     setListeners() {
         if (this.socket) {
             this.socket.addEventListener('open', this.handleOpen);
             this.socket.addEventListener('message', this.handleMessage);
+            this.socket.addEventListener('close', this.handleClose);
+            this.socket.addEventListener('error', this.handleError);
         }
     }
     removeListeners() {
         if (this.socket) {
             this.socket.removeEventListener('open', this.handleOpen);
             this.socket.removeEventListener('message', this.handleMessage);
+            this.socket.removeEventListener('close', this.handleClose);
+            this.socket.removeEventListener('error', this.handleError);
         }
     }
+    handleClose(evt) {
+        this.removeListeners();
+    }
+    handleError(evt) {}
     handleOpen() {
         if (this.socket) {
             this.getMessages();
@@ -13105,7 +13092,6 @@ class MessageControll {
         }
     }
     connect({ chatId , userId , token  }) {
-        console.log(chatId, token, "connect", userId);
         if (this.chatId !== chatId) {
             this.chatId = chatId;
             this.token = token;
@@ -13115,15 +13101,12 @@ class MessageControll {
         }
     }
     handleMessage(evt) {
-        console.log(evt);
         const messages = JSON.parse(evt.data);
         if (messages.type !== 'pong') {
-            if (Array.isArray(messages)) {
-                console.log("handleMessage", messages);
-                _storeDefault.default.set({
-                    messages: messages.reverse()
-                });
-            } else {
+            if (Array.isArray(messages)) _storeDefault.default.set({
+                messages: messages.reverse()
+            });
+            else {
                 const state = _storeDefault.default.get();
                 _storeDefault.default.set({
                     messages: Object.assign(state.messages, {
@@ -13140,13 +13123,10 @@ class MessageControll {
         }));
     }
     getMessages() {
-        if (this.socket) {
-            console.log("getMessages");
-            this.socket.send(JSON.stringify({
-                content: "0",
-                type: "get old"
-            }));
-        }
+        if (this.socket) this.socket.send(JSON.stringify({
+            content: "0",
+            type: "get old"
+        }));
     }
 }
 exports.default = new MessageControll();
@@ -13164,25 +13144,24 @@ class ProfileControll {
             _storeDefault.default.set({
                 userInfo: JSON.parse(response)
             });
-        });
+        }).catch(()=>{});
     }
     searchUser({ ...rest }) {
         return _profileInterfaceDefault.default.searchUser({
             ...rest
-        }).then(({ response  })=>console.log(response)
-        );
+        }).then(({ response  })=>console.log("возмите отсюда id и вставте в поле после нажмите Add", response)
+        ).catch(()=>{});
     }
     changeAvatar(avatar) {
-        console.log(avatar);
         _profileInterfaceDefault.default.changeAvatar(avatar).then(({ response  })=>{
             _storeDefault.default.set({
                 userInfo: JSON.parse(response)
             });
-        });
+        }).catch(()=>{});
     }
     changePassword(userPassword) {
         _profileInterfaceDefault.default.changePassword(userPassword).then(()=>console.log("userPassword done")
-        );
+        ).catch(()=>{});
     }
 }
 exports.default = new ProfileControll();
@@ -13197,7 +13176,6 @@ class ProfileInterface extends _mainClassDefault.default {
         super("/user");
     }
     changeUserInfo(userInfo) {
-        console.log(userInfo);
         return this.put("profile", userInfo);
     }
     searchUser({ login  }) {
@@ -13206,7 +13184,6 @@ class ProfileInterface extends _mainClassDefault.default {
         });
     }
     changeAvatar(avatar) {
-        console.log(avatar);
         return this.put('profile/avatar', avatar, {});
     }
     changePassword(userPassword) {
@@ -13223,6 +13200,7 @@ parcelHelpers.export(exports, "EditProfile", ()=>EditProfile
 var _block = require("../../mypracticum/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
 var _editProfileCss = require("./editProfile.css");
+var _input = require("../../component/input/input");
 var _validate = require("../../sourseCode/validate");
 var _profileControll = require("../../sourseCode/control/ProfileControll");
 var _profileControllDefault = parcelHelpers.interopDefault(_profileControll);
@@ -13248,15 +13226,23 @@ class EditProfile extends _blockDefault.default {
                 let profileName = this.element.querySelector("input[name='profileName']");
                 let mail = this.element.querySelector("input[name='mail']");
                 let messageErrorlogin = _validate.validate(login.value);
-                if (!messageErrorlogin && !_validate.validate(phone.value) && !_validate.validate(chatname.value) && !_validate.validate(secondName.value) && !_validate.validate(profileName.value) && !_validate.validate(mail.value)) _profileControllDefault.default.editProfile({
-                    first_name: profileName.value,
-                    second_name: secondName.value,
-                    display_name: chatname.value,
-                    login: login.value,
-                    email: mail.value,
-                    phone: phone.value
-                });
-                else console.log("исправьте ошибки выделенные красным цветом, пожалуйста");
+                if (!messageErrorlogin && !_validate.validate(phone.value) && !_validate.validate(chatname.value) && !_validate.validate(secondName.value) && !_validate.validate(profileName.value) && !_validate.validate(mail.value)) {
+                    _profileControllDefault.default.editProfile({
+                        first_name: profileName.value,
+                        second_name: secondName.value,
+                        display_name: chatname.value,
+                        login: login.value,
+                        email: mail.value,
+                        phone: phone.value
+                    });
+                    const input = document.querySelector(".edit-profile__file_input");
+                    const receivePhoto = input.files;
+                    if (receivePhoto[0]) {
+                        let formData = new FormData();
+                        formData.append("avatar", receivePhoto[0]);
+                        _profileControllDefault.default.changeAvatar(formData);
+                    } else console.log("Сначала выберете на кнопку ниже файл или это замена данных без замены аватара");
+                } else console.log("исправьте ошибки выделенные красным цветом, пожалуйста");
             },
             toChat: ()=>_routerDefault.default.go("/messenger")
         });
@@ -13267,9 +13253,16 @@ class EditProfile extends _blockDefault.default {
    <main class="mainclass">
     <form class="edit-profile"> 
       {{{Title firstLine="Изменение профиля"}}}
-      
+      <div class ="edit-profile__avatar">
+        {{{Avatar avatar="${userInfo.avatar}"}}}  
+        
+      </div>
+      <label class="edit-profile__input-file">
+        Сменить аватар
+        <input class="edit-profile__file_input" type="file" name="avatar" accept="image/*" />
+      </label>
       {{{mainInput 
-        onInput=onInput 
+        onInput=onInput
         onFocus=onFocus
         type="text" 
         name="mail"
@@ -13316,7 +13309,7 @@ class EditProfile extends _blockDefault.default {
         classes="input__text-field"
         placeholder="Имя в чате"
         errorClass="error"
-        value="${userInfo.display_name}"
+        value="${userInfo.display_name ? userInfo.display_name : "Тут можно ввести имя в чате"}"
       }}}
       {{{mainInput 
         onInput=onInput 
@@ -13336,7 +13329,35 @@ class EditProfile extends _blockDefault.default {
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","./editProfile.css":"5iWeb","../../sourseCode/validate":"ihU9O","../../sourseCode/control/ProfileControll":"4CRXS","../../sourseCode/control/LogInControll":"3t8s8","../../mypracticum/Store":"crPhk","../../mypracticum/Router":"ksMzb","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"5iWeb":[function() {},{}],"1d69E":[function(require,module,exports) {
+},{"../../mypracticum/Block":"hydC4","./editProfile.css":"5iWeb","../../component/input/input":"2ww53","../../sourseCode/validate":"ihU9O","../../sourseCode/control/ProfileControll":"4CRXS","../../sourseCode/control/LogInControll":"3t8s8","../../mypracticum/Store":"crPhk","../../mypracticum/Router":"ksMzb","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"5iWeb":[function() {},{}],"2ww53":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "Input", ()=>Input
+);
+var _block = require("../../mypracticum/Block");
+var _blockDefault = parcelHelpers.interopDefault(_block);
+var _inputCss = require("./input.css");
+class Input extends _blockDefault.default {
+    static componentName = 'Input';
+    constructor({ onInput , onFocus , onBlur , ...props }){
+        super({
+            ...props,
+            events: {
+                input: onInput,
+                focus: onFocus,
+                blur: onBlur
+            }
+        });
+    }
+    render() {
+        const { name , type , minlength , maxlength  } = this.state;
+        return `
+    <input name="{{name}}" value="{{value}}" class="{{classes}}" type="{{type}}" placeholder="{{placeholder}}">   
+    `;
+    }
+}
+
+},{"../../mypracticum/Block":"hydC4","./input.css":"72l2a","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"72l2a":[function() {},{}],"1d69E":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Register", ()=>Register
@@ -13436,7 +13457,7 @@ class Register extends _blockDefault.default {
         type="text" 
         name="password_repeat"
         classes="input__text-field"
-        placeholder="Повтарите пароль"
+        placeholder="Повторите пароль"
         errorClass="error"
       }}}
       {{{mainInput 
@@ -13470,8 +13491,6 @@ var _storeDefault = parcelHelpers.interopDefault(_store);
 var _router = require("../../mypracticum/Router");
 var _routerDefault = parcelHelpers.interopDefault(_router);
 var _profileCss = require("./profile.css");
-var _profileControll = require("../../sourseCode/control/ProfileControll");
-var _profileControllDefault = parcelHelpers.interopDefault(_profileControll);
 class Profile extends _blockDefault.default {
     constructor(){
         super();
@@ -13490,78 +13509,64 @@ class Profile extends _blockDefault.default {
             ,
             changePassword: ()=>_routerDefault.default.go("/editPassword")
             ,
-            Avatar: (evt)=>{
-                const input = document.querySelector(".input-file__input");
-                const jjj = input.files;
-                if (jjj[0]) {
-                    let formData = new FormData();
-                    console.log(jjj[0]);
-                    formData.append("avatar", jjj[0]);
-                    _profileControllDefault.default.changeAvatar(formData);
-                } else console.log("Сначало выберете на кнопку ниже файл");
-            },
             toChat: ()=>_routerDefault.default.go("/messenger")
         };
     }
     render() {
         const { userInfo =[]  } = this.props;
         const { avatar , email , login , first_name , second_name , display_name , phone  } = userInfo;
-        console.log(userInfo, this.props);
         return `
       <main class="profile">
         <div class="profile__form">
-        {{{Avatar avatar="${avatar}" onClick=Avatar}}}
-        <span >Выбор файла затем клик по круглой картинке высылает файл на сервер, замена тут после нового захода на эту страницу</span>
-        <input class="input-file__input" type="file" name="avatar" accept="image/*" />
-            <div class ="profile__title">
-            {{{Title firstLine="${display_name}"}}}
-            </div>
-            <form class="profile__form">
-            <div class="profile__form__span">
-                <label class="profile__form__span__label">Почта</label>
-                <p>"${email}"</p>
-            </div>
-            <div class="profile__form__span">
-                <label class="profile__form__span__label">Логин</label>
-                <p class="profile__form__span__value">"${login}"</p>
-            </div>
-            <div class="profile__form__span">
-                <label class="profile__form__span__label">Имя</label>
-                <p class="profile__form__span__value">"${first_name}"</p>
-            </div>
-            <div class="profile__form__span">
-                <label class="profile__form__span__label">Фамилия</label>
-                <p class="profile__form__span__value">"${second_name}"</p>
-            </div>
-            <div class="profile__form__span">
-                <label class="profile__form__span__label">Имя в чате</label>
-                <p class="profile__form__span__value">"${display_name}"</p>
-            </div>
-            <div class="profile__form__span">
-                <label class="profile__form__span__label">Телефон</label>
-                <p class="profile__form__span__value">"${phone}"</p>
-            </div>
-            </form>
+          {{{Avatar avatar="${avatar}"}}}
+          <div class ="profile__title">
+          {{{Title firstLine="${display_name ? display_name : "Пройдите в изменить данные"}"}}}
+          </div>
+          <form class="profile__form">
+          <div class="profile__form__span">
+              <label class="profile__form__span__label">Почта</label>
+              <p>"${email}"</p>
+          </div>
+          <div class="profile__form__span">
+              <label class="profile__form__span__label">Логин</label>
+              <p class="profile__form__span__value">"${login}"</p>
+          </div>
+          <div class="profile__form__span">
+              <label class="profile__form__span__label">Имя</label>
+              <p class="profile__form__span__value">"${first_name}"</p>
+          </div>
+          <div class="profile__form__span">
+              <label class="profile__form__span__label">Фамилия</label>
+              <p class="profile__form__span__value">"${second_name}"</p>
+          </div>
+          <div class="profile__form__span">
+              <label class="profile__form__span__label">Имя в чате</label>
+              <p class="profile__form__span__value">"${display_name ? display_name : "Пройдите в изменить данные"}"</p>
+          </div>
+          <div class="profile__form__span">
+              <label class="profile__form__span__label">Телефон</label>
+              <p class="profile__form__span__value">"${phone}"</p>
+          </div>
+          </form>
 
-            <div class="profile__form__span">
-                {{{Button classes="button__profile_link" textBtn="Изменить данные" onClick=changeData }}}
-            </div>
-            <div class="profile__form__span">
-                {{{Button classes="button__profile_link" textBtn="Изменить пароль" onClick=changePassword }}}
-            </div>
-            <div class="profile__form__span">
-                {{{Button classes="button__profile_link" textBtn="Выйти" onClick=exit }}}      
-            </div>
-            <div class="profile__form__span">
-                {{{Button classes="button__profile_link" textBtn="Вернуться в чат" onClick=toChat }}}
-            </div>
-            
+          <div class="profile__form__span">
+              {{{Button classes="button__profile_link" textBtn="Изменить данные" onClick=changeData }}}
+          </div>
+          <div class="profile__form__span">
+              {{{Button classes="button__profile_link" textBtn="Изменить пароль" onClick=changePassword }}}
+          </div>
+          <div class="profile__form__span">
+              {{{Button classes="button__profile_link" textBtn="Выйти" onClick=exit }}}      
+          </div>
+          <div class="profile__form__span">
+              {{{Button classes="button__profile_link" textBtn="Вернуться в чат" onClick=toChat }}}
+          </div>            
      </main>
     `;
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","../../sourseCode/control/LogInControll":"3t8s8","../../mypracticum/Store":"crPhk","../../mypracticum/Router":"ksMzb","./profile.css":"gXxuZ","../../sourseCode/control/ProfileControll":"4CRXS","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"gXxuZ":[function() {},{}],"gEr5a":[function(require,module,exports) {
+},{"../../mypracticum/Block":"hydC4","../../sourseCode/control/LogInControll":"3t8s8","../../mypracticum/Store":"crPhk","../../mypracticum/Router":"ksMzb","./profile.css":"gXxuZ","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"gXxuZ":[function() {},{}],"gEr5a":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "EditPassword", ()=>EditPassword
@@ -13782,35 +13787,7 @@ parcelHelpers.export(exports, "default", ()=>_input.Input
 );
 var _input = require("./input");
 
-},{"./input":"2ww53","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"2ww53":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "Input", ()=>Input
-);
-var _block = require("../../mypracticum/Block");
-var _blockDefault = parcelHelpers.interopDefault(_block);
-var _inputCss = require("./input.css");
-class Input extends _blockDefault.default {
-    static componentName = 'Input';
-    constructor({ onInput , onFocus , onBlur , ...props }){
-        super({
-            ...props,
-            events: {
-                input: onInput,
-                focus: onFocus,
-                blur: onBlur
-            }
-        });
-    }
-    render() {
-        const { name , type , minlength , maxlength  } = this.state;
-        return `
-    <input name="{{name}}" value="{{value}}" class="{{classes}}" type="{{type}}" placeholder="{{placeholder}}">   
-    `;
-    }
-}
-
-},{"../../mypracticum/Block":"hydC4","./input.css":"72l2a","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"72l2a":[function() {},{}],"bhL52":[function(require,module,exports) {
+},{"./input":"2ww53","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"bhL52":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>_button.Button
@@ -13880,8 +13857,6 @@ class ListItem extends _blockDefault.default {
     }
     render() {
         const { countNotReadMessage , time , userName , lastMessage , id  } = this.state;
-        console.log(11111);
-        console.log(userName, countNotReadMessage, lastMessage, time, id);
         return `
   <li class="list-item" chat_id="${id}">
     <div class="list-item__container">
@@ -13890,12 +13865,10 @@ class ListItem extends _blockDefault.default {
         <p class="list-item__message">{{#unless this.countNotReadMessage}}<span class="list-item__message_bold">Вы:</span>{{/unless}} {{this.lastMessage}}</p>
       </div>
       <div class="list-item__wrap">
-        <time class="list-item__time">{{this.time}}</time>
         <p class="list-item__count-message {{#if this.countNotReadMessage}}list-item__count-message_is-show{{/if}}">{{this.countNotReadMessage}}</p>
       </div>
     </div>
-  </li>
-  
+  </li>  
    `;
     }
 }
@@ -14002,18 +13975,16 @@ var _avatar = require("./avatar");
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "Avatar", ()=>Avatar
-);
+) // avatar !== 'undefined' && avatar !== 'null'
+;
 var _block = require("../../mypracticum/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
 var _avatarCss = require("./avatar.css");
 const yandex = "https://ya-praktikum.tech/api/v2/resources";
 class Avatar extends _blockDefault.default {
     static componentName = "Avatar";
-    constructor({ onClick , ...rest }){
+    constructor({ ...rest }){
         super({
-            events: {
-                click: onClick
-            },
             ...rest
         });
     }
@@ -14026,7 +13997,8 @@ class Avatar extends _blockDefault.default {
         const { avatar  } = this.state;
         return `
       <div class="avatar">
-      <img class="avatar__img" src="${`${yandex}${avatar}`}" alt="Аватар по умолчанию" />
+      <img class="avatar__img" src="${avatar !== 'undefined' && avatar !== 'null' ? `${yandex}${avatar}` : ""}"
+       alt="Уставновите аватар в Изменить данные" />
       </div>
       `;
     }
@@ -14035,18 +14007,18 @@ class Avatar extends _blockDefault.default {
 },{"../../mypracticum/Block":"hydC4","./avatar.css":"iIMPn","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"iIMPn":[function() {},{}],"4wJpe":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>_button.ButtonS
+parcelHelpers.export(exports, "default", ()=>_buttonS.ButtonS
 );
-var _button = require("./button");
+var _buttonS = require("./button_s");
 
-},{"./button":"4rbpw","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"4rbpw":[function(require,module,exports) {
+},{"./button_s":"lw9NR","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"lw9NR":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "ButtonS", ()=>ButtonS
 );
 var _block = require("../../mypracticum/Block");
 var _blockDefault = parcelHelpers.interopDefault(_block);
-var _buttonCss = require("./button.css");
+var _buttonSCss = require("./button_s.css");
 class ButtonS extends _blockDefault.default {
     static componentName = "ButtonS";
     constructor({ textBtn , onClick , classes  }){
@@ -14066,5 +14038,5 @@ class ButtonS extends _blockDefault.default {
     }
 }
 
-},{"../../mypracticum/Block":"hydC4","./button.css":"2SFtB","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"2SFtB":[function() {},{}]},["41p50","57jqn"], "57jqn", "parcelRequirea735")
+},{"../../mypracticum/Block":"hydC4","./button_s.css":"8mI20","@parcel/transformer-js/src/esmodule-helpers.js":"j7FRh"}],"8mI20":[function() {},{}]},["41p50","57jqn"], "57jqn", "parcelRequirea735")
 

@@ -38,7 +38,6 @@ export class Chat extends Block {
         if (chatItemId) {
           ChatControll.getChatToken({ chatId: Number(chatItemId) })
           .then(({ token }) =>{
-            console.log({token},userInfo?.id,chatItemId)
             MessageControll.connect({
               userId: userInfo?.id,
               chatId: Number(chatItemId),
@@ -69,7 +68,6 @@ export class Chat extends Block {
         const input=document.querySelector(".chat__create_chat") as HTMLFormElement;
         if(input.value!=""){
           const title=input.value as CreateChat
-          console.log({title})
           ChatControll.createChat({title});
 
           store.on("update", () => {
@@ -77,13 +75,12 @@ export class Chat extends Block {
             this.setState({ allChat: state.allChat });
           });
         }else{
-          console.log("---------------")
+          console.log("введите название чата")
         }
       },
       serchUser:()=>{
         const input=document.querySelector(".input__footer-User") as HTMLFormElement;
         const login=input.value as SearchUser
-        console.log({login})
         if(input.value!=""){
           ProfileControll.searchUser({
             login: login,
@@ -97,7 +94,6 @@ export class Chat extends Block {
         if(this.state.chatItemId!=0){
           if(input.value!=""){
             const login=input.value as SearchUser
-            console.log({login},this.state.chatItemID)
             let send=Number(login)
             ChatControll.addUser({
               users: [send],
@@ -129,7 +125,6 @@ export class Chat extends Block {
       userInfo=[],
       messages=[]
     }=this.props;
-
     return `
     <main>
       <ul class="chat">
@@ -139,7 +134,6 @@ export class Chat extends Block {
         ${
           allChat &&Object.values(allChat)?.map(
               (chat: any) =>{
-                console.log(chat.title)
                 return`
                 {{{listItem        
                   id="${chat.id}"
@@ -154,22 +148,18 @@ export class Chat extends Block {
                 }}}`;
               }
             )
-            .join('')  
+          .join('')  
         }
         </ul>
-        <input class="chat__create_chat" type="text" placeholder="Создать чат" />  
-        {{{Button classes="button__footer-btn-send" onClick=addChat }}}
-      </li>
-        <li class="chat__main chat__main-dialog">
-        <div class="chat__header">
-          <div class="chat__inner">        
-            <p class="chat__user-name">Вадим</p>
-          </div>
+        <div class="chat__create_panel">
+          <input class="chat__create_chat" type="text" placeholder="Создать чат"/>
+          {{{Button classes="button__plus" onClick=addChat }}}
         </div>
+      </li>
+        <li class="chat__main chat__main-dialog">        
         <div class="chat__inner">
           <ul class="chat__messages">
-            ${console.log(messages),
-              messages.map((message: MessageToChat) => {
+            ${messages.map((message: MessageToChat) => {
                 return `
                   {{{message
                     text="${message.content}"
@@ -185,15 +175,17 @@ export class Chat extends Block {
         </button>
         <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />    
         {{{Button classes="button__footer-btn-send" onClick=sendMessage }}}
-        {{{ButtonS classes="button__footer-btn-send_zero" onClick=sendMessage }}}
+        {{{ButtonS classes="button_s__footer-btn-send_zero" onClick=sendMessage }}}
       </form>
       </div>
       <div>
-        <input class="input__footer-User" type="text" placeholder="Ник пользователя удалить/добавить Результат работы прошу проследить в консоль логе на Ф12" />  
+        <input class="input__footer-User" type="text" placeholder="Добовлять/удалять участника чата по id. Id получить ввести первую букву логина на serchUserIdInF12 получить список всех id" />  
       </div>
-      {{{Button classes="button__footer-btn-addUser" textBtn = "add" onClick=addUser }}}
-      {{{Button classes="button__footer-btn-deleteUser" textBtn="delete" onClick=deleteUser }}}
-      {{{Button classes="button__footer-btn-serchUser" textBtn="serchUserIdInF12" onClick=serchUser }}}
+      <div class="chat__footer-button">
+        {{{Button classes="button__footer-btn-User" textBtn = "add" onClick=addUser }}}
+        {{{Button classes="button__footer-btn-User" textBtn="delete" onClick=deleteUser }}}
+        {{{Button classes="button__footer-btn-User" textBtn="serchUserIdInF12" onClick=serchUser }}}
+      </div>
       </li>
     </ul>
     </main>

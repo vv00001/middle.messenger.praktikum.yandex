@@ -10,18 +10,26 @@ class ProfileControll {
       .then(({ response }: any) => {
         store.set({ userInfo: JSON.parse(response) });        
       })
+      .catch(()=>{
+        
+      })
   }
   public searchUser({ ...rest }: SearchUser) {
     return ProfileInterface.searchUser({ ...rest })
       .then(({ response }: any) =>
-        console.log(response)
+        console.log("возмите отсюда id и вставте в поле после нажмите Add",response)
       )
+      .catch(()=>{
+        
+      })
   }
   public changeAvatar(avatar:FormData){
-    console.log(avatar)
     ProfileInterface.changeAvatar(avatar)
     .then(({ response }: any) => {
       store.set({ userInfo: JSON.parse(response) });   
+    })
+    .catch(()=>{
+        
     })
   }
   public changePassword(userPassword: UserPaswordType) {
@@ -29,7 +37,9 @@ class ProfileControll {
       .then(() =>
         console.log("userPassword done")
       )
+      .catch(()=>{
+        
+      })
   }
 }
-
 export default new ProfileControll();

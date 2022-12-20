@@ -3,8 +3,8 @@
   align-items: center;
   justify-content: center;
 
-  width: 100vw;
-  height: 100vh;
+  width: 98vw;
+  height: 98vh;
 
   &__title {
     margin-top: 100px;
@@ -35,7 +35,6 @@
       &__value {
         margin: 0;
       }
-
     }
   }
   &__link {
