@@ -24,7 +24,6 @@ export class ChatControll {
       .then(({ response }: any) => JSON.parse(response))
   }
   public createChat({ title }: string) {
-    console.log(title)
     ChatInterface.createChat({title})
     .then(({ response }: any) => {
        const state = store.get() as ChatsType;

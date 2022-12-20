@@ -1,7 +1,9 @@
 .mainclass{
   display: flex;
 }
-
+input[type="file"] {
+  display: none;
+}
 .edit-profile {
   list-style: none;
   font-family: inherit;
@@ -12,6 +14,18 @@
   flex-direction: column;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
+  
+  &__input-file{
+    
+    font-family: inherit;
+    border: 5px;
+    display: block;
+    /* padding: 6px 12px; */
+    margin:22px 0;
+    cursor: pointer;
+    border-bottom: 1px solid var(--main-blue);
+  }
+  &__avatar{
+    margin-left: 37%;
+  }
 }
-
-

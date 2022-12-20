@@ -37,8 +37,6 @@ export class ListItem extends Block {
       lastMessage,
       id
     } = this.state;
-    console.log(11111);
-    console.log(userName,countNotReadMessage,lastMessage,time,id)
     return `
   <li class="list-item" chat_id="${id}">
     <div class="list-item__container">
@@ -47,11 +45,9 @@ export class ListItem extends Block {
         <p class="list-item__message">{{#unless this.countNotReadMessage}}<span class="list-item__message_bold">Вы:</span>{{/unless}} {{this.lastMessage}}</p>
       </div>
       <div class="list-item__wrap">
-        <time class="list-item__time">{{this.time}}</time>
         <p class="list-item__count-message {{#if this.countNotReadMessage}}list-item__count-message_is-show{{/if}}">{{this.countNotReadMessage}}</p>
       </div>
     </div>
-  </li>
-  
+  </li>  
    `}
 }

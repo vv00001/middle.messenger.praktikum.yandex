@@ -1,7 +1,6 @@
 import Store from "../../mypracticum/Store";
 import { MainType } from "../globalTypes";
 const URLS= "wss://ya-praktikum.tech/ws/chats";
-// const userId="120127"
 
 class MessageControll {
    chatId!: string | number;
@@ -11,12 +10,16 @@ class MessageControll {
       this.socket = null;
       this.handleOpen = this.handleOpen.bind(this);
       this.handleMessage = this.handleMessage.bind(this);
+      this.handleError = this.handleError.bind(this);
+      this.handleClose = this.handleClose.bind(this);
    }
 
    setListeners() {
       if (this.socket) {
          this.socket.addEventListener('open', this.handleOpen);
          this.socket.addEventListener('message', this.handleMessage);
+         this.socket.addEventListener('close', this.handleClose);
+         this.socket.addEventListener('error', this.handleError);
       }
    }
 
@@ -24,7 +27,15 @@ class MessageControll {
       if (this.socket) {
          this.socket.removeEventListener('open', this.handleOpen);
          this.socket.removeEventListener('message', this.handleMessage);
+         this.socket.removeEventListener('close', this.handleClose);
+         this.socket.removeEventListener('error', this.handleError);
       }
+   }
+   handleClose(evt: any) {
+      this.removeListeners();      
+   }
+   handleError(evt: any) {
+   
    }
    handleOpen() {
    if (this.socket) {
@@ -35,7 +46,6 @@ class MessageControll {
       }
    }
    public connect({ chatId,userId, token }: any) {
-      console.log(chatId,token,"connect",userId)
       if (this.chatId !== chatId) {
          this.chatId = chatId;
          this.token = token;
@@ -47,11 +57,9 @@ class MessageControll {
       }
    }
    handleMessage(evt: any) {
-      console.log(evt)
       const messages = JSON.parse(evt.data);
       if (messages.type !== 'pong') {
          if (Array.isArray(messages)) {
-            console.log("handleMessage",messages)
             Store.set({
                messages: messages.reverse(),
             });
@@ -73,10 +81,8 @@ class MessageControll {
       }
    }
 
-
    public getMessages() {
       if (this.socket) {
-         console.log("getMessages")
          this.socket.send(
             JSON.stringify({
                content: "0",

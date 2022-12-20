@@ -6,7 +6,6 @@ export class ChatInterface extends MainClass {
    }
 
    public getChats() {
-      console.log(this)
       return this.get('');
    }
    public getChatToken({ chatId }: number) {

@@ -17,19 +17,19 @@ import Message from "./component/message"
 import Title from "./component/title/"
 import Avatar from "./component/avatar"
 import ButtonS from "./component/button_s"
+import LogInControll from "./sourseCode/control/LogInControll"
 
-registerComponent(Error);
-registerComponent(Input);
-registerComponent(Button);
-registerComponent(MainInput);
-registerComponent(Title);
-registerComponent(ListItem);
-registerComponent(Message);
-registerComponent(Avatar);
+registerComponent(Error)
+registerComponent(Input)
+registerComponent(Button)
+registerComponent(MainInput)
+registerComponent(Title)
+registerComponent(ListItem)
+registerComponent(Message)
+registerComponent(Avatar)
 registerComponent(ButtonS)
 
 window.addEventListener('DOMContentLoaded', async () => {
-  console.log(Router)
   Router
   .use("/", LoginPage)
   .use("/messenger",Chat)
@@ -39,17 +39,6 @@ window.addEventListener('DOMContentLoaded', async () => {
   .use("/register",Register)
   .use("/404",NotFoundPage)
   .use("/500",ServerError)
-
-  
-  console.log(window.location.pathname)
-  switch (window.location.pathname) {    
-    case "/":
-      break;      
-  }
-
-  try {
-    Router.start();
-  } catch (e) {
-    
-  }
+  Router.start();
+  LogInControll.check()
 });

@@ -1,5 +1,5 @@
 import Block from "../../mypracticum/Block";
-import "./button.css";
+import "./button_s.css";
 
 interface ButtonProps {
   textBtn?: string;

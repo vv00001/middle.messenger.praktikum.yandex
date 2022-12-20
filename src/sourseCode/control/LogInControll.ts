@@ -10,17 +10,20 @@ export class LogInControll {
   }
 
   public signin({ ...rest }: LoginData) {
-    console.log({...rest})
     MainClass.signin({ ...rest })
     .then(() => {
       router.go("/messenger");
+    })
+    .catch(()=>{
+        
     })
   }
   public getProfile() {
     MainClass.getProfile()
     .then(({ response }: any) => {
-      console.log(response)
       store.set({ userInfo: JSON.parse(response) });
+    })
+    .catch(()=>{
     })
   }
   public exit() {
@@ -35,6 +38,14 @@ export class LogInControll {
       router.go("/messenger");
     })
   }
-
+  public check(){
+    MainClass.getProfile()
+    .then(()=>{
+      router.go("/messenger");
+    })
+    .catch(e=>{
+      router.go("/");
+    })
+  }
 }
 export default new LogInControll();

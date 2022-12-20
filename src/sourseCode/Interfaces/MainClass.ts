@@ -10,7 +10,6 @@ export default abstract class MainClass {
    }
   
    post(url: string, data: unknown) {
-      console.log(this.yandex,this.headers,data,url)
       return this.https.post(`${this.yandex}/${url}`, { headers: this._headers, data });
    }
 

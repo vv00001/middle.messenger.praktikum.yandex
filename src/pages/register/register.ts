@@ -97,7 +97,7 @@ export class Register extends Block {
         type="text" 
         name="password_repeat"
         classes="input__text-field"
-        placeholder="Повтарите пароль"
+        placeholder="Повторите пароль"
         errorClass="error"
       }}}
       {{{mainInput 
