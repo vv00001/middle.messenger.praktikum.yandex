@@ -45,10 +45,8 @@ export class MainInput extends Block {
   }
 
   protected validateDone(inputValue:string,inputName:string){
-    console.log(inputValue,inputName)
     const takeCompinentOndex=Object.entries(this._children)[1][1]    
     const messageError = validate(inputValue,inputName)
-    // console.log(messageError)
     if(messageError.length>0){
       takeCompinentOndex.setProps({
         errorClass:"error_show",

@@ -6,14 +6,14 @@ export default class EventBus <E extends string = string, M extends { [K in E]: 
      if(!this.listeners[event]){
        this.listeners[event]=[];
     }
-    this.listeners[event].push(callback);
+    this.listeners[event]!.push(callback);
   }
 
   off(event: E, callback: Listener<M[E]>) {
      if(!this.listeners[event]){
        throw new Error(`Нет события: ${event}`);
     }
-    this.listeners[event] = this.listeners[event].filter(
+    this.listeners[event] = this.listeners[event]!.filter(
       listener => listener !== callback
     );
   }
@@ -22,7 +22,7 @@ export default class EventBus <E extends string = string, M extends { [K in E]: 
     if(!this.listeners[event]){
        throw new Error(`Нет события: ${event}`);
     }
-    this.listeners[event].forEach(
+    this.listeners[event]!.forEach(
       function(listener){
       listener(...args);
     });

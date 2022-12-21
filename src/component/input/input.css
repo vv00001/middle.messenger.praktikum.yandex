@@ -17,10 +17,10 @@
      border: none;
      background-color: transparent;
      width: 100%;
-     border-bottom: 1px solid #2e69fd;
+     border-bottom: 1px solid var(--main-blue);
      padding-bottom: 7px;
      font-size: 15px;
-     color: #1e1e1e;
+     color: var(--main-noFull-black);
      font-weight: 500;
      line-height: 15px;
      margin-bottom: 7px;
@@ -38,7 +38,7 @@
      width: 100%;
      font-size: 15px;
  
-     color: #999;
+     color: var(--main-derk-grey);
      font-weight: 500;
  
      line-height: 15px;

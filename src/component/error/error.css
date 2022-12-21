@@ -3,12 +3,13 @@
   justify-content: top;
   align-items: left ;
   font-size: 15px;
-  color: #fd2e2e;
+  color: var(--main-red);
+  /* color: #fd2e2e; */
   opacity: 0;
   margin: 0;
 
   &_show{
     opacity: 1;
-    color: #fd2e2e;
+    color: var(--main-red);
   }
 }
