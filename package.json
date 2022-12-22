@@ -1,10 +1,10 @@
 {
-  "name": "sprint_3",
+  "name": "sprint_4",
   "version": "1.0.0",
   "description": "---",
   "scripts": {
     "build": "parcel build src/index.html --no-cache",
-    "dev": "parcel src/index.html --no-source-maps --no-cache",
+    "dev": "parcel src/index.html --no-source-maps --no-cache --open",
     "start": "node ./api/server.js"
   },
   "license": "ISC",

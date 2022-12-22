@@ -49,6 +49,13 @@ export class ChatControll {
     .then(() => {
       console.log("delUser")
     })
-  }  
+  }
+  public delChat({ ...rest }: string){
+    ChatInterface.delChat({...rest})
+    .then(()=>{
+      console.log("delete chat done")
+    })
+    .catch(console.log("error"))
+  }
 }
 export default new ChatControll();

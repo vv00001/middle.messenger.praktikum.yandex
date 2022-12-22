@@ -20,6 +20,9 @@ export class ChatInterface extends MainClass {
    public delUser({ ...rest }: AddUser) {
       return this.delete('users', { ...rest });
    }
+   public delChat({...rest}:string){
+      return this.delete('',{...rest});
+   }
 }
 
 export default new ChatInterface();

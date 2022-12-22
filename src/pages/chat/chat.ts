@@ -116,7 +116,10 @@ export class Chat extends Block {
         }else{
           console.log("---------------")
         }
-      }
+      },
+      deleteChat:()=>{
+        ChatControll.delChat({ chatId: this.state.chatItemId });
+      }      
     }
   }
   render() {
@@ -135,13 +138,13 @@ export class Chat extends Block {
           allChat &&Object.values(allChat)?.map(
               (chat: any) =>{
                 return`
-                {{{listItem        
+                {{{listItem
                   id="${chat.id}"
                   userName="${chat.title}"
                   lastMessage="${
                     chat.last_message ? chat.last_message.content : ""
                   }"                  
-                  srcAvatar= "#"                  
+                  srcAvatar= "${chat.avatar}"                  
                   time="${chat.last_message ? chat.last_message.time : null}"
                   countNotReadMessage="${chat.unread_count}"
                   onClick=chooseChat
@@ -168,11 +171,11 @@ export class Chat extends Block {
                   }}}`;
               })
             .join('')}
-          </ul>
+          </ul>          
         </div>
       <div class="chat__footer">
-      <form class="chat__footer-form">       
-        </button>
+      <form class="chat__footer-form">    
+      {{{Button classes="button__footer-btn-User" textBtn="Удалить этот чат" onClick=deleteChat }}}
         <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />    
         {{{Button classes="button__footer-btn-send" onClick=sendMessage }}}
         {{{ButtonS classes="button_s__footer-btn-send_zero" onClick=sendMessage }}}
