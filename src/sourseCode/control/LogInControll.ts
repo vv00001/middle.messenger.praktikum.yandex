@@ -15,7 +15,7 @@ export class LogInControll {
       router.go("/messenger");
     })
     .catch(()=>{
-        
+      console.log("error")
     })
   }
   public getProfile() {
@@ -24,6 +24,7 @@ export class LogInControll {
       store.set({ userInfo: JSON.parse(response) });
     })
     .catch(()=>{
+      console.log("error")
     })
   }
   public exit() {

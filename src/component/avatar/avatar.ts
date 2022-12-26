@@ -21,7 +21,7 @@ export class Avatar extends Block {
       return `
       <div class="avatar">
       <img class="avatar__img" src="${
-      avatar !== 'undefined' && avatar !== 'null'? `${yandex}${avatar}`:""
+         avatar !== 'undefined' && avatar !== 'null'? `${yandex}${avatar}`:""
       }"
        alt="Уставновите аватар в Изменить данные" />
       </div>

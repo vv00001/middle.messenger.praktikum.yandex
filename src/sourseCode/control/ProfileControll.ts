@@ -11,7 +11,7 @@ class ProfileControll {
         store.set({ userInfo: JSON.parse(response) });        
       })
       .catch(()=>{
-        
+        console.log("error")
       })
   }
   public searchUser({ ...rest }: SearchUser) {
@@ -20,7 +20,7 @@ class ProfileControll {
         console.log("возмите отсюда id и вставте в поле после нажмите Add",response)
       )
       .catch(()=>{
-        
+        console.log("error")
       })
   }
   public changeAvatar(avatar:FormData){
@@ -29,7 +29,7 @@ class ProfileControll {
       store.set({ userInfo: JSON.parse(response) });   
     })
     .catch(()=>{
-        
+      console.log("error")
     })
   }
   public changePassword(userPassword: UserPaswordType) {
@@ -38,7 +38,7 @@ class ProfileControll {
         console.log("userPassword done")
       )
       .catch(()=>{
-        
+        console.log("error")
       })
   }
 }

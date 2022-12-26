@@ -35,6 +35,7 @@
   &__chat_link{
     color: #05f;
     margin-top: 20px;
+    margin-bottom: 20px;
     color:none;
     border:none
   }
@@ -42,7 +43,7 @@
     opacity: 0.2;
   }
   &__edit_pro{ 
-    margin-left: 100px;    
+    margin-left: 100px;
   }
   &__edit_password{ 
     margin-left: 70px;    
