@@ -19,7 +19,7 @@ export class Register extends Block {
         let password= this.element.querySelector("input[name='password']") as HTMLInputElement
         let password_repeat= this.element.querySelector("input[name='password_repeat']") as HTMLInputElement
         let phone= this.element.querySelector("input[name='phone']") as HTMLInputElement
-        let messageErrorlogin = validate(login.value )   
+        let messageErrorlogin = validate(login.value,"login")   
         const signData={
           password: password.value,
           email: mail.value,
@@ -28,10 +28,15 @@ export class Register extends Block {
           second_name: secondName.value,
           phone:phone.value
         }  
-        if(!messageErrorlogin  &&!validate(secondName.value) &&!validate(profileName.value) &&
-        !validate(mail.value)  &&!validate(password.value)  &&!validate(password_repeat.value) &&!validate(phone.value)){
-          console.log("отправка. Проверка на совпадение паролей в разработке", login.value);
-          LogInControll.signup(signData as SignupType);
+        if(!messageErrorlogin  &&!
+          validate(secondName.value,"secondName") &&!
+          validate(profileName.value,"profileName") &&!
+          validate(mail.value,"mail")  &&!
+          validate(password.value,"password")  &&!
+          validate(password_repeat.value,"repeateNewPassword") &&!
+          validate(phone.value,"phone")){
+            console.log("отправка. Проверка на совпадение паролей в разработке", login.value);
+            LogInControll.signup(signData as SignupType);
         }
         else
         console.log("исправьте ошибки выделенные красным цветом, пожалуйста. Проверка на совпадение паролей в разработке") 

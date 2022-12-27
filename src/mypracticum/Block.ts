@@ -65,7 +65,7 @@ export default  class Block <P=any>{
   private _createResources() {
     this._element = this._createDocumentElement("div");
   }
-  getStateFromProps(props: any): void {
+  protected getStateFromProps(props: any): void {
     this.state = {}
   }
   init() {
@@ -123,7 +123,7 @@ export default  class Block <P=any>{
     this._addEvents();
   }
 
-  render(): string {return""}
+  protected render(): string {return""}
 
   getContent() : HTMLElement{
     return this.element;
