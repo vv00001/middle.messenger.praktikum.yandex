@@ -11,48 +11,45 @@ interface MainInputProps {
   value: string
   name?: string
   classes?: string
-  errorMes?:string
-  errorClass:string
 }
 
-export class MainInput extends Block {     
+export class MainInput extends Block {
   static componentName = "mainInput"
   constructor({
       placeholder,
       value,
       name,
-      classes,
-      errorMes,
-      errorClass
+      classes
     }: MainInputProps) {
     super({
       classes,
       placeholder, value,
-      name,     
+      name,
       errorClass:"error",
-      onInput: (e: FocusEvent) => {        
+      onInput: (e: FocusEvent) => {
         const takeInput = e.target as HTMLInputElement
-        this.validateDone(takeInput.value,takeInput.name)        
+        this.validateDone(takeInput.value,takeInput.name)
       },
       onBlur: (e: FocusEvent) => {
         const takeInput = e.target as HTMLInputElement
         this.validateDone(takeInput.value,takeInput.name)
       },
-      onFocus: (e: FocusEvent) => {       
+      onFocus: (e: FocusEvent) => {
         const takeInput = e.target as HTMLInputElement
         this.validateDone(takeInput.value,takeInput.name)}
     })
   }
 
   protected validateDone(inputValue:string,inputName:string){
-    const takeCompinentOndex=Object.entries(this._children)[1][1]    
+    const takeCompinentOndex=Object.entries(this.children)[1][1]
+
     const messageError = validate(inputValue,inputName)
     if(messageError.length>0){
       takeCompinentOndex.setProps({
         errorClass:"error_show",
         errorMes:messageError
         })
-    }else{      
+    }else{
       takeCompinentOndex.setProps({
         errorClass:"error_hide",
         errorMes:""
@@ -63,11 +60,11 @@ export class MainInput extends Block {
     return `
     <div class="input {{divClassName}}">
     {{{Input
-        name="{{name}}" 
+        name="{{name}}"
         type="{{type}}"
         classes="{{classes}}"
-        placeholder="{{placeholder}}" 
-        onInput=onInput 
+        placeholder="{{placeholder}}"
+        onInput=onInput
         onBlur=onBlur
         onFocus=onFocus
         value=value

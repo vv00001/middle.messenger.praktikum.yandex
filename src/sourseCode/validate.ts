@@ -103,7 +103,7 @@ export function validate (receive:string,nameInput:string){
       } else if (receive.match(/[A-Za-zА-Яа-я]+/g)) {
         checkDone.answer =AnswerMessage.WithOutCharts
       } else if (receive.length > 15) {
-        checkDone.answer =AnswerMessage.LessThenfifteen
+        checkDone.answer =AnswerMessage.LessThenFifteen
       }
    }
    return checkDone.answer;
