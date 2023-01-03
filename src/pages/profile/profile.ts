@@ -25,10 +25,10 @@ export class Profile extends Block {
       },
       changeData: () => router.go("/settings"),
       changePassword: () => router.go("/editPassword"),
-      toChat:()=>router.go("/messenger")      
+      toChat:()=>router.go("/messenger")
     };
   }
-  
+
   protected render(): string {
     const { userInfo = [] } = this.props;
     const { avatar,  email,login, first_name,second_name , display_name,phone  } =
@@ -39,7 +39,7 @@ export class Profile extends Block {
           {{{Avatar avatar="${avatar}"}}}
           <div class ="profile__title">
           {{{Title firstLine="${
-            display_name ? display_name : "Пройдите в изменить данные"                  
+            display_name ? display_name : "Пройдите в изменить данные"
           }"}}}
           </div>
           <form class="profile__form">
@@ -62,7 +62,7 @@ export class Profile extends Block {
           <div class="profile__form__span">
               <label class="profile__form__span__label">Имя в чате</label>
               <p class="profile__form__span__value">"${
-                display_name ? display_name : "Пройдите в изменить данные"                  
+                display_name ? display_name : "Пройдите в изменить данные"
               }"</p>
           </div>
           <div class="profile__form__span">
@@ -78,11 +78,11 @@ export class Profile extends Block {
               {{{Button classes="button__profile_link" textBtn="Изменить пароль" onClick=changePassword }}}
           </div>
           <div class="profile__form__span">
-              {{{Button classes="button__profile_link" textBtn="Выйти" onClick=exit }}}      
+              {{{Button classes="button__profile_link" textBtn="Выйти" onClick=exit }}}
           </div>
           <div class="profile__form__span">
               {{{Button classes="button__profile_link" textBtn="Вернуться в чат" onClick=toChat }}}
-          </div>            
+          </div>
      </main>
     `
   }

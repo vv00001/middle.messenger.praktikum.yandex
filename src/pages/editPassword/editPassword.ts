@@ -1,6 +1,6 @@
-import Block from "../../mypracticum/Block" 
+import Block from "../../mypracticum/Block"
 import "./editPassword.css"
-import { input } from "../../component/input/input"
+import { Input } from "../../component/input/input"
 import {validate} from "../../sourseCode/validate"
 import ProfileControll from "../../sourseCode/control/ProfileControll"
 import {UserPaswordType} from "../../sourseCode/globalTypes"
@@ -11,16 +11,18 @@ export class EditPassword extends Block {
    super()
    this.setProps({
       onSubmit: () => {
-         let oldPasswordHTML = this.element.querySelector("input[name='oldPassword']") as HTMLInputElement  
+         let oldPasswordHTML = this.element.querySelector("input[name='oldPassword']") as HTMLInputElement
          let newPasswordHTML= this.element.querySelector("input[name='newPassword']") as HTMLInputElement
          let repeateNewPassword= this.element.querySelector("input[name='repeateNewPassword']") as HTMLInputElement
-      
+
          if(oldPasswordHTML && newPasswordHTML && repeateNewPassword){
             let newPassword=newPasswordHTML.value
-            let repeateNewPasswordValue=repeateNewPassword.value   
+            let repeateNewPasswordValue=repeateNewPassword.value
             let oldPassword=oldPasswordHTML.value
-            if(!validate(oldPassword) &&!validate(newPassword) &&!validate(repeateNewPasswordValue)){
-               if(newPassword== repeateNewPasswordValue){                  
+            if(!validate(oldPassword,"oldPassword") &&!
+            validate(newPassword,"newPassword") &&!
+            validate(repeateNewPasswordValue,"repeateNewPassword")){
+               if(newPassword== repeateNewPasswordValue){
                   console.log("отправка ", newPassword);
                   ProfileControll.changePassword({
                      newPassword,
@@ -29,7 +31,7 @@ export class EditPassword extends Block {
                }else
                   console.log("пасворды одинаковые пожалуйста");
             }else
-               console.log("исправьте ошибки выделенные красным цветом, пожалуйста") 
+               console.log("исправьте ошибки выделенные красным цветом, пожалуйста")
          }
       },
       toChat:()=>router.go("/messenger")
@@ -40,31 +42,31 @@ export class EditPassword extends Block {
       <main class="mainpage">
          <ul class="edit-profile">
             <li class="edit-profile__main">
-               <form class="edit-password__form">         
+               <form class="edit-password__form">
                   {{{Title firstLine="Смена пароля"}}}
                   <ul class="edit-password__list">
-                  {{{mainInput 
-                     onInput=onInput 
+                  {{{mainInput
+                     onInput=onInput
                      onFocus=onFocus
-                     type="text" 
+                     type="text"
                      name="oldPassword"
                      classes="input__text-field"
                      placeholder="Текущий пароль"
                      errorClass="error"
                   }}}
-                  {{{mainInput 
-                     onInput=onInput 
+                  {{{mainInput
+                     onInput=onInput
                      onFocus=onFocus
-                     type="text" 
+                     type="text"
                      name="newPassword"
                      classes="input__text-field"
                      placeholder="Новый пароль"
                      errorClass="error"
                   }}}
-                  {{{mainInput 
-                     onInput=onInput 
+                  {{{mainInput
+                     onInput=onInput
                      onFocus=onFocus
-                     type="text" 
+                     type="text"
                      name="repeateNewPassword"
                      classes="input__text-field"
                      placeholder="Повторите новый пароль"

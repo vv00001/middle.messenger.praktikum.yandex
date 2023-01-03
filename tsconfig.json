@@ -1,11 +1,19 @@
 {
-   "compilerOptions": {
-   "noImplicitAny": true,
-   "noUnusedLocals": true,
-   "noUnusedParameters": true,
-   "sourceMap": true,
-   "strictNullChecks": true,
-   "esModuleInterop": true
-   },  
-   "include": ["src","add.d.ts"]
+  "compilerOptions": {
+  "skipLibCheck": true,
+  "strict": true,
+  "noImplicitAny": false,
+  "noUnusedLocals": false,
+  "noUnusedParameters": true,
+  "sourceMap": true,
+  "strictNullChecks": false,
+  "esModuleInterop": true,
+  "target": "es2017",
+
+  "moduleResolution": "node",
+  "rootDir": "./src",
+  "baseUrl":"./src"
+
+  },
+  "include": ["src","add.d.ts"]
 }

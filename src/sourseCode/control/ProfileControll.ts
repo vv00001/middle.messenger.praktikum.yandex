@@ -8,7 +8,7 @@ class ProfileControll {
   public editProfile(userInfo: ProfileInfo) {
     ProfileInterface.changeUserInfo(userInfo)
       .then(({ response }: any) => {
-        store.set({ userInfo: JSON.parse(response) });        
+        store.set({ userInfo: JSON.parse(response) });
       })
       .catch(()=>{
         console.log("error")
@@ -26,7 +26,7 @@ class ProfileControll {
   public changeAvatar(avatar:FormData){
     ProfileInterface.changeAvatar(avatar)
     .then(({ response }: any) => {
-      store.set({ userInfo: JSON.parse(response) });   
+      store.set({ userInfo: JSON.parse(response) });
     })
     .catch(()=>{
       console.log("error")

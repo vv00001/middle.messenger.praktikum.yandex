@@ -1,10 +1,23 @@
-import { Block } from "./Block"
+import  Block  from "./Block"
 
+interface BlockClass<P> extends Function {
+    new (props: P): Block<P>;
+    componentName?: string;
+}
+
+type props = Record<string, any>;
 function isEqual(first: string, second: string): boolean {
     return first === second;
-  }
- class Route {
-   constructor(pathname, view, props) {
+}
+class Route<P = any> {
+
+  private _pathname: string;
+  private _blockClass: BlockClass<any>;
+  private _block: Block | null = null;
+  private _props: props;
+
+  constructor(pathname: string, view: BlockClass<P>, props: props) {
+
        this._pathname = pathname;
        this._blockClass = view;
        this._block = null;
@@ -31,7 +44,7 @@ function isEqual(first: string, second: string): boolean {
    render() {
     //    if (!this._block) {
        if (!0) {
-           this._block = new this._blockClass();
+           this._block = new this._blockClass({ ...this._props });
            render(this._props.rootQuery, this._block);
            return;
         }
@@ -41,6 +54,11 @@ function isEqual(first: string, second: string): boolean {
 }
 
 class Router {
+    static __instance: Router;
+    private routes: Array<Route> = [];
+    private history: History = window.history;
+    private _currentRoute: Route | null = null;
+    private _rootQuery;
    constructor(rootQuery) {
        if (Router.__instance) {
            return Router.__instance;
@@ -64,7 +82,7 @@ class Router {
         window.onpopstate =(event=>{
         this. _onRoute(event.currentTarget.location.pathname)
         }).bind(this);
-        
+
         this._onRoute(window.location.pathname)
     }
 
@@ -76,12 +94,13 @@ class Router {
        }
 
        this._currentRoute = route;
-       route.render(route, pathname);
+       route.render();
+    //    route.render(route, pathname);
     }
 
    go(pathname) {
      this.history.pushState({},"",pathname);
-     
+
      this._onRoute(pathname);
     }
 
@@ -100,13 +119,13 @@ class Router {
 
 function render(takeSelector: string, block: Block) {
     const root = document.querySelector(takeSelector);
-  
+
     if (root === null) {
         throw new Error(`not takeSelector "${takeSelector}"`);
-    }  
+    }
     root.innerHTML = '';
     root.append(block.getContent()!);
-  
+
     return root;
 }
 export default new Router('#app');

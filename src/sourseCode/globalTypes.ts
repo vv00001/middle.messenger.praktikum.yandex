@@ -1,9 +1,22 @@
-import { Block } from "../mypracticum/Block";
+interface LoginData{
+  login: string;
+  password: string;
+}
+interface SignupType{
+   login: string;
+   password: string;
+}
+interface DelChat{
+   chatId: number;
+}
+interface ChatIdToken{
+   chatId: number;
+}
 interface AddUserType {
    users: number[];
    chatId: number;
 }
-interface UserPaswordType{   
+interface UserPaswordType{
    newPassword: string;
    oldPassword: string;
 }
@@ -20,18 +33,38 @@ interface ProfileInfo{
    login: string;
    first_name: string;
    phone: string;
+   id?: number;
 }
 interface LoginType {
    login: string;
    password: string;
 }
-
+interface ChatsType {
+   avatar: null | string;
+   created_by: number;
+   id: number;
+   title: string;
+   unread_count: number;
+}
 interface MainType {
    users?: string;
+   userInfo?: ProfileInfo;
+   allChat:ChatsType[];
+   messages?;
 }
-
-
+type props = Record<string, any>;
 export {
    MainType,
-   LoginType
+   LoginType,
+   AddUserType,
+   UserPaswordType,
+   CreateChat,
+   SearchUser,
+   ProfileInfo,
+   ChatsType,
+   ChatIdToken,
+   DelChat,
+   LoginData,
+   SignupType,
+   props
 };

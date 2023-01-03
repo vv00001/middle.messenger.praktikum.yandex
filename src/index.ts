@@ -1,4 +1,4 @@
-import { renderDOM, registerComponent } from "./mypracticum"
+import { registerComponent } from "./mypracticum"
 import Router from "../src/mypracticum/Router"
 import { LoginPage } from "./pages/login/login"
 import { NotFoundPage } from "./pages/notFound/notFound"
@@ -18,6 +18,7 @@ import Title from "./component/title/"
 import Avatar from "./component/avatar"
 import ButtonS from "./component/button_s"
 import LogInControll from "./sourseCode/control/LogInControll"
+import './styles/styles.css';
 
 registerComponent(Error)
 registerComponent(Input)
