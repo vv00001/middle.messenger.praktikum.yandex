@@ -1,10 +1,7 @@
 import ChatInterface from '../Interfaces/ChatInterface';
 import store from '../../mypracticum/Store';
-import { MainType,AddUserType,CreateChat,ChatsType,ChatIdToken,DelChat } from '../globalTypes';
+import { MainType,AddUserType,CreateChat,ChatIdToken,DelChat } from '../globalTypes';
 
-interface LastMessage {
-  content: string;
-}
 export class ChatControll {
   public getChats() {
     ChatInterface.getChats()
@@ -17,12 +14,13 @@ export class ChatControll {
       .getChatToken({ ...rest })
       .then(({ response }: any) => JSON.parse(response))
   }
+
   public createChat({ title }: CreateChat) {
     ChatInterface.createChat({title})
     .then(({ response }: any) => {
       const state = store.get() as MainType;
       const newChat = {
-        avatar: null,
+        avatar: "",
         id: JSON.parse(response).id,
         title: title,
         unread_count: 0,

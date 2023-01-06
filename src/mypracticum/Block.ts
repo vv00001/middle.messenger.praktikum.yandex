@@ -171,7 +171,11 @@ export default  class Block <P=any>{
       if (!stub) {
         return
       }
-      const stubChilds = stub.childNodes.length ? stub.childNodes : []
+      let stubChilds: NodeListOf<ChildNode> | never[]
+      if(stub.childNodes.length)
+        stubChilds=stub.childNodes
+      else
+        stubChilds=[]
       const content = component.getContent()
       stub.replaceWith(content)
       const layoutContent = content.querySelector("[data-layout='1']")

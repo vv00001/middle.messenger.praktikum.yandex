@@ -3,8 +3,6 @@ import LogInControll from "../../sourseCode/control/LogInControll";
 import store from "../../mypracticum/Store"
 import router from "../../mypracticum/Router"
 import "./profile.css"
-import { Avatar }from "../../component/Avatar/avatar"
-import ProfileControll from "../../sourseCode/control/ProfileControll";
 
 export class Profile extends Block {
   constructor() {

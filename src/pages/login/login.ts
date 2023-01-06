@@ -1,9 +1,6 @@
-import { Input } from "../../component/input/input"
-import { Button }from "../../component/button/button"
 import Block from "../../mypracticum/Block"
 import { validate } from "../../sourseCode/validate"
 import "./login.css"
-import MainClass from "../../sourseCode/Interfaces/MainClass"
 import LogInControll from "../../sourseCode/control/LogInControll"
 import router from "../../mypracticum/Router"
 import {LoginData} from '../../sourseCode/globalTypes';

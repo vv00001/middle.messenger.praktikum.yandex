@@ -1,6 +1,5 @@
 import Block from "../../mypracticum/Block"
 import "./register.css"
-import { Input } from "../../component/input/input"
 import router from "../../mypracticum/Router"
 import LogInControll from "../../sourseCode/control/LogInControll"
 import {SignupType} from '../../sourseCode/globalTypes';

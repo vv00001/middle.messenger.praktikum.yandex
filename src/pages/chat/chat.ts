@@ -3,9 +3,8 @@ import store from "../../mypracticum/Store"
 import router from "../../mypracticum/Router"
 import ChatControll from "../../sourseCode/control/ChatControll"
 import "./chat.css"
-import {validate} from "../../sourseCode/validate"
 import MessageControll from "../../sourseCode/control/MessageControll"
-import { MainType, CreateChat,SearchUser} from "../../sourseCode/globalTypes"
+import { MainType, SearchUser} from "../../sourseCode/globalTypes"
 import  ProfileControll  from "../../sourseCode/control/ProfileControll"
 import LogInControll from "../../sourseCode/control/LogInControll"
 
@@ -128,7 +127,6 @@ export class Chat extends Block {
   render() {
     const {
       allChat=[],
-      userInfo=[],
       messages=[]
     }=this.props;
     return `

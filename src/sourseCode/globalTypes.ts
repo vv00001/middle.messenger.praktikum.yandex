@@ -50,7 +50,7 @@ interface MainType {
    users?: string;
    userInfo?: ProfileInfo;
    allChat:ChatsType[];
-   messages?;
+   messages?:any;
 }
 type props = Record<string, any>;
 export {

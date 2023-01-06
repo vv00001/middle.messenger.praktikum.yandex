@@ -1,5 +1,4 @@
 import Block from "../../mypracticum/Block"
-import { Error} from "../error/error"
 import { validate } from "../../sourseCode/validate"
 
 interface MainInputProps {

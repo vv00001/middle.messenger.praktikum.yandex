@@ -1,6 +1,5 @@
 import Block from "../../mypracticum/Block"
 import "./editPassword.css"
-import { Input } from "../../component/input/input"
 import {validate} from "../../sourseCode/validate"
 import ProfileControll from "../../sourseCode/control/ProfileControll"
 import {UserPaswordType} from "../../sourseCode/globalTypes"
