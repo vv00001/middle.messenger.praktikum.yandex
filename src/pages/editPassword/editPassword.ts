@@ -22,20 +22,19 @@ export class EditPassword extends Block {
             validate(newPassword,"newPassword") &&!
             validate(repeateNewPasswordValue,"repeateNewPassword")){
                if(newPassword== repeateNewPasswordValue){
-                  console.log("отправка ", newPassword);
                   ProfileControll.changePassword({
                      newPassword,
                      oldPassword
                   } as UserPaswordType);
-               }else
+              }else
                   console.log("пасворды одинаковые пожалуйста");
             }else
                console.log("исправьте ошибки выделенные красным цветом, пожалуйста")
-         }
+        }
       },
       toChat:()=>router.go("/messenger")
-   })
-   }
+    })
+  }
    render():string {
    return `
       <main class="mainpage">
@@ -79,5 +78,5 @@ export class EditPassword extends Block {
          </ul>
       </main>
    `
-   }
+  }
 }

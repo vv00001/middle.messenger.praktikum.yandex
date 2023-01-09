@@ -68,10 +68,7 @@ export class Chat extends Block {
         const input=document.querySelector(".chat__create_chat") as HTMLFormElement;
         if(input.value!=""){
           const title=input.value
-          console.log(typeof title)
-
           ChatControll.createChat({title});
-
           store.on("update", () => {
             const state = store.get() as MainType;
             this.setState({ allChat: state.allChat });
