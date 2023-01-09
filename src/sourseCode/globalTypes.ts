@@ -1,3 +1,8 @@
+import  Block  from '../mypracticum/Block';
+interface BlockClass<P> extends Function {
+  new (props: P): Block<P>;
+  componentName?: string;
+}
 interface LoginData{
   login: string;
   password: string;
@@ -66,5 +71,6 @@ export {
    DelChat,
    LoginData,
    SignupType,
-   props
+   props,
+   BlockClass
 };
