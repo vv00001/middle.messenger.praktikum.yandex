@@ -12,11 +12,11 @@
   2. Нет deploy на Heroku
 
 ### Сборка и запуск приложения
-npm i
-npm run build
-npm run start
+* npm i
+* npm run build
+* npm run start
 ### Приложение запустится на порту 3000
 http://localhost:3000/
 
 ### Сборка и запуск приложения
-npm run test
+* npm run test
