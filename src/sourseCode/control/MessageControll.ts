@@ -31,11 +31,11 @@ class MessageControll {
          this.socket.removeEventListener('error', this.handleError);
       }
    }
-   handleClose(evt: any) {
-      this.removeListeners();      
+   handleClose() {
+      this.removeListeners();
    }
-   handleError(evt: any) {
-   
+   handleError() {
+
    }
    handleOpen() {
    if (this.socket) {

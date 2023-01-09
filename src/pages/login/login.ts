@@ -1,13 +1,9 @@
-import { input } from "../../component/input/input"
-import { Button }from "../../component/button/button"
 import Block from "../../mypracticum/Block"
 import { validate } from "../../sourseCode/validate"
 import "./login.css"
-import MainClass from "../../sourseCode/Interfaces/MainClass"
 import LogInControll from "../../sourseCode/control/LogInControll"
 import router from "../../mypracticum/Router"
-import {LoginData} from '../Interfaces/LoginInterface';
-
+import {LoginData} from '../../sourseCode/globalTypes';
 
 export class LoginPage extends Block {
   constructor() {
@@ -19,22 +15,18 @@ export class LoginPage extends Block {
         let loginHTML = this.element.querySelector("input[name='login']") as HTMLInputElement
         let passwordHTML = this.element.querySelector("input[name='password']") as HTMLInputElement
 
-        let messageErrorlogin = validate(loginHTML.value )
-        let messageErrorpassword = validate(passwordHTML.value )
-       
+        let messageErrorlogin = validate(loginHTML.value,"login")
+        let messageErrorpassword = validate(passwordHTML.value,"password" )
+
 
         if(!messageErrorlogin && !messageErrorpassword){
           let login =loginHTML.value
           let password =passwordHTML.value
-          // if(login=="")
-          //   login="qqqqqqqqqqqqqqqqqqq"
-          // if(password=="")
-          //   password="dkn30oLKdlk"
           if(login!="" && password!=""){
             const sedLogin={
               login:login,
               password:password
-            }      
+            }
             LogInControll.signin(sedLogin as LoginData);
           }
           else{
@@ -42,8 +34,8 @@ export class LoginPage extends Block {
           }
         }
         else
-        console.log("исправте ошибки выделеные красным цветом, пожалуйста")        
-        
+        console.log("исправте ошибки выделеные красным цветом, пожалуйста")
+
       },
       onRegister:()=>{
         router.go("/register")
@@ -52,24 +44,24 @@ export class LoginPage extends Block {
   }
 
   render() {
-    return `    
+    return `
   <main class="mainclass">
     <form class="signin">
       {{{Title firstLine="Вход"}}}
-      {{{mainInput 
-        onInput=onInput 
+      {{{mainInput
+        onInput=onInput
         onFocus=onFocus
-        type="text" 
+        type="text"
         name="login"
         value=loginValue
         classes="input__text-field"
         placeholder="Ваш логин"
       }}}
-      {{{mainInput 
-        onInput=onInput 
+      {{{mainInput
+        onInput=onInput
         onFocus=onFocus
 
-        name="password" 
+        name="password"
         value=passwordValue
 
         type="text"

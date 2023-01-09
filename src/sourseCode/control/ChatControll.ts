@@ -1,15 +1,6 @@
 import ChatInterface from '../Interfaces/ChatInterface';
 import store from '../../mypracticum/Store';
-import { MainType,AddUserType } from '../globalTypes';
-
-interface ChatsType {
-  avatar: null | string;
-  created_by: number;
-  id: number;
-  last_message?: LastMessage;
-  title: string;
-  unread_count: number;
-}
+import { MainType,AddUserType,CreateChat,ChatIdToken,DelChat } from '../globalTypes';
 
 export class ChatControll {
   public getChats() {
@@ -18,17 +9,18 @@ export class ChatControll {
       store.set({allChat: JSON.parse(response)})
     })
   }
-  public getChatToken({ ...rest }: number) {
+  public getChatToken({ ...rest }: ChatIdToken) {
     return ChatInterface
       .getChatToken({ ...rest })
       .then(({ response }: any) => JSON.parse(response))
   }
-  public createChat({ title }: string) {
+
+  public createChat({ title }: CreateChat) {
     ChatInterface.createChat({title})
     .then(({ response }: any) => {
-       const state = store.get() as ChatsType;
+      const state = store.get() as MainType;
       const newChat = {
-        avatar: null,
+        avatar: "",
         id: JSON.parse(response).id,
         title: title,
         unread_count: 0,
@@ -40,7 +32,7 @@ export class ChatControll {
   }
   public addUser({ users, chatId }: AddUserType) {
     ChatInterface.addUser({ users, chatId })
-    .then(() => {     
+    .then(() => {
       console.log("addUser")
     })
   }
@@ -49,6 +41,12 @@ export class ChatControll {
     .then(() => {
       console.log("delUser")
     })
-  }  
+  }
+  public delChat({ ...rest }: DelChat){
+    ChatInterface.delChat({...rest})
+    .then(()=>{
+      console.log("delete chat done")
+    })
+  }
 }
 export default new ChatControll();

@@ -3,9 +3,8 @@ import store from "../../mypracticum/Store"
 import router from "../../mypracticum/Router"
 import ChatControll from "../../sourseCode/control/ChatControll"
 import "./chat.css"
-import {validate} from "../../sourseCode/validate"
 import MessageControll from "../../sourseCode/control/MessageControll"
-import { MainType, CreateChat,SearchUser} from "../../sourseCode/globalTypes"
+import { MainType, SearchUser} from "../../sourseCode/globalTypes"
 import  ProfileControll  from "../../sourseCode/control/ProfileControll"
 import LogInControll from "../../sourseCode/control/LogInControll"
 
@@ -19,23 +18,24 @@ export class Chat extends Block {
   constructor() {
     super()
     ChatControll.getChats();
-    MessageControll.getMessages();    
+    MessageControll.getMessages();
     LogInControll.getProfile();
 
     store.on("update", () => {
       this.setProps(store.get());
     });
   }
-  getStateFromProps(props: any): void {
+  getStateFromProps(): void {
     this.state={
       chatItemId:0,
       chooseChat:(evt: Event)=>{
           const element = evt.currentTarget as HTMLElement;
           const chatItemId = element.getAttribute("chat_id");
-          this.setState({ chatItemId });  
+          this.setState({ chatItemId });
           const state = store.get() as MainType;
-          const { userInfo } = state;  
+          const { userInfo } = state;
         if (chatItemId) {
+          // const sendchatItemId= Number(chatItemId);
           ChatControll.getChatToken({ chatId: Number(chatItemId) })
           .then(({ token }) =>{
             MessageControll.connect({
@@ -67,7 +67,9 @@ export class Chat extends Block {
       addChat:()=>{
         const input=document.querySelector(".chat__create_chat") as HTMLFormElement;
         if(input.value!=""){
-          const title=input.value as CreateChat
+          const title=input.value
+          console.log(typeof title)
+
           ChatControll.createChat({title});
 
           store.on("update", () => {
@@ -80,11 +82,9 @@ export class Chat extends Block {
       },
       serchUser:()=>{
         const input=document.querySelector(".input__footer-User") as HTMLFormElement;
-        const login=input.value as SearchUser
+        const login=input.value
         if(input.value!=""){
-          ProfileControll.searchUser({
-            login: login,
-          } as SearchUser);
+          ProfileControll.searchUser({login});
         }else{
           console.log("---------------")
         }
@@ -106,7 +106,7 @@ export class Chat extends Block {
       },
       deleteUser:()=> {
         const input=document.querySelector(".input__footer-User") as HTMLFormElement;
-        const login=input.value as SearchUser        
+        const login=input.value as SearchUser
         let send=Number(login)
         if(input.value!=""){
           ChatControll.delUser({
@@ -116,13 +116,17 @@ export class Chat extends Block {
         }else{
           console.log("---------------")
         }
+      },
+      deleteChat:()=>{
+
+        // ChatControll.delChat({ chatId: this.state.chatItemId });
+        ChatControll.delChat({ chatId: this.state.chatItemId });
       }
     }
   }
   render() {
     const {
       allChat=[],
-      userInfo=[],
       messages=[]
     }=this.props;
     return `
@@ -130,25 +134,25 @@ export class Chat extends Block {
       <ul class="chat">
       <li class="chat__main chat__main_left">
       {{{Button classes="button__chat_link" textBtn="Редактировать профиль" onClick=goProfile }}}
-        <ul class="chat__list">    
+        <ul class="chat__list">
         ${
           allChat &&Object.values(allChat)?.map(
               (chat: any) =>{
                 return`
-                {{{listItem        
+                {{{listItem
                   id="${chat.id}"
                   userName="${chat.title}"
                   lastMessage="${
                     chat.last_message ? chat.last_message.content : ""
-                  }"                  
-                  srcAvatar= "#"                  
+                  }"
+                  srcAvatar= "${chat.avatar}"
                   time="${chat.last_message ? chat.last_message.time : null}"
                   countNotReadMessage="${chat.unread_count}"
                   onClick=chooseChat
                 }}}`;
               }
             )
-          .join('')  
+          .join('')
         }
         </ul>
         <div class="chat__create_panel">
@@ -156,7 +160,7 @@ export class Chat extends Block {
           {{{Button classes="button__plus" onClick=addChat }}}
         </div>
       </li>
-        <li class="chat__main chat__main-dialog">        
+        <li class="chat__main chat__main-dialog">
         <div class="chat__inner">
           <ul class="chat__messages">
             ${messages.map((message: MessageToChat) => {
@@ -171,15 +175,15 @@ export class Chat extends Block {
           </ul>
         </div>
       <div class="chat__footer">
-      <form class="chat__footer-form">       
-        </button>
-        <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />    
+      <form class="chat__footer-form">
+      {{{Button classes="button__footer-btn-User" textBtn="Удалить этот чат" onClick=deleteChat }}}
+        <input class="chat__footer-input" type="text" placeholder="Ваше сообщение" />
         {{{Button classes="button__footer-btn-send" onClick=sendMessage }}}
         {{{ButtonS classes="button_s__footer-btn-send_zero" onClick=sendMessage }}}
       </form>
       </div>
       <div>
-        <input class="input__footer-User" type="text" placeholder="Добовлять/удалять участника чата по id. Id получить ввести первую букву логина на serchUserIdInF12 получить список всех id" />  
+        <input class="input__footer-User" type="text" placeholder="Добовлять/удалять участника чата по id. Id получить ввести первую букву логина на serchUserIdInF12 получить список всех id" />
       </div>
       <div class="chat__footer-button">
         {{{Button classes="button__footer-btn-User" textBtn = "add" onClick=addUser }}}

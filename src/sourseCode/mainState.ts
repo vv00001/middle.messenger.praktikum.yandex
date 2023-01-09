@@ -9,5 +9,14 @@ export const mainState: MainType = {
     second_name: '',
     phone: ''
   },
+  allChat: [
+    {
+      avatar: null,
+      created_by: 0,
+      id: 0,
+      title: '',
+      unread_count: 0,
+    },
+  ],
   users: ''
 };

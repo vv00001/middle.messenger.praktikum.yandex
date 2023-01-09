@@ -1,16 +1,11 @@
 import MainClass from './MainClass';
-
-export interface LoginData {
-  login: string;
-  password: string;
-}
+import {LoginData,SignupType} from '../globalTypes';
 
 export class LoginInterface extends MainClass {
   constructor() {
     super('/auth');
   }
-
-  public signin({ ...rest }: SigninType) {
+  public signin({ ...rest }: LoginData) {
     return this.post('signin', { ...rest });
   }
   public getProfile() {
@@ -23,5 +18,4 @@ export class LoginInterface extends MainClass {
     return this.post('signup', { ...rest });
   }
 }
-
 export default new LoginInterface();

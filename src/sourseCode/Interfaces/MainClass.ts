@@ -3,12 +3,13 @@ import {HTTPTransport} from "../../mypracticum/HTTPTransport"
 export default abstract class MainClass {
   protected https: HTTPTransport; yandex:string;
 
+  private _headers: Record<string, string>;
   protected constructor( point : string) {
    this.https = new HTTPTransport();
       this.yandex='https://ya-praktikum.tech/api/v2'+point;
-      this._headers = { 'Content-Type': 'application/json' };    
+      this._headers = { 'Content-Type': 'application/json' };
    }
-  
+
    post(url: string, data: unknown) {
       return this.https.post(`${this.yandex}/${url}`, { headers: this._headers, data });
    }

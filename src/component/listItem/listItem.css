@@ -70,5 +70,16 @@
    &__count-message_is-show {
      display: block;
    }
- }
+   &__avatar {
+    margin-right: 10px;
+    box-sizing: border-box;
+    border: none;
+    padding: 0;
+    border-radius: 50%;
+    min-width: 40px;
+    height: 40px;
+    background: center no-repeat url("../../image/ava.jpg");
+    background-size: cover;
+  }
+}
  

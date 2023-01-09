@@ -1,4 +1,5 @@
-export function queryStringify(data:{}) {
+type ReceiveData = Record<string, string | number>;
+export function queryStringify(data:ReceiveData) {
    if (!data) {
       return '';
     }
