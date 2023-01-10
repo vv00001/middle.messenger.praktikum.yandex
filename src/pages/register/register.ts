@@ -34,7 +34,6 @@ export class Register extends Block {
           validate(password.value,"password")  &&!
           validate(password_repeat.value,"repeateNewPassword") &&!
           validate(phone.value,"phone")){
-            console.log("отправка. Проверка на совпадение паролей в разработке", login.value);
             LogInControll.signup(signData as SignupType);
         }
         else

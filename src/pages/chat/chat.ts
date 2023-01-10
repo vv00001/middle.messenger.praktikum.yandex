@@ -46,10 +46,8 @@ export class Chat extends Block {
           });
         }
         store.on("add-users", () => {
-          console.log("add-users")
         })
         store.on("delete-users", () => {
-          console.log("delete-users")
         })
       },
       sendMessage: (evt: Event) => {
@@ -83,7 +81,7 @@ export class Chat extends Block {
         if(input.value!=""){
           ProfileControll.searchUser({login});
         }else{
-          console.log("---------------")
+          console.log("введите первую букву логина зарегистрированного в сервисе пользователя для получения идентификаторов всех логинов начинающихся на вами указанную букву")
         }
       },
       addUser:()=>{
@@ -97,7 +95,7 @@ export class Chat extends Block {
               chatId: Number(this.state.chatItemId),
             });
           }else{
-            console.log("---------------")
+            console.log("для добавления участника чата введите цифровой идентификатор полученный из сервиса поиск зарегистрированных пользователей (кнопка SearchUser)")
           }
         }
       },
@@ -111,7 +109,7 @@ export class Chat extends Block {
             chatId: Number(this.state.chatItemId),
           });
         }else{
-          console.log("---------------")
+          console.log("для удаления участника чата введите цифровой идентификатор такого участника, который вы записали на бумажке когда участника добавляли")
         }
       },
       deleteChat:()=>{

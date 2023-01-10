@@ -30,7 +30,7 @@ export class LoginPage extends Block {
             LogInControll.signin(sedLogin as LoginData);
           }
           else{
-            console.log("enter plz")
+            console.log("не все поля заполнены")
           }
         }
         else

@@ -38,15 +38,11 @@ export class Route<P = any> {
     }
 
    render() {
-    //    if (!this._block) {
-       if (!0) {
-           this._block = new this._blockClass({ ...this._props });
-           render(this._props.rootQuery, this._block);
-           return;
-        }
-
-       this._block.show();
+      this._block = new this._blockClass({ ...this._props });
+      render(this._props.rootQuery, this._block);
+      return;
     }
+
 }
 function render(takeSelector: string, block: Block) {
   const root = document.querySelector(takeSelector);

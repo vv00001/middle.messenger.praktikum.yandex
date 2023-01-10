@@ -33,19 +33,19 @@ export class ChatControll {
   public addUser({ users, chatId }: AddUserType) {
     ChatInterface.addUser({ users, chatId })
     .then(() => {
-      console.log("addUser")
+      console.log("добавлен участник чата")
     })
   }
   public delUser ({ users, chatId }: AddUserType) {
     ChatInterface.delUser({ users, chatId })
     .then(() => {
-      console.log("delUser")
+      console.log("участник чата удален из чата")
     })
   }
   public delChat({ ...rest }: DelChat){
     ChatInterface.delChat({...rest})
     .then(()=>{
-      console.log("delete chat done")
+      console.log("чат удален, удаление из списка чата произойдет при следующем открытии страницы чата (конечно у нас одна страница, вот такое юзерфрендли)")
     })
   }
 }

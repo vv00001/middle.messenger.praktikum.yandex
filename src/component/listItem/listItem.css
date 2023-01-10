@@ -1,19 +1,19 @@
 .list-item {
    list-style: none;
    text-align: left;
- 
- 
+
+
    &__container {
      display: flex;
      padding: 10px 0;
      border-top: 1px solid var(--main-grey);
      margin: 0 10px;
    }
- 
+
    &__container:last-of-type {
      border-bottom: 1px solid var(--main-grey);
    }
- 
+
    &__user-name {
      margin: 0;
      font-size: 15px;
@@ -22,7 +22,7 @@
      line-height: 15px;
      margin-bottom: 4px;
    }
- 
+
    &__message {
      margin: 0;
      max-width: 193px;
@@ -31,11 +31,11 @@
      font-weight: 500;
      line-height: 15px;
    }
- 
+
    &__message_bold {
      color: var(--main-noFull-black);
    }
- 
+
    &__wrap {
      display: flex;
      flex-direction: column;
@@ -43,7 +43,7 @@
      align-items: flex-start;
      flex-grow: 1;
    }
- 
+
    &__time {
      margin: 0;
      white-space: nowrap;
@@ -53,7 +53,7 @@
      font-weight: 500;
      line-height: 15px;
    }
- 
+
    &__count-message {
      display: none;
      margin: 0;
@@ -66,7 +66,7 @@
      background-color: var(--main-blue);
      border-radius: 50%;
    }
- 
+
    &__count-message_is-show {
      display: block;
    }
@@ -82,4 +82,3 @@
     background-size: cover;
   }
 }
- 
