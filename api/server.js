@@ -12,4 +12,4 @@ app.get("/*", (req, res) => {
   res.sendFile(pathName)
 })
 
-app.listen(PORT, () => console.log(`http://localhost:${PORT}`))
+app.listen(PORT)
