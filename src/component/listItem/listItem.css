@@ -1,76 +1,76 @@
 .list-item {
-   list-style: none;
-   text-align: left;
+  list-style: none;
+  text-align: left;
 
+  &__container {
+    display: flex;
+    padding: 10px 0;
+    border-top: 1px solid var(--main-grey);
+    margin: 0 10px;
+  }
 
-   &__container {
-     display: flex;
-     padding: 10px 0;
-     border-top: 1px solid var(--main-grey);
-     margin: 0 10px;
-   }
+  &__container:last-of-type {
+    border-bottom: 1px solid var(--main-grey);
+  }
 
-   &__container:last-of-type {
-     border-bottom: 1px solid var(--main-grey);
-   }
+  &__user-name {
+    margin: 0;
+    font-size: 15px;
+    color: var(--main-noFull-black);
+    font-weight: 600;
+    line-height: 15px;
+    margin-bottom: 4px;
+  }
 
-   &__user-name {
-     margin: 0;
-     font-size: 15px;
-     color: var(--main-noFull-black);
-     font-weight: 600;
-     line-height: 15px;
-     margin-bottom: 4px;
-   }
+  &__message {
+    margin: 0;
+    max-width: 193px;
+    font-size: 10px;
+    color: var(--main-derk-grey);
+    font-weight: 500;
+    line-height: 15px;
+  }
 
-   &__message {
-     margin: 0;
-     max-width: 193px;
-     font-size: 10px;
-     color: var(--main-derk-grey);
-     font-weight: 500;
-     line-height: 15px;
-   }
+  &__message_bold {
+    color: var(--main-noFull-black);
+  }
 
-   &__message_bold {
-     color: var(--main-noFull-black);
-   }
+  &__wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-grow: 1;
+  }
 
-   &__wrap {
-     display: flex;
-     flex-direction: column;
-     justify-content: space-between;
-     align-items: flex-start;
-     flex-grow: 1;
-   }
+  &__time {
+    margin: 0;
+    white-space: nowrap;
+    align-self: flex-end;
+    font-size: 9px;
+    color: var(--main-derk-grey);
+    font-weight: 500;
+    line-height: 15px;
+  }
 
-   &__time {
-     margin: 0;
-     white-space: nowrap;
-     align-self: flex-end;
-     font-size: 9px;
-     color: var(--main-derk-grey);
-     font-weight: 500;
-     line-height: 15px;
-   }
+  &__count-message {
+    display: none;
+    margin: 0;
+    align-self: flex-end;
+    font-size: 11px;
+    color: var(--main-white);
+    font-weight: 500;
+    line-height: 10px;
+    padding: 4px 6px;
+    background-color: var(--main-blue);
+    border-radius: 50%;
+  }
 
-   &__count-message {
-     display: none;
-     margin: 0;
-     align-self: flex-end;
-     font-size: 11px;
-     color: var(--main-white);
-     font-weight: 500;
-     line-height: 10px;
-     padding: 4px 6px;
-     background-color: var(--main-blue);
-     border-radius: 50%;
-   }
+  &__count-message_is-show {
+    display: block;
+  }
 
-   &__count-message_is-show {
-     display: block;
-   }
-   &__avatar {
+  &__avatar {
     margin-right: 10px;
     box-sizing: border-box;
     border: none;
