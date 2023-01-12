@@ -7,7 +7,8 @@
     "dev": "webpack serve",
     "start": "node ./api/server.js",
     "test": "jest",
-    "lint:style": "npx stylelint \"**/*.css\" --fix"
+    "lint:style": "npx stylelint \"**/*.css\" --fix",
+    "prepare": "husky install"
   },
   "license": "ISC",
   "devDependencies": {
@@ -40,11 +41,13 @@
     "husky": "8.0.3",
 
     "stylelint": "14.11.0",
-    "stylelint-config-standard": "28.0.0"
+    "stylelint-config-standard": "28.0.0",
+
+    "lint-staged": "13.0.3"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run test"
+      "pre-commit": "lint-staged"
     }
   },
   "jest": {
@@ -57,5 +60,8 @@
   },
   "dependencies": {
     "express": "4.18.1"
+  },
+  "lint-staged": {
+    "*.css": "npm run lint:style"
   }
 }

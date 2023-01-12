@@ -58,7 +58,7 @@ export function validate (receive:string,nameInput:string){
          checkDone.answer = AnswerMessage.Simbol
       }
    }
-   if (nameInput == "mail") {//исключение лишних точек и лишних @ в разработке
+   if (nameInput == "mail") {
       if (receive.length < 3) {
          checkDone.answer = AnswerMessage.FromThreeCharts
       }else if (receive.match(/\s/g)) {

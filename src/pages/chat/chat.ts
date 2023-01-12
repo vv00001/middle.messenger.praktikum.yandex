@@ -35,7 +35,6 @@ export class Chat extends Block {
           const state = store.get() as MainType;
           const { userInfo } = state;
         if (chatItemId) {
-          // const sendchatItemId= Number(chatItemId);
           ChatControll.getChatToken({ chatId: Number(chatItemId) })
           .then(({ token }) =>{
             MessageControll.connect({
@@ -113,8 +112,6 @@ export class Chat extends Block {
         }
       },
       deleteChat:()=>{
-
-        // ChatControll.delChat({ chatId: this.state.chatItemId });
         ChatControll.delChat({ chatId: this.state.chatItemId });
       }
     }

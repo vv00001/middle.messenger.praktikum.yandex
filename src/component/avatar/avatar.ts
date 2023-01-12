@@ -15,7 +15,7 @@ export class Avatar extends Block {
       this.state = {
          avatar: props.avatar
       };
-   }   
+   }
    protected render(): string {
       const { avatar } = this.state;
       return `
@@ -28,5 +28,3 @@ export class Avatar extends Block {
       `
    }
 }
-
-// avatar !== 'undefined' && avatar !== 'null'

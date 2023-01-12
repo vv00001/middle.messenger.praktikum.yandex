@@ -40,7 +40,6 @@ export class LogInControll {
       router.go("/messenger");
     })
     .catch(()=>{
-      // .catch(e=>{
       router.go("/");
     })
   }

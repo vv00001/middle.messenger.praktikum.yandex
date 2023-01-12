@@ -45,7 +45,6 @@ export default  class Block <P=any>{
       props
     };
     this.getStateFromProps(props)
-    // this._children=this._makePropsProxy(this.children);
     this.props = this._makePropsProxy(props || ({} as P));
     this.state = this._makePropsProxy(this.state);
 
