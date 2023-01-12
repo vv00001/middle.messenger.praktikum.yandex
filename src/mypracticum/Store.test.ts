@@ -11,4 +11,11 @@ describe('mypracticum/Store', () => {
     store.set({ users: 'test' });
     expect(tryemit).toHaveBeenCalled();
   });
+  it('set state', () => {
+    store.set({users:"123"});
+
+    const state = store.get();
+
+    expect(state?.users).toEqual("123");
+  });
 });
