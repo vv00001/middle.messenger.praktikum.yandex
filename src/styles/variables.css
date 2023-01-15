@@ -1,13 +1,9 @@
 :root {
-   --main-blue: #2e69fd;
-   --main-red:#fd2e2e;
-   --main-white:#fff;
-   --main-grey:#eaeaea;
-   --main-dark-grey:#999;
-   --main-noFull-black:#1e1e1e;
-   --main-light-grey:#efefef;
-
+  --main-blue: #2e69fd;
+  --main-red: #fd2e2e;
+  --main-white: #fff;
+  --main-grey: #eaeaea;
+  --main-dark-grey: #999;
+  --main-noFull-black: #1e1e1e;
+  --main-light-grey: #efefef;
 }
-
-
-/* я проверил на своем сайте параметры цвета */

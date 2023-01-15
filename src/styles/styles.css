@@ -1,7 +1,8 @@
 @import "./variables.css";
+
 .page {
   box-sizing: border-box;
-  font-family: sans-serif, Arial ;
+  font-family: sans-serif, Arial;
   height: 100vh;
 
   &__forma {
@@ -20,5 +21,3 @@
     margin: 0 10px 25px 0;
   }
 }
- 
- 

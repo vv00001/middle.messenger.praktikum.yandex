@@ -17,12 +17,10 @@ export class Input extends Block {
   constructor({ onInput, onFocus, onBlur, ...props }: InputProps) {
     super({ ...props, events: { input: onInput, focus: onFocus, blur: onBlur } })
   }
-  
+
   protected render(): string {
-    const { name, type, minlength, maxlength } = this.state;
     return `
-    <input name="{{name}}" value="{{value}}" class="{{classes}}" type="{{type}}" placeholder="{{placeholder}}">   
+    <input name="{{name}}" value="{{value}}" class="{{classes}}" type="{{type}}" placeholder="{{placeholder}}">
     `
   }
 }
-

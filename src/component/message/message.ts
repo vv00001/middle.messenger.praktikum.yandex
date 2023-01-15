@@ -2,8 +2,8 @@
 import Block from "../../mypracticum/Block"
 import "./message.css"
 
-interface MessageProps {  
-  owner?: boolen
+interface MessageProps {
+  owner?: boolean
   text: string
   time?: string
   srcImg?: string
@@ -18,17 +18,16 @@ export class Message extends Block {
   protected render(): string {
     return `
     <main">
-    
     <li class="message {{#unless this.owner}}message_is-not-owner{{/unless}} {{#if this.srcImg}}message_is-img{{/if}}">
     {{#if this.text}}
-    
+
       <p class="message__text {{#if this.owner}}message__text_is-me{{/if}}{{#unless this.owner}}message__text_is-friend{{/unless}}">
         {{this.text}}
         {{#unless this.owner}}
           <time class="message__time {{#unless this.isRead}}message__time_is-not-read{{/unless}}{{#if this.isRead}}message__time_is-read{{/if}}">{{this.time}}</time>
         {{/unless}}
         {{#if this.owner}}
-  
+
           <time class="message__time">{{this.time}}</time>
         {{/if}}
       </p>

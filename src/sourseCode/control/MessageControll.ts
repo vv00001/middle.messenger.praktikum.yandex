@@ -31,11 +31,11 @@ class MessageControll {
          this.socket.removeEventListener('error', this.handleError);
       }
    }
-   handleClose(evt: any) {
-      this.removeListeners();      
+   handleClose() {
+      this.removeListeners();
    }
-   handleError(evt: any) {
-   
+   handleError() {
+
    }
    handleOpen() {
    if (this.socket) {
@@ -49,7 +49,6 @@ class MessageControll {
       if (this.chatId !== chatId) {
          this.chatId = chatId;
          this.token = token;
-         // const socket = new WebSocket('wss://ya-praktikum.tech/ws/chats/<USER_ID>/<CHAT_ID>/<TOKEN_VALUE>');
          this.socket = new WebSocket(
          `${URLS}/${userId}/${this.chatId}/${this.token}`
          );

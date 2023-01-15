@@ -15,18 +15,16 @@ export class Avatar extends Block {
       this.state = {
          avatar: props.avatar
       };
-   }   
+   }
    protected render(): string {
       const { avatar } = this.state;
       return `
       <div class="avatar">
       <img class="avatar__img" src="${
-      avatar !== 'undefined' && avatar !== 'null'? `${yandex}${avatar}`:""
+         avatar !== 'undefined' && avatar !== 'null'? `${yandex}${avatar}`:""
       }"
        alt="Уставновите аватар в Изменить данные" />
       </div>
       `
    }
 }
-
-// avatar !== 'undefined' && avatar !== 'null'

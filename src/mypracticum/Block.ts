@@ -24,7 +24,7 @@ export default  class Block <P=any>{
   _meta:BlockMeta;
 
   static componentName: string
-  public id = makeUUID(8);
+  public id = makeUUID();
   props: P
   children: { [id: string]: Block } = {}
   /** JSDoc
@@ -45,7 +45,6 @@ export default  class Block <P=any>{
       props
     };
     this.getStateFromProps(props)
-    this._children=this._makePropsProxy(this.children);
     this.props = this._makePropsProxy(props || ({} as P));
     this.state = this._makePropsProxy(this.state);
 
@@ -65,12 +64,14 @@ export default  class Block <P=any>{
   private _createResources() {
     this._element = this._createDocumentElement("div");
   }
-  getStateFromProps(props: any): void {
+  protected getStateFromProps(props: any): void {
     this.state = {}
+    if(!props)
+    return
   }
   init() {
     this._createResources();
-    
+
     this.eventBus().emit(Block.EVENTS.FLOW_RENDER,this.props);
   }
 
@@ -78,18 +79,18 @@ export default  class Block <P=any>{
     this.componentDidMount();
   }
 
-  componentDidMount(props: P) {}
+  componentDidMount() {}
 
 
-  private _componentDidUpdate(oldProps:P, newProps:P) {
-    const response = this.componentDidUpdate(oldProps, newProps);
+  private _componentDidUpdate() {
+    const response = this.componentDidUpdate();
     if(!response){
       return;
     }
     this._render();
   }
 
-  componentDidUpdate(oldProps:P, newProps:P) {
+  componentDidUpdate() {
     return true;
   }
 
@@ -123,7 +124,7 @@ export default  class Block <P=any>{
     this._addEvents();
   }
 
-  render(): string {return""}
+  protected  render(): string {return""}
 
   getContent() : HTMLElement{
     return this.element;
@@ -136,9 +137,9 @@ export default  class Block <P=any>{
           const value = target[prop];
           return typeof value === "function" ? value.bind(target) : value;
         },
-        set:(target: Record<string>, prop: string, value:unknown)=> {
+        set:(target: Record<string,unknown>, prop: string, value:unknown)=> {
           target[prop] = value;
-          
+
           this.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
           return true;
         },
@@ -160,7 +161,7 @@ export default  class Block <P=any>{
     this.getContent().style.display="none";
   }
   private _compile(): DocumentFragment {
-    const fragment = document.createElement("template")   
+    const fragment = document.createElement("template")
     const template = Handlebars.compile(this.render())
     fragment.innerHTML = template({ ...this.state, ...this.props, children: this.children, refs: this.refs })
     Object.entries(this.children).forEach(([id, component]) => {
@@ -169,14 +170,18 @@ export default  class Block <P=any>{
       if (!stub) {
         return
       }
-      const stubChilds = stub.childNodes.length ? stub.childNodes : []
+      let stubChilds: NodeListOf<ChildNode> | never[]
+      if(stub.childNodes.length)
+        stubChilds=stub.childNodes
+      else
+        stubChilds=[]
       const content = component.getContent()
       stub.replaceWith(content)
       const layoutContent = content.querySelector("[data-layout='1']")
       if (layoutContent && stubChilds.length) {
         layoutContent.append(...stubChilds)
       }
-    })    
+    })
     return fragment.content
   }
 

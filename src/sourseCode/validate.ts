@@ -25,14 +25,14 @@ enum AnswerMessage {
 
 export function validate (receive:string,nameInput:string){
    let checkDone = {answer:""}
-   
+
    if (nameInput == "profileName" ||
       nameInput == "secondName"||
       nameInput == "chatname") {
       if (!receive.match(/^[A-ZА-Я]/g)){
       checkDone.answer = AnswerMessage.FromUpperCharts
       }else if (receive.length < 3) {
-         checkDone.answer = AnswerMessage.FromThreeCharts  
+         checkDone.answer = AnswerMessage.FromThreeCharts
       } else if (receive.match(/\d+/g)) {
          checkDone.answer = AnswerMessage.WithOutNumber
       }  else if (receive.match(/\s/g)) {
@@ -45,9 +45,9 @@ export function validate (receive:string,nameInput:string){
       if (receive.length == 0) {
          checkDone.answer =AnswerMessage.NoVoidBoötes
       } else if (receive.length < 3) {
-         checkDone.answer = AnswerMessage.FromThreeCharts      
+         checkDone.answer = AnswerMessage.FromThreeCharts
       }  else if (!receive.match(/^[a-zA-Z0-9-_]/g)) {
-         checkDone.answer = AnswerMessage.OnlyLatinoParty 
+         checkDone.answer = AnswerMessage.OnlyLatinoParty
       } else if (receive.length > 20) {
          checkDone.answer = AnswerMessage.LessThenTwenty
       } else if (!receive.match(/[a-zA-Zа-я]+/g)) {
@@ -58,9 +58,9 @@ export function validate (receive:string,nameInput:string){
          checkDone.answer = AnswerMessage.Simbol
       }
    }
-   if (nameInput == "mail") {//исключение лишних точек и лишних @ в разработке
+   if (nameInput == "mail") {
       if (receive.length < 3) {
-         checkDone.answer = AnswerMessage.FromThreeCharts 
+         checkDone.answer = AnswerMessage.FromThreeCharts
       }else if (receive.match(/\s/g)) {
          checkDone.answer = AnswerMessage.NoSpace
       }  else if (!receive.match(/^[a-zA-Z0-9-_]/g)) {
@@ -81,9 +81,9 @@ export function validate (receive:string,nameInput:string){
       nameInput=="newPassword"||
       nameInput=="repeateNewPassword"){
       if (!receive.match(/^[a-zA-Z0-9-_]/g)) {
-         checkDone.answer = AnswerMessage.OnlyLatinoParty   
+         checkDone.answer = AnswerMessage.OnlyLatinoParty
       } else if (receive.length > 40) {
-         checkDone.answer =AnswerMessage.LessThenForty 
+         checkDone.answer =AnswerMessage.LessThenForty
       } else if (!receive.match(/\d+/g)) {
          checkDone.answer = AnswerMessage.NeedNumber
       } else if (!receive.match(/[A-ZА-Я]+/g)) {
@@ -92,10 +92,10 @@ export function validate (receive:string,nameInput:string){
          checkDone.answer =AnswerMessage.FromEight
       }
    }
-   
+
    if (nameInput =="phone") {
       if (!receive.match(/^[+]/g)) {
-         checkDone.answer = AnswerMessage.FormPlusPhone     
+         checkDone.answer = AnswerMessage.FormPlusPhone
       }else if (receive.length < 10) {
          checkDone.answer =AnswerMessage.FromTen
       } else if (receive.match(/\s/g)) {
@@ -103,7 +103,7 @@ export function validate (receive:string,nameInput:string){
       } else if (receive.match(/[A-Za-zА-Яа-я]+/g)) {
         checkDone.answer =AnswerMessage.WithOutCharts
       } else if (receive.length > 15) {
-        checkDone.answer =AnswerMessage.LessThenfifteen
+        checkDone.answer =AnswerMessage.LessThenFifteen
       }
    }
    return checkDone.answer;

@@ -16,22 +16,22 @@ type Options={
    withCredentials?: boolean;
 }
 
-export class HTTPTransport {  
+export class HTTPTransport {
 
   public get = (url: string, options = {}) =>
      this.request(url, { ...options, method: METHODS.GET });
- 
+
      public put = (url: string, options = {}) =>
      this.request(url, { ...options, method: METHODS.PUT });
- 
+
    public post = (url: string, options = {}) =>
      this.request(url, { ...options, method: METHODS.POST });
- 
+
    public delete = (url: string, options = {}) =>
      this.request(url, { ...options, method: METHODS.DELETE });
- 
 
-  private request = (url: string, options: RequestOptions) => {
+
+  private request = (url: string, options: Options) => {
    const {
       withCredentials = true,
       method = METHODS.GET,

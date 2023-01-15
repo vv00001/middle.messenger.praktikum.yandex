@@ -1,49 +1,45 @@
-import MainClass, {LoginInterface, LoginData,SignupType} from '../Interfaces/LoginInterface';
+import LoginInterface from "../Interfaces/LoginInterface";
+import {LoginData,SignupType} from '../globalTypes'
 import store from '../../mypracticum/Store';
 import router from "../../mypracticum/Router";
 
 export class LogInControll {
-  private readonly aplicationPI: LoginInterface;
-
-  constructor() {
-    this.aplicationPI = MainClass;
-  }
-
   public signin({ ...rest }: LoginData) {
-    MainClass.signin({ ...rest })
+    LoginInterface.signin({ ...rest })
     .then(() => {
       router.go("/messenger");
     })
     .catch(()=>{
-        
+      console.log("error")
     })
   }
   public getProfile() {
-    MainClass.getProfile()
+    LoginInterface.getProfile()
     .then(({ response }: any) => {
       store.set({ userInfo: JSON.parse(response) });
     })
     .catch(()=>{
+      console.log("error")
     })
   }
   public exit() {
-    MainClass.exit()
+    LoginInterface.exit()
     .then(() => {
       router.go("/");
     })
   }
   public signup({ ...rest }: SignupType) {
-    MainClass.signup({ ...rest })
+    LoginInterface.signup({ ...rest })
     .then(() => {
       router.go("/messenger");
     })
   }
   public check(){
-    MainClass.getProfile()
+    LoginInterface.getProfile()
     .then(()=>{
       router.go("/messenger");
     })
-    .catch(e=>{
+    .catch(()=>{
       router.go("/");
     })
   }
